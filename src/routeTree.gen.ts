@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as CoursesIndexRouteImport } from './routes/courses.index'
 import { Route as CoursesSlugRouteImport } from './routes/courses.$slug'
@@ -17,6 +18,11 @@ import { Route as CoursesSlugRouteImport } from './routes/courses.$slug'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RegisterRoute = RegisterRouteImport.update({
@@ -37,12 +43,14 @@ const CoursesSlugRoute = CoursesSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/register': typeof RegisterRoute
   '/courses/$slug': typeof CoursesSlugRoute
   '/courses/': typeof CoursesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/register': typeof RegisterRoute
   '/courses/$slug': typeof CoursesSlugRoute
   '/courses': typeof CoursesIndexRoute
@@ -50,20 +58,22 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/register': typeof RegisterRoute
   '/courses/$slug': typeof CoursesSlugRoute
   '/courses/': typeof CoursesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/register' | '/courses/$slug' | '/courses/'
+  fullPaths: '/' | '/about' | '/register' | '/courses/$slug' | '/courses/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/register' | '/courses/$slug' | '/courses'
-  id: '__root__' | '/' | '/register' | '/courses/$slug' | '/courses/'
+  to: '/' | '/about' | '/register' | '/courses/$slug' | '/courses'
+  id: '__root__' | '/' | '/about' | '/register' | '/courses/$slug' | '/courses/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
   RegisterRoute: typeof RegisterRoute
   CoursesSlugRoute: typeof CoursesSlugRoute
   CoursesIndexRoute: typeof CoursesIndexRoute
@@ -76,6 +86,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/register': {
@@ -104,6 +121,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
   RegisterRoute: RegisterRoute,
   CoursesSlugRoute: CoursesSlugRoute,
   CoursesIndexRoute: CoursesIndexRoute,
