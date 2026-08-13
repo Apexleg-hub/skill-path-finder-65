@@ -31,7 +31,7 @@ const schema = z.object({
 
 type Errors = Partial<Record<keyof z.infer<typeof schema>, string>>;
 
-export function RegistrationForm({ defaultCourse }: { defaultCourse?: string }) {
+export function RegistrationForm({ defaultCourse }: { defaultCourse?: string | undefined }) {
   const [course, setCourse] = useState(defaultCourse ?? "");
   const [delivery, setDelivery] = useState("Live Online");
   const [errors, setErrors] = useState<Errors>({});

@@ -34,7 +34,7 @@ export const Route = createFileRoute("/courses/")({
 
 function CoursesPage() {
   const { category } = Route.useSearch();
-  const navigate = useNavigate({ from: "/courses" });
+  const navigate = useNavigate({ from: "/courses/" });
   const [query, setQuery] = useState("");
   const active = category ?? "all";
 
@@ -71,7 +71,8 @@ function CoursesPage() {
                 type="button"
                 onClick={() =>
                   navigate({
-                    search: tab.id === "all" ? {} : { category: tab.id as CategoryId },
+                    search: () =>
+                      tab.id === "all" ? {} : { category: tab.id as CategoryId },
                   })
                 }
                 className={cn(
