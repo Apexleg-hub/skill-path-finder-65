@@ -65,9 +65,11 @@ function CourseDetail() {
             >
               <ArrowLeft className="size-4" /> Back to catalog
             </Link>
-            <Badge variant="tag" className="mt-4">
-              {categoryName(course.category)}
-            </Badge>
+            <div className="mt-4">
+              <Badge variant="tag" className="inline-flex">
+                {categoryName(course.category)}
+              </Badge>
+            </div>
             <h1 className="mt-3 text-3xl font-bold sm:text-4xl">{course.title}</h1>
             <p className="mt-4 max-w-xl text-primary-foreground/85">{course.summary}</p>
             <Button asChild variant="cta" size="xl" className="mt-7">
