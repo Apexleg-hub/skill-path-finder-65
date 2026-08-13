@@ -1,0 +1,157 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
+import { z } from "zod";
+import { CheckCircle2, Mail, MapPin, Phone } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+
+export const Route = createFileRoute("/contact")({
+  head: () => ({
+    meta: [
+      { title: "Contact Us | Northbridge Tech Academy" },
+      {
+        name: "description",
+        content:
+          "Call, email or message Northbridge Tech Academy about course dates, fees and corporate training in Lagos or online.",
+      },
+      { property: "og:title", content: "Contact Northbridge Tech Academy" },
+      {
+        property: "og:description",
+        content: "Questions about a course? Our team replies within one working day.",
+      },
+    ],
+  }),
+  component: ContactPage,
+});
+
+const schema = z.object({
+  name: z.string().trim().min(2, "Please enter your name").max(100),
+  email: z.string().trim().email("Enter a valid email address").max(255),
+  subject: z.string().trim().min(2, "Add a subject").max(150),
+  message: z.string().trim().min(10, "Tell us a little more").max(1000),
+});
+
+type Errors = Partial<Record<"name" | "email" | "subject" | "message", string>>;
+
+function ContactPage() {
+  const [errors, setErrors] = useState<Errors>({});
+  const [sent, setSent] = useState(false);
+
+  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const fd = new FormData(e.currentTarget);
+    const parsed = schema.safeParse({
+      name: String(fd.get("name") ?? ""),
+      email: String(fd.get("email") ?? ""),
+      subject: String(fd.get("subject") ?? ""),
+      message: String(fd.get("message") ?? ""),
+    });
+    if (!parsed.success) {
+      const next: Errors = {};
+      for (const issue of parsed.error.issues) next[issue.path[0] as keyof Errors] = issue.message;
+      setErrors(next);
+      return;
+    }
+    setErrors({});
+    setSent(true);
+  }
+
+  return (
+    <div>
+      <section className="bg-hero-gradient text-primary-foreground">
+        <div className="mx-auto max-w-6xl px-4 py-16">
+          <h1 className="text-4xl font-bold sm:text-5xl">Contact us</h1>
+          <p className="mt-3 max-w-2xl text-primary-foreground/80">
+            Ask about cohort dates, fees, corporate training or anything else. We reply within one
+            working day.
+          </p>
+        </div>
+      </section>
+
+      <section className="mx-auto grid max-w-6xl gap-10 px-4 py-14 lg:grid-cols-[1fr_1.2fr]">
+        <div className="space-y-6">
+          <div className="rounded-2xl border border-border bg-card p-6 shadow-card">
+            <h2 className="text-lg font-semibold">Reach us directly</h2>
+            <ul className="mt-4 space-y-4 text-sm">
+              <li className="flex gap-3">
+                <Phone className="size-5 shrink-0 text-primary" />
+                <span>
+                  +234 800 000 0000
+                  <br />
+                  +234 811 111 1111 (WhatsApp)
+                </span>
+              </li>
+              <li className="flex gap-3">
+                <Mail className="size-5 shrink-0 text-primary" />
+                <span>
+                  hello@northbridgetech.io
+                  <br />
+                  admissions@northbridgetech.io
+                </span>
+              </li>
+              <li className="flex gap-3">
+                <MapPin className="size-5 shrink-0 text-primary" />
+                <span>12 Admiralty Way, Lekki Phase 1, Lagos, Nigeria</span>
+              </li>
+            </ul>
+          </div>
+          <div className="overflow-hidden rounded-2xl border border-border shadow-card">
+            <iframe
+              title="Northbridge Tech Academy location"
+              src="https://www.openstreetmap.org/export/embed.html?bbox=3.44%2C6.42%2C3.50%2C6.46&layer=mapnik"
+              className="h-64 w-full border-0"
+              loading="lazy"
+            />
+          </div>
+        </div>
+
+        {sent ? (
+          <div className="rounded-2xl border border-border bg-card p-8 text-center shadow-card">
+            <CheckCircle2 className="mx-auto size-10 text-primary" />
+            <h2 className="mt-4 text-xl font-semibold">Message received</h2>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Thanks — we&apos;ll be in touch shortly.
+            </p>
+            <Button className="mt-6" variant="outline" onClick={() => setSent(false)}>
+              Send another message
+            </Button>
+          </div>
+        ) : (
+          <form
+            onSubmit={onSubmit}
+            noValidate
+            className="space-y-5 rounded-2xl border border-border bg-card p-6 shadow-card sm:p-8"
+          >
+            <div className="grid gap-5 sm:grid-cols-2">
+              <div className="space-y-2">
+                <Label htmlFor="c-name">Name</Label>
+                <Input id="c-name" name="name" maxLength={100} />
+                {errors.name && <p className="text-xs text-destructive">{errors.name}</p>}
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="c-email">Email</Label>
+                <Input id="c-email" name="email" type="email" maxLength={255} />
+                {errors.email && <p className="text-xs text-destructive">{errors.email}</p>}
+              </div>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="c-subject">Subject</Label>
+              <Input id="c-subject" name="subject" maxLength={150} />
+              {errors.subject && <p className="text-xs text-destructive">{errors.subject}</p>}
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="c-message">Message</Label>
+              <Textarea id="c-message" name="message" rows={6} maxLength={1000} />
+              {errors.message && <p className="text-xs text-destructive">{errors.message}</p>}
+            </div>
+            <Button type="submit" variant="cta" size="lg" className="w-full">
+              Send message
+            </Button>
+          </form>
+        )}
+      </section>
+    </div>
+  );
+}
