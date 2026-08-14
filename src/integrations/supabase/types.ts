@@ -14,7 +14,54 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      course_applications: {
+        Row: {
+          course: string
+          created_at: string
+          email: string
+          experience_level: string | null
+          full_name: string
+          id: string
+          learning_format: string | null
+          message: string | null
+          occupation: string | null
+          phone: string
+          preferred_schedule: string | null
+          source: string | null
+          status: string
+        }
+        Insert: {
+          course: string
+          created_at?: string
+          email: string
+          experience_level?: string | null
+          full_name: string
+          id?: string
+          learning_format?: string | null
+          message?: string | null
+          occupation?: string | null
+          phone: string
+          preferred_schedule?: string | null
+          source?: string | null
+          status?: string
+        }
+        Update: {
+          course?: string
+          created_at?: string
+          email?: string
+          experience_level?: string | null
+          full_name?: string
+          id?: string
+          learning_format?: string | null
+          message?: string | null
+          occupation?: string | null
+          phone?: string
+          preferred_schedule?: string | null
+          source?: string | null
+          status?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
