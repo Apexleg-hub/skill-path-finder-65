@@ -7,6 +7,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
+const west = 3.3657;
+const south = 6.5193;
+const east = 3.3757;
+const north = 6.5293;
+
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
@@ -78,33 +83,32 @@ function ContactPage() {
               <li className="flex gap-3">
                 <Phone className="size-5 shrink-0 text-primary" />
                 <span>
-                  +234 800 000 0000
+                  +234 911 575 1406
                   <br />
-                  +234 811 111 1111 (WhatsApp)
+                  +234 911 575 1406 (WhatsApp)
                 </span>
               </li>
               <li className="flex gap-3">
                 <Mail className="size-5 shrink-0 text-primary" />
                 <span>
-                  hello@northbridgetech.io
-                  <br />
-                  admissions@northbridgetech.io
+                  equallinelimited@gmail.com
                 </span>
               </li>
               <li className="flex gap-3">
                 <MapPin className="size-5 shrink-0 text-primary" />
-                <span>12 Admiralty Way, Lekki Phase 1, Lagos, Nigeria</span>
+                <span>50 Shiro Street Fadeyi, Shomolu Lagos, Nigeria</span>
               </li>
             </ul>
           </div>
           <div className="overflow-hidden rounded-2xl border border-border shadow-card">
             <iframe
-              title="Northbridge Tech Academy location"
-              src="https://www.openstreetmap.org/export/embed.html?bbox=3.44%2C6.42%2C3.50%2C6.46&layer=mapnik"
-              className="h-64 w-full border-0"
+              title="Corepoint Tech Academy — Lagos location map"
+              src="https://www.openstreetmap.org/export/embed.html?bbox=3.3657%2C6.5193%2C3.3757%2C6.5293&layer=mapnik"
+              className="h-72 w-full border-0"
               loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
             />
-          </div>
+              </div>
         </div>
 
         {sent ? (

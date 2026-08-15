@@ -50,7 +50,7 @@ function AboutPage() {
     <div>
       <section className="bg-hero-gradient text-primary-foreground">
         <div className="mx-auto max-w-6xl px-4 py-16">
-          <h1 className="text-4xl font-bold sm:text-5xl">About Northbridge Tech</h1>
+          <h1 className="text-4xl font-bold sm:text-5xl">About Corepoint Tech</h1>
           <p className="mt-4 max-w-2xl text-primary-foreground/80">
             We are a technology training academy built around one belief: people learn tools by
             using them on work that matters.
@@ -61,7 +61,7 @@ function AboutPage() {
       <section className="mx-auto grid max-w-6xl gap-10 px-4 py-16 lg:grid-cols-2 lg:items-center">
         <img
           src={heroImg}
-          alt="Students working together in a Northbridge Tech classroom"
+          alt="Students working together in a Corepoint Tech classroom"
           loading="lazy"
           width={1600}
           height={1008}
@@ -70,7 +70,7 @@ function AboutPage() {
         <div>
           <h2 className="text-3xl font-bold">Our story</h2>
           <p className="mt-4 text-muted-foreground">
-            Northbridge began as a weekend study group for analysts who wanted to move beyond
+            Corepoint Tech began as a weekend study group for analysts who wanted to move beyond
             spreadsheets. Word spread, the group outgrew the room, and it became a full academy
             with structured programmes across seven disciplines.
           </p>
@@ -80,8 +80,8 @@ function AboutPage() {
           </p>
           <h2 className="mt-10 text-3xl font-bold">Our mission</h2>
           <p className="mt-4 text-muted-foreground">
-            To make world-class, practical technology education accessible to anyone with the
-            discipline to show up — online from anywhere, or in person in Lagos.
+            To make world-class, practical technology education accessible to anyone
+            committed to learning, whether online from anywhere in the world or in person.
           </p>
         </div>
       </section>

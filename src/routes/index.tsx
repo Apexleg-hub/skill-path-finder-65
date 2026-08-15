@@ -60,8 +60,8 @@ function Index() {
               Build the technology skills that will shape your career
             </h1>
             <p className="mt-5 max-w-xl text-lg text-primary-foreground/80">
-              Practical, hands-on training across AI, data, development, cybersecurity, cloud and
-              more — taught in small classes by professionals who do the work every day.
+              Develop job-ready technology skills through practical, hands-on training in AI, data,
+              software development, cybersecurity, cloud computing, and more. Guided by industry professionals.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button asChild variant="cta" size="xl">
@@ -99,7 +99,7 @@ function Index() {
         <div className="mx-auto max-w-6xl px-4">
           <h2 className="text-3xl font-bold">Two ways to learn</h2>
           <p className="mt-3 max-w-xl text-muted-foreground">
-            Same curriculum, same instructors — choose the format that fits your schedule.
+            Same curriculum, same instructors choose the format that fits your schedule.
           </p>
           <div className="mt-8 grid gap-6 md:grid-cols-2">
             <div className="rounded-2xl border border-border bg-card p-7 shadow-card">

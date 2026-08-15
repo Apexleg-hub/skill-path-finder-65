@@ -1,8 +1,9 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { Menu, X, GraduationCap, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { categories } from "@/data/courses";
+import logo from "@/assets/corepoint-tech.jpg";
 
 const navLinks = [
   { to: "/", label: "Home" },
@@ -17,11 +18,9 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 border-b border-border/70 bg-background/85 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4">
         <Link to="/" className="flex items-center gap-2">
-          <span className="flex size-9 items-center justify-center rounded-lg bg-hero-gradient text-primary-foreground">
-            <GraduationCap className="size-5" />
-          </span>
+          <img src={logo} alt="Corepoint Tech Logo" className="h-9 w-auto" />
           <span className="font-display text-lg font-bold tracking-tight">
-            Northbridge<span className="text-primary"> Tech</span>
+            Corepoint <span className="text-primary">Tech</span>
           </span>
         </Link>
 
