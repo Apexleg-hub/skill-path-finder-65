@@ -10,13 +10,13 @@ import { Textarea } from "@/components/ui/textarea";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact Us | Northbridge Tech Academy" },
+      { title: "Contact Us | Corepoint Tech Academy" },
       {
         name: "description",
         content:
-          "Call, email or message Northbridge Tech Academy about course dates, fees and corporate training in Lagos or online.",
+          "Call, email or message Corepoint Tech Academy about course dates, fees and corporate training in Lagos or online.",
       },
-      { property: "og:title", content: "Contact Northbridge Tech Academy" },
+      { property: "og:title", content: "Contact Corepoint Tech Academy" },
       {
         property: "og:description",
         content: "Questions about a course? Our team replies within one working day.",

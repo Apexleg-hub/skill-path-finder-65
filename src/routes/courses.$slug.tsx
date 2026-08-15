@@ -24,7 +24,7 @@ export const Route = createFileRoute("/courses/$slug")({
       };
     }
     const { course } = loaderData;
-    const title = `${course.title} | Northbridge Tech Academy`;
+    const title = `${course.title} | Corepoint Tech Academy`;
     return {
       meta: [
         { title },

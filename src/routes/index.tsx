@@ -8,13 +8,13 @@ import heroImg from "@/assets/hero-training.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Northbridge Tech Academy | Hands-On Technology Training" },
+      { title: "Corepoint Tech Academy" },
       {
         name: "description",
         content:
           "Instructor-led training in AI, data science, software development, cybersecurity, cloud, databases and automation. Live online or in person in Lagos.",
       },
-      { property: "og:title", content: "Northbridge Tech Academy | Hands-On Technology Training" },
+      { property: "og:title", content: "Corepoint Tech Academy | Hands-On Technology Training" },
       {
         property: "og:description",
         content: "Small classes, real projects, working professionals as instructors.",
@@ -27,7 +27,7 @@ export const Route = createFileRoute("/")({
 const valueProps = [
   {
     icon: Users,
-    title: "Small, personal classes",
+    title: " Personal classes",
     body: "Capped cohorts mean your questions get answered and your work gets reviewed.",
   },
   {

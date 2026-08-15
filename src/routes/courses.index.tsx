@@ -16,13 +16,13 @@ export const Route = createFileRoute("/courses/")({
   },
   head: () => ({
     meta: [
-      { title: "Course Catalog | Northbridge Tech Academy" },
+      { title: "Course Catalog | Corepoint Tech Academy" },
       {
         name: "description",
         content:
           "Browse instructor-led courses in AI, data science, software development, cybersecurity, cloud, databases and automation.",
       },
-      { property: "og:title", content: "Course Catalog | Northbridge Tech Academy" },
+      { property: "og:title", content: "Course Catalog | Corepoint Tech Academy" },
       {
         property: "og:description",
         content: "Hands-on technology training delivered live online and in person in Lagos.",

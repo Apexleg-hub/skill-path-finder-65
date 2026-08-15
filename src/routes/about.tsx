@@ -6,13 +6,13 @@ import heroImg from "@/assets/hero-training.jpg";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About Us | Northbridge Tech Academy" },
+      { title: "About Us | Corepoint Tech Academy" },
       {
         name: "description",
         content:
-          "Northbridge Tech Academy trains professionals in AI, data, development, security and cloud through small, project-based classes led by practitioners.",
+          "Corepoint Tech Academy trains professionals in AI, data, development, security and cloud through small, project-based classes led by practitioners.",
       },
-      { property: "og:title", content: "About Northbridge Tech Academy" },
+      { property: "og:title", content: "About Corepoint Tech Academy" },
       {
         property: "og:description",
         content: "Small classes, real projects, instructors who still work in the field.",

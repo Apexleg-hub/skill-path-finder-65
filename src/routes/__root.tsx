@@ -79,12 +79,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Northbridge Tech Academy" },
+      { title: "Corepoint Tech Academy" },
       {
         name: "description",
         content: "Hands-on technology training in AI, data, development, security and cloud.",
       },
-      { name: "author", content: "Northbridge Tech Academy" },
+      { name: "author", content: "Corepoint Tech Academy" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],

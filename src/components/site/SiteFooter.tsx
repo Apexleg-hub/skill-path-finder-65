@@ -11,7 +11,7 @@ export function SiteFooter() {
             <span className="flex size-9 items-center justify-center rounded-lg bg-accent-gradient text-accent-foreground">
               <GraduationCap className="size-5" />
             </span>
-            <span className="font-display text-lg font-bold">Northbridge Tech</span>
+            <span className="font-display text-lg font-bold">Corepoint Tech</span>
           </div>
           <p className="mt-4 text-sm text-ink-foreground/70">
             Practical, instructor-led technology training. Small classes, real projects, working
@@ -66,16 +66,16 @@ export function SiteFooter() {
             Get in touch
           </h3>
           <ul className="mt-4 space-y-3 text-sm text-ink-foreground/80">
-            <li className="flex gap-2"><Phone className="size-4 shrink-0" /> +234 800 000 0000</li>
-            <li className="flex gap-2"><Mail className="size-4 shrink-0" /> hello@northbridgetech.io</li>
-            <li className="flex gap-2"><MapPin className="size-4 shrink-0" /> 12 Admiralty Way, Lekki, Lagos</li>
+            <li className="flex gap-2"><Phone className="size-4 shrink-0" /> +234 911 575 1406</li>
+            <li className="flex gap-2"><Mail className="size-4 shrink-0" /> equallinelimited@gmail.com</li>
+            <li className="flex gap-2"><MapPin className="size-4 shrink-0" /> 50 Shiro street Fadeyi, Shomolu, Lagos</li>
           </ul>
         </div>
       </div>
 
       <div className="border-t border-ink-foreground/10">
         <p className="mx-auto max-w-6xl px-4 py-6 text-xs text-ink-foreground/60">
-          © {new Date().getFullYear()} Northbridge Tech Academy. All rights reserved.
+          © {new Date().getFullYear()} Equalline limited. All rights reserved.
         </p>
       </div>
     </footer>

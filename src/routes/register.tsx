@@ -9,13 +9,13 @@ export const Route = createFileRoute("/register")({
     typeof search["course"] === "string" ? { course: search["course"] } : {},
   head: () => ({
     meta: [
-      { title: "Register Your Interest | Northbridge Tech Academy" },
+      { title: "Register Your Interest | Corepoint Tech Academy" },
       {
         name: "description",
         content:
           "Tell us which course you want and how you'd like to learn. Our admissions team calls you back within one working day.",
       },
-      { property: "og:title", content: "Register Your Interest | Northbridge Tech Academy" },
+      { property: "og:title", content: "Register Your Interest | Corepoint Tech Academy" },
       {
         property: "og:description",
         content: "No payment online — register your interest and we'll get in touch.",
