@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { z } from "zod";
-import { CheckCircle2 } from "lucide-react";
+import { Link } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
+import { AlertCircle, CheckCircle2, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -14,39 +15,49 @@ import {
 } from "@/components/ui/select";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { courses } from "@/data/courses";
+import {
+  EXPERIENCE_LEVELS,
+  LEARNING_FORMATS,
+  SCHEDULES,
+  SOURCES,
+  applicationSchema,
+  type CourseApplicationInput,
+} from "@/lib/applications";
+import { submitCourseApplication } from "@/lib/applications.functions";
 
-const schema = z.object({
-  name: z.string().trim().min(2, "Please enter your full name").max(100),
-  email: z.string().trim().email("Enter a valid email address").max(255),
-  phone: z
-    .string()
-    .trim()
-    .min(7, "Enter a valid phone number")
-    .max(20)
-    .regex(/^[0-9+()\-\s]+$/, "Phone can only contain digits and + ( ) -"),
-  course: z.string().min(1, "Choose a course"),
-  delivery: z.enum(["Physical", "Live Online"]),
-  message: z.string().trim().max(1000, "Message is too long").optional(),
-});
+type Errors = Partial<Record<keyof CourseApplicationInput, string>>;
 
-type Errors = Partial<Record<keyof z.infer<typeof schema>, string>>;
+const NONE = "__none__";
 
 export function RegistrationForm({ defaultCourse }: { defaultCourse?: string | undefined }) {
+  const submit = useServerFn(submitCourseApplication);
   const [course, setCourse] = useState(defaultCourse ?? "");
   const [delivery, setDelivery] = useState("Live Online");
+  const [experience, setExperience] = useState(NONE);
+  const [schedule, setSchedule] = useState(NONE);
+  const [source, setSource] = useState(NONE);
   const [errors, setErrors] = useState<Errors>({});
+  const [submitting, setSubmitting] = useState(false);
+  const [failed, setFailed] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const fd = new FormData(e.currentTarget);
-    const parsed = schema.safeParse({
-      name: String(fd.get("name") ?? ""),
+    if (submitting) return;
+
+    const form = e.currentTarget;
+    const fd = new FormData(form);
+    const parsed = applicationSchema.safeParse({
+      full_name: String(fd.get("full_name") ?? ""),
       email: String(fd.get("email") ?? ""),
       phone: String(fd.get("phone") ?? ""),
       course,
-      delivery,
-      message: String(fd.get("message") ?? ""),
+      learning_format: delivery,
+      experience_level: experience === NONE ? undefined : experience,
+      preferred_schedule: schedule === NONE ? undefined : schedule,
+      source: source === NONE ? undefined : source,
+      occupation: String(fd.get("occupation") ?? "") || undefined,
+      message: String(fd.get("message") ?? "") || undefined,
     });
 
     if (!parsed.success) {
@@ -55,25 +66,50 @@ export function RegistrationForm({ defaultCourse }: { defaultCourse?: string | u
         next[issue.path[0] as keyof Errors] = issue.message;
       }
       setErrors(next);
+      setFailed(false);
       return;
     }
 
     setErrors({});
-    setSubmitted(true);
+    setFailed(false);
+    setSubmitting(true);
+    try {
+      const result = await submit({ data: parsed.data });
+      if (result.ok) {
+        form.reset();
+        setCourse(defaultCourse ?? "");
+        setDelivery("Live Online");
+        setExperience(NONE);
+        setSchedule(NONE);
+        setSource(NONE);
+        setSubmitted(true);
+      } else {
+        setFailed(true);
+      }
+    } catch {
+      setFailed(true);
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   if (submitted) {
     return (
       <div className="rounded-2xl border border-border bg-card p-8 text-center shadow-card">
         <CheckCircle2 className="mx-auto size-10 text-primary" />
-        <h3 className="mt-4 text-xl font-semibold">Thanks — we&apos;ll be in touch shortly</h3>
+        <h3 className="mt-4 text-xl font-semibold">Application Submitted Successfully!</h3>
         <p className="mt-2 text-sm text-muted-foreground">
-          Your registration interest has been recorded. A member of our admissions team will call
-          or email you within one working day with the next cohort dates and fees.
+          Thank you for your interest. Our team will contact you shortly with information about the
+          course, schedule, instructor, and next steps.
         </p>
-        <Button className="mt-6" variant="outline" onClick={() => setSubmitted(false)}>
-          Register another interest
-        </Button>
+        <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
+          <Button asChild variant="cta">
+            <Link to="/courses">Explore More Courses</Link>
+          </Button>
+          <Button variant="outline" onClick={() => setSubmitted(false)}>
+            Apply for another course
+          </Button>
+        </div>
       </div>
     );
   }
@@ -86,9 +122,9 @@ export function RegistrationForm({ defaultCourse }: { defaultCourse?: string | u
     >
       <div className="grid gap-5 sm:grid-cols-2">
         <div className="space-y-2">
-          <Label htmlFor="name">Full name</Label>
-          <Input id="name" name="name" maxLength={100} placeholder="Ada Obi" />
-          {errors.name && <p className="text-xs text-destructive">{errors.name}</p>}
+          <Label htmlFor="full_name">Full name</Label>
+          <Input id="full_name" name="full_name" maxLength={100} placeholder="Ada Obi" />
+          {errors.full_name && <p className="text-xs text-destructive">{errors.full_name}</p>}
         </div>
         <div className="space-y-2">
           <Label htmlFor="email">Email</Label>
@@ -98,7 +134,7 @@ export function RegistrationForm({ defaultCourse }: { defaultCourse?: string | u
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="phone">Phone number</Label>
+        <Label htmlFor="phone">Phone / WhatsApp number</Label>
         <Input id="phone" name="phone" maxLength={20} placeholder="+234 800 000 0000" />
         {errors.phone && <p className="text-xs text-destructive">{errors.phone}</p>}
       </div>
@@ -122,17 +158,72 @@ export function RegistrationForm({ defaultCourse }: { defaultCourse?: string | u
       </div>
 
       <div className="space-y-2">
-        <Label>Preferred delivery method</Label>
+        <Label>Preferred learning format</Label>
         <RadioGroup value={delivery} onValueChange={setDelivery} className="flex gap-6 pt-1">
-          <div className="flex items-center gap-2">
-            <RadioGroupItem value="Live Online" id="d-online" />
-            <Label htmlFor="d-online" className="font-normal">Live Online</Label>
-          </div>
-          <div className="flex items-center gap-2">
-            <RadioGroupItem value="Physical" id="d-physical" />
-            <Label htmlFor="d-physical" className="font-normal">Physical Class</Label>
-          </div>
+          {LEARNING_FORMATS.map((f) => (
+            <div key={f} className="flex items-center gap-2">
+              <RadioGroupItem value={f} id={`d-${f}`} />
+              <Label htmlFor={`d-${f}`} className="font-normal">
+                {f === "Physical" ? "Physical Class" : f}
+              </Label>
+            </div>
+          ))}
         </RadioGroup>
+      </div>
+
+      <div className="grid gap-5 sm:grid-cols-2">
+        <div className="space-y-2">
+          <Label htmlFor="experience">Experience level (optional)</Label>
+          <Select value={experience} onValueChange={setExperience}>
+            <SelectTrigger id="experience">
+              <SelectValue placeholder="Select your level" />
+            </SelectTrigger>
+            <SelectContent>
+              {EXPERIENCE_LEVELS.map((l) => (
+                <SelectItem key={l} value={l}>
+                  {l}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="schedule">Preferred schedule (optional)</Label>
+          <Select value={schedule} onValueChange={setSchedule}>
+            <SelectTrigger id="schedule">
+              <SelectValue placeholder="Select a schedule" />
+            </SelectTrigger>
+            <SelectContent>
+              {SCHEDULES.map((s) => (
+                <SelectItem key={s} value={s}>
+                  {s}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+
+      <div className="grid gap-5 sm:grid-cols-2">
+        <div className="space-y-2">
+          <Label htmlFor="occupation">Current occupation (optional)</Label>
+          <Input id="occupation" name="occupation" maxLength={120} placeholder="Student, Analyst…" />
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="source">How did you hear about us? (optional)</Label>
+          <Select value={source} onValueChange={setSource}>
+            <SelectTrigger id="source">
+              <SelectValue placeholder="Select an option" />
+            </SelectTrigger>
+            <SelectContent>
+              {SOURCES.map((s) => (
+                <SelectItem key={s} value={s}>
+                  {s}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
       </div>
 
       <div className="space-y-2">
@@ -147,11 +238,31 @@ export function RegistrationForm({ defaultCourse }: { defaultCourse?: string | u
         {errors.message && <p className="text-xs text-destructive">{errors.message}</p>}
       </div>
 
-      <Button type="submit" variant="cta" size="lg" className="w-full">
-        Register Now
+      {failed && (
+        <div className="flex gap-2.5 rounded-xl border border-destructive/40 bg-destructive/5 p-4">
+          <AlertCircle className="mt-0.5 size-4 shrink-0 text-destructive" />
+          <div>
+            <p className="text-sm font-semibold text-destructive">Something went wrong</p>
+            <p className="text-xs text-muted-foreground">
+              We could not submit your application at this time. Please try again or contact us
+              directly.
+            </p>
+          </div>
+        </div>
+      )}
+
+      <Button type="submit" variant="cta" size="lg" className="w-full" disabled={submitting}>
+        {submitting ? (
+          <>
+            <Loader2 className="size-4 animate-spin" /> Submitting...
+          </>
+        ) : (
+          "Submit Application"
+        )}
       </Button>
       <p className="text-center text-xs text-muted-foreground">
-        No payment required. We&apos;ll contact you to confirm your place.
+        By submitting this form, you agree that we may contact you regarding your course application
+        and training opportunities.
       </p>
     </form>
   );
