@@ -6,7 +6,6 @@ CREATE TABLE public.course_applications (
   phone TEXT NOT NULL,
   course TEXT NOT NULL,
   experience_level TEXT,
-  preferred_schedule TEXT,
   learning_format TEXT,
   occupation TEXT,
   message TEXT,

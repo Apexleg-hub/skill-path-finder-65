@@ -26,7 +26,6 @@ export type Database = {
           message: string | null
           occupation: string | null
           phone: string
-          preferred_schedule: string | null
           source: string | null
           status: string
         }
@@ -41,7 +40,6 @@ export type Database = {
           message?: string | null
           occupation?: string | null
           phone: string
-          preferred_schedule?: string | null
           source?: string | null
           status?: string
         }
@@ -56,7 +54,6 @@ export type Database = {
           message?: string | null
           occupation?: string | null
           phone?: string
-          preferred_schedule?: string | null
           source?: string | null
           status?: string
         }

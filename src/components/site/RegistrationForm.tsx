@@ -18,7 +18,6 @@ import { courses } from "@/data/courses";
 import {
   EXPERIENCE_LEVELS,
   LEARNING_FORMATS,
-  SCHEDULES,
   SOURCES,
   applicationSchema,
   type CourseApplicationInput,
@@ -34,7 +33,6 @@ export function RegistrationForm({ defaultCourse }: { defaultCourse?: string | u
   const [course, setCourse] = useState(defaultCourse ?? "");
   const [delivery, setDelivery] = useState("Live Online");
   const [experience, setExperience] = useState(NONE);
-  const [schedule, setSchedule] = useState(NONE);
   const [source, setSource] = useState(NONE);
   const [errors, setErrors] = useState<Errors>({});
   const [submitting, setSubmitting] = useState(false);
@@ -54,7 +52,6 @@ export function RegistrationForm({ defaultCourse }: { defaultCourse?: string | u
       course,
       learning_format: delivery,
       experience_level: experience === NONE ? undefined : experience,
-      preferred_schedule: schedule === NONE ? undefined : schedule,
       source: source === NONE ? undefined : source,
       occupation: String(fd.get("occupation") ?? "") || undefined,
       message: String(fd.get("message") ?? "") || undefined,
@@ -80,7 +77,6 @@ export function RegistrationForm({ defaultCourse }: { defaultCourse?: string | u
         setCourse(defaultCourse ?? "");
         setDelivery("Live Online");
         setExperience(NONE);
-        setSchedule(NONE);
         setSource(NONE);
         setSubmitted(true);
       } else {
@@ -100,7 +96,7 @@ export function RegistrationForm({ defaultCourse }: { defaultCourse?: string | u
         <h3 className="mt-4 text-xl font-semibold">Application Submitted Successfully!</h3>
         <p className="mt-2 text-sm text-muted-foreground">
           Thank you for your interest. Our team will contact you shortly with information about the
-          course, schedule, instructor, and next steps.
+          course, instructor, and next steps.
         </p>
         <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
           <Button asChild variant="cta">
@@ -123,7 +119,7 @@ export function RegistrationForm({ defaultCourse }: { defaultCourse?: string | u
       <div className="grid gap-5 sm:grid-cols-2">
         <div className="space-y-2">
           <Label htmlFor="full_name">Full name</Label>
-          <Input id="full_name" name="full_name" maxLength={100} placeholder="Ada Obi" />
+          <Input id="full_name" name="full_name" maxLength={120} placeholder="Full Name" />
           {errors.full_name && <p className="text-xs text-destructive">{errors.full_name}</p>}
         </div>
         <div className="space-y-2">
@@ -187,21 +183,6 @@ export function RegistrationForm({ defaultCourse }: { defaultCourse?: string | u
             </SelectContent>
           </Select>
         </div>
-        <div className="space-y-2">
-          <Label htmlFor="schedule">Preferred schedule (optional)</Label>
-          <Select value={schedule} onValueChange={setSchedule}>
-            <SelectTrigger id="schedule">
-              <SelectValue placeholder="Select a schedule" />
-            </SelectTrigger>
-            <SelectContent>
-              {SCHEDULES.map((s) => (
-                <SelectItem key={s} value={s}>
-                  {s}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
       </div>
 
       <div className="grid gap-5 sm:grid-cols-2">
@@ -233,9 +214,9 @@ export function RegistrationForm({ defaultCourse }: { defaultCourse?: string | u
           name="message"
           maxLength={1000}
           rows={4}
-          placeholder="Tell us about your background or preferred start date"
+          placeholder="Questions or preferred start date"
         />
-        {errors.message && <p className="text-xs text-destructive">{errors.message}</p>}
+        {errors.message && <p className="text-xs  text-destructive">{errors.message}</p>}
       </div>
 
       {failed && (

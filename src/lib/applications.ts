@@ -2,14 +2,6 @@ import { z } from "zod";
 
 export const EXPERIENCE_LEVELS = ["Beginner", "Intermediate", "Advanced"] as const;
 export const LEARNING_FORMATS = ["Live Online", "Physical", "Either"] as const;
-export const SCHEDULES = [
-  "Weekday",
-  "Weekend",
-  "Morning",
-  "Afternoon",
-  "Evening",
-  "Flexible",
-] as const;
 export const SOURCES = [
   "Google",
   "Facebook",
@@ -40,7 +32,6 @@ export const applicationSchema = z.object({
     .regex(/^[0-9+()\-\s]+$/, "Phone can only contain digits and + ( ) -"),
   course: z.string().trim().min(1, "Please choose a course.").max(200),
   experience_level: z.string().trim().max(50).optional(),
-  preferred_schedule: z.string().trim().max(50).optional(),
   learning_format: z.string().trim().max(50).optional(),
   occupation: z.string().trim().max(120).optional(),
   message: z.string().trim().max(1000, "Message is too long.").optional(),

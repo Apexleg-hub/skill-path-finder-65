@@ -46,7 +46,6 @@ export function adminEmail(app: CourseApplicationInput, createdAt: string) {
       <h2 style="font-size:15px;margin:20px 0 6px;">Learning Information</h2>
       ${row("Experience Level", app.experience_level)}
       ${row("Preferred Format", app.learning_format)}
-      ${row("Preferred Schedule", app.preferred_schedule)}
       ${row("Occupation", app.occupation)}
 
       <h2 style="font-size:15px;margin:20px 0 6px;">Message</h2>
@@ -68,9 +67,8 @@ export function studentEmail(app: CourseApplicationInput) {
       <p style="font-size:15px;">Hello ${escapeHtml(app.full_name)},</p>
       <p style="font-size:15px;">Thank you for your interest in <strong>${escapeHtml(app.course)}</strong>.</p>
       <p style="font-size:15px;">We have received your application successfully.</p>
-      <p style="font-size:15px;">Our team will review your information and contact you shortly with the next steps, including course schedule, instructor information, and training details.</p>
+      <p style="font-size:15px;">Our team will review your information and contact you shortly with the next steps, including instructor information and training details.</p>
       ${row("Course", app.course)}
-      ${row("Preferred Schedule", app.preferred_schedule)}
       ${row("Preferred Format", app.learning_format)}
       <p style="font-size:15px;">We look forward to helping you develop your technology skills.</p>
       <p style="font-size:15px;margin-bottom:0;">Best regards,<br/>${BRAND}</p>

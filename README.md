@@ -192,17 +192,20 @@ This is deliberately lighter than a full marketplace stack — no auth, no payme
 
 If you eventually want online payment and self-paced access, that's a separate, larger project (see the earlier marketplace spec). Signs you're ready for that: registration form volume is high enough that manual follow-up doesn't scale, and you want students to pay and get instant access without a phone call in between.
 
-This project was built with [Lovable](https://lovable.dev).
+## Deployment
 
-**Live app**: https://skill-path-finder-65.lovable.app
+This project is a TanStack Start + React application that can be deployed to any Node.js hosting platform.
 
-## Build with Lovable
+### Supported Platforms
+- **Vercel** - Recommended for TanStack Start applications
+- **Netlify** - Supports Node.js functions
+- **AWS** - EC2, Lambda, or App Runner
+- **Docker** - Containerizable with Dockerfile
+- **Heroku** - Node.js buildpack support
+- **Railway** - Simple git-based deployment
 
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/a3c16ffe-0beb-4b36-a968-e32cfcaa5c03).
-
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
+### Local Development
+The application was originally built with Lovable but is now fully independent and portable. You can deploy this to any hosting provider.
 
 ## Development
 

@@ -37,7 +37,6 @@ export const submitCourseApplication = createServerFn({ method: "POST" })
           phone: application.phone,
           course: application.course,
           experience_level: application.experience_level ?? null,
-          preferred_schedule: application.preferred_schedule ?? null,
           learning_format: application.learning_format ?? null,
           occupation: application.occupation ?? null,
           message: application.message ?? null,

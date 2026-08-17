@@ -56,8 +56,7 @@ function CoursesPage() {
         <div className="mx-auto max-w-6xl px-4 py-16">
           <h1 className="text-4xl font-bold sm:text-5xl">Course Catalog</h1>
           <p className="mt-3 max-w-2xl text-primary-foreground/80">
-            {courses.length} instructor-led programmes across seven disciplines. Filter by category
-            or search by title to find the right fit.
+            {courses.length} Courses available, filter by category or search by title. 
           </p>
         </div>
       </section>
