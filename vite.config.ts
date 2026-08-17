@@ -5,9 +5,9 @@ import { tanstackStart } from '@tanstack/react-start/plugin/vite';
 
 export default defineConfig({
   plugins: [
+    tailwindcss(),
     tanstackStart(),
     react(),
-    tailwindcss(),
   ],
   resolve: {
     tsconfigPaths: true,
