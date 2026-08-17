@@ -6,6 +6,7 @@ import securityImg from "@/assets/course-security.jpg";
 import cloudImg from "@/assets/course-cloud.jpg";
 import databaseImg from "@/assets/course-database.jpg";
 import automationImg from "@/assets/course-automation.jpg";
+import managementImg from "@/assets/project-management.png";
 
 export type CategoryId =
   | "ai"
@@ -74,7 +75,7 @@ export const categories: Category[] = [
     name: "Project Management",
     shortName: "Management",
     description: "Planning, executing and closing projects effectively.",
-    image: dataImg,
+    image: managementImg,
   },
   {
     id: "development",
@@ -117,6 +118,841 @@ export const categoryName = (id: CategoryId) =>
   categories.find((c) => c.id === id)?.name ?? id;
 
 export const courses: Course[] = [
+  {
+  slug: "full-stack-data-science",
+  title: "Full-Stack Data Science",
+  category: "data-science",
+  level: "Beginner to Advanced",
+  duration: "10 weeks",
+  delivery: "Both",
+  featured: true,
+  image: dataImg,
+
+  summary:
+    "Master the complete data workflow with Excel, SQL, Python, SPSS, Power BI and Tableau. From raw data to analysis, visualisation and business insight.",
+
+  overview:
+    "A comprehensive, project-based Data Science programme designed to take learners from foundational data analysis to advanced data science workflows. Students work with industry-relevant tools including Microsoft Excel, SQL, Python, SPSS, Power BI and Tableau while developing practical skills in data cleaning, statistical analysis, exploratory data analysis, data visualisation, business intelligence and predictive analytics. Throughout the programme, learners work with real-world datasets and complete portfolio projects that demonstrate their ability to transform raw data into actionable insights.",
+
+  audience:
+    "Aspiring data scientists, data analysts, business intelligence professionals, graduates, researchers, business professionals and career changers who want comprehensive practical skills across the modern data analytics and data science ecosystem.",
+
+  outcomes: [
+    "Understand the complete data science and analytics lifecycle",
+    "Collect, clean, transform and prepare real-world datasets",
+    "Use Microsoft Excel for advanced data analysis and reporting",
+    "Write SQL queries to extract and analyse data from relational databases",
+    "Use Python for data cleaning, exploratory analysis and statistical computing",
+    "Perform statistical analysis using SPSS",
+    "Create interactive dashboards and reports with Power BI",
+    "Build professional data visualisations using Tableau",
+    "Perform exploratory data analysis and identify meaningful patterns",
+    "Apply descriptive and inferential statistical techniques",
+    "Perform correlation and regression analysis",
+    "Communicate analytical findings through effective data storytelling",
+    "Select the appropriate tool for different data analysis and business problems",
+    "Combine multiple tools into an end-to-end data workflow",
+    "Develop portfolio-ready data analytics and data science projects",
+    "Present data-driven recommendations to technical and non-technical stakeholders",
+  ],
+
+  curriculum: [
+    {
+      module: "Module 1: Introduction to Data Science & Analytics",
+      topics: [
+        "Introduction to data science",
+        "Data science vs data analytics",
+        "Business intelligence fundamentals",
+        "The data analytics lifecycle",
+        "The data science lifecycle",
+        "Types of data",
+        "Structured and unstructured data",
+        "Data collection and preparation",
+        "Data quality",
+        "Exploratory data analysis",
+        "Data-driven decision making",
+        "Choosing the right data tool",
+      ],
+    },
+
+    {
+      module: "Module 2: Advanced Excel for Data Analysis",
+      topics: [
+        "Advanced Excel functions",
+        "XLOOKUP and lookup techniques",
+        "INDEX and MATCH",
+        "Logical and conditional functions",
+        "Text and date functions",
+        "Dynamic arrays",
+        "Data cleaning",
+        "Excel Tables",
+        "Data validation",
+        "PivotTables",
+        "PivotCharts",
+        "Slicers and interactive reporting",
+        "Power Query",
+        "Data modelling in Excel",
+        "Advanced Excel dashboards",
+      ],
+    },
+
+    {
+      module: "Module 3: SQL for Data Analysis",
+      topics: [
+        "Relational databases",
+        "Database concepts",
+        "SELECT statements",
+        "Filtering and sorting",
+        "Aggregate functions",
+        "GROUP BY and HAVING",
+        "INNER and OUTER joins",
+        "Subqueries",
+        "Common Table Expressions",
+        "Window functions",
+        "CASE statements",
+        "Date and time analysis",
+        "Data cleaning with SQL",
+        "Business analysis using SQL",
+      ],
+    },
+
+    {
+      module: "Module 4: Python for Data Science",
+      topics: [
+        "Python fundamentals for data science",
+        "Jupyter Notebook",
+        "NumPy",
+        "Pandas",
+        "Importing datasets",
+        "Data cleaning",
+        "Missing values",
+        "Duplicate records",
+        "Data transformation",
+        "Grouping and aggregation",
+        "Merging datasets",
+        "Exploratory Data Analysis",
+        "Working with APIs",
+        "Automating data analysis workflows",
+      ],
+    },
+
+    {
+      module: "Module 5: Statistics & SPSS",
+      topics: [
+        "Introduction to statistics",
+        "Descriptive statistics",
+        "Measures of central tendency",
+        "Measures of dispersion",
+        "Probability fundamentals",
+        "Sampling techniques",
+        "Hypothesis testing",
+        "Confidence intervals",
+        "t-tests",
+        "Chi-square tests",
+        "ANOVA",
+        "Correlation analysis",
+        "Regression analysis",
+        "SPSS interface",
+        "Data preparation in SPSS",
+        "Statistical analysis in SPSS",
+        "Interpreting SPSS output",
+      ],
+    },
+
+    {
+      module: "Module 6: Data Visualisation with Python",
+      topics: [
+        "Principles of data visualisation",
+        "Choosing the right visualisation",
+        "Matplotlib",
+        "Seaborn",
+        "Bar charts",
+        "Line charts",
+        "Scatter plots",
+        "Histograms",
+        "Box plots",
+        "Heatmaps",
+        "Distribution analysis",
+        "Statistical visualisation",
+        "Data storytelling",
+      ],
+    },
+
+    {
+      module: "Module 7: Power BI for Business Intelligence",
+      topics: [
+        "Introduction to Power BI",
+        "Power BI Desktop",
+        "Connecting to data sources",
+        "Power Query",
+        "Data transformation",
+        "Data modelling",
+        "Relationships",
+        "Star schema",
+        "Date tables",
+        "DAX fundamentals",
+        "Calculated columns",
+        "Measures",
+        "Filter context",
+        "Time intelligence",
+        "Interactive dashboards",
+        "Power BI Service",
+        "Publishing and sharing reports",
+      ],
+    },
+
+    {
+      module: "Module 8: Tableau for Data Visualisation",
+      topics: [
+        "Introduction to Tableau",
+        "Connecting to datasets",
+        "Tableau data preparation",
+        "Dimensions and measures",
+        "Calculated fields",
+        "Filters and parameters",
+        "Charts and visualisations",
+        "Dashboards",
+        "Interactive dashboards",
+        "Geographical visualisation",
+        "Advanced visual analytics",
+        "Storytelling with Tableau",
+        "Publishing and sharing dashboards",
+      ],
+    },
+
+    {
+      module: "Module 9: Predictive Analytics & Data Science",
+      topics: [
+        "Introduction to predictive analytics",
+        "Regression fundamentals",
+        "Linear regression",
+        "Logistic regression",
+        "Feature engineering",
+        "Model preparation",
+        "Training and testing data",
+        "Model evaluation",
+        "Classification fundamentals",
+        "Clustering fundamentals",
+        "Introduction to machine learning",
+        "Business applications of predictive analytics",
+      ],
+    },
+
+    {
+      module: "Module 10: Data Integration & End-to-End Analytics",
+      topics: [
+        "Building an end-to-end data workflow",
+        "Combining Excel and SQL",
+        "Connecting SQL databases to Power BI",
+        "Connecting Python to databases",
+        "Preparing data with Python",
+        "Statistical analysis with SPSS",
+        "Dashboard development with Power BI",
+        "Visualisation with Tableau",
+        "Data consistency across tools",
+        "Automating recurring analysis",
+        "Building reproducible workflows",
+        "Data governance fundamentals",
+      ],
+    },
+
+    {
+      module: "Module 11: Data Storytelling & Business Communication",
+      topics: [
+        "Turning analysis into insights",
+        "Identifying key business questions",
+        "Choosing meaningful KPIs",
+        "Building executive dashboards",
+        "Data storytelling principles",
+        "Presenting analytical findings",
+        "Communicating statistical results",
+        "Writing data-driven reports",
+        "Presenting insights to stakeholders",
+        "Making evidence-based recommendations",
+      ],
+    },
+
+    {
+      module: "Module 12: Full-Stack Data Science Capstone",
+      topics: [
+        "Business problem definition",
+        "Data collection",
+        "Data extraction using SQL",
+        "Data cleaning using Excel or Python",
+        "Statistical analysis using SPSS or Python",
+        "Exploratory data analysis",
+        "Data visualisation",
+        "Power BI dashboard development",
+        "Tableau dashboard development",
+        "Predictive analysis",
+        "Business insight generation",
+        "Executive reporting",
+        "Final project presentation",
+        "Portfolio documentation",
+      ],
+    },
+  ],
+
+  projects: [
+    "Retail Sales & Customer Analytics",
+    "Financial Performance & Business Intelligence Dashboard",
+    "Customer Behaviour & Segmentation Analysis",
+    "Employee Performance & Workforce Analytics",
+    "Marketing Campaign Performance Analysis",
+    "Healthcare Data Statistical Analysis",
+    "Sales Forecasting & Predictive Analytics",
+    "Power BI Executive Business Dashboard",
+    "Tableau Interactive Analytics Dashboard",
+    "End-to-End Full-Stack Data Science Capstone",
+  ],
+
+  tools: [
+    "Microsoft Excel",
+    "Power Query",
+    "SQL",
+    "PostgreSQL",
+    "Microsoft SQL Server",
+    "Python",
+    "Pandas",
+    "NumPy",
+    "Matplotlib",
+    "Seaborn",
+    "SPSS",
+    "Power BI",
+    "DAX",
+    "Tableau",
+    "Jupyter Notebook",
+    "Git & GitHub",
+  ],
+
+  prerequisites: [
+    "Basic computer literacy",
+    "No previous data science experience required",
+    "Basic mathematics is recommended",
+    "Basic spreadsheet knowledge is helpful but not required",
+  ],
+ },
+  {
+  slug: "r-programming-for-data-science",
+  title: "R Programming for Data Science",
+  category: "data-science",
+  level: "Beginner to Intermediate",
+  duration: "6 weeks",
+  delivery: "Both",
+  image: dataImg,
+
+  summary:
+    "Learn R for data analysis, statistical modelling, visualisation and data-driven decision-making using real-world datasets.",
+
+  overview:
+    "A practical, project-based R programming programme designed for learners who want to develop professional skills in data analysis and statistical computing. Students learn how to work with datasets in R, clean and transform data, perform exploratory and statistical analysis, create professional visualisations with ggplot2 and build reproducible analytical workflows. The programme combines R programming with practical statistics and real-world data science projects.",
+
+  audience:
+    "Aspiring data scientists, data analysts, researchers, statisticians, graduates, business professionals and professionals who want to develop practical data analysis skills using R.",
+
+  outcomes: [
+    "Understand the fundamentals of R programming for data science",
+    "Work confidently with vectors, lists, data frames and other R data structures",
+    "Import and export data from common file formats",
+    "Clean and transform real-world datasets using R",
+    "Perform exploratory data analysis",
+    "Apply descriptive and inferential statistical techniques",
+    "Create professional data visualisations using ggplot2",
+    "Analyse relationships between variables",
+    "Build and interpret statistical models",
+    "Perform regression analysis using R",
+    "Work with categorical and numerical data",
+    "Create reproducible data analysis workflows",
+    "Build professional reports using R Markdown",
+    "Communicate analytical findings effectively",
+    "Complete a portfolio-ready data science project using R",
+  ],
+
+  curriculum: [
+    {
+      module: "Module 1: Introduction to R & RStudio",
+      topics: [
+        "Introduction to R programming",
+        "R for data science",
+        "Installing R and RStudio",
+        "RStudio interface",
+        "Variables and objects",
+        "Data types",
+        "Vectors",
+        "Lists",
+        "Matrices",
+        "Data frames",
+        "Factors",
+        "Basic R operators",
+      ],
+    },
+
+    {
+      module: "Module 2: R Programming Fundamentals",
+      topics: [
+        "Conditional statements",
+        "Loops",
+        "Functions",
+        "Custom functions",
+        "Vectorised operations",
+        "Working with strings",
+        "Date and time data",
+        "Handling missing values",
+        "Error handling",
+        "Writing reusable R code",
+      ],
+    },
+
+    {
+      module: "Module 3: Data Import, Cleaning & Transformation",
+      topics: [
+        "Importing CSV files",
+        "Importing Excel data",
+        "Working with databases",
+        "Data inspection",
+        "Handling missing data",
+        "Removing duplicates",
+        "Data type conversion",
+        "Filtering data",
+        "Sorting and arranging data",
+        "Creating calculated columns",
+        "Joining datasets",
+        "Data transformation with dplyr",
+      ],
+    },
+
+    {
+      module: "Module 4: Exploratory Data Analysis",
+      topics: [
+        "Introduction to exploratory data analysis",
+        "Understanding dataset structure",
+        "Descriptive statistics",
+        "Measures of central tendency",
+        "Measures of dispersion",
+        "Grouping and aggregation",
+        "Distribution analysis",
+        "Outlier detection",
+        "Correlation analysis",
+        "Identifying trends and patterns",
+        "EDA workflow with R",
+      ],
+    },
+
+    {
+      module: "Module 5: Data Visualisation with ggplot2",
+      topics: [
+        "Introduction to data visualisation",
+        "Grammar of graphics",
+        "Building charts with ggplot2",
+        "Bar charts",
+        "Line charts",
+        "Scatter plots",
+        "Histograms",
+        "Box plots",
+        "Faceting",
+        "Customising visualisations",
+        "Themes and annotations",
+        "Statistical visualisation",
+        "Data storytelling",
+      ],
+    },
+
+    {
+      module: "Module 6: Statistics & Statistical Modelling",
+      topics: [
+        "Probability fundamentals",
+        "Sampling concepts",
+        "Confidence intervals",
+        "Hypothesis testing",
+        "t-tests",
+        "Chi-square tests",
+        "ANOVA",
+        "Correlation",
+        "Simple linear regression",
+        "Multiple linear regression",
+        "Model interpretation",
+        "Model diagnostics",
+      ],
+    },
+
+    {
+      module: "Module 7: Advanced Data Science with R",
+      topics: [
+        "Introduction to the tidyverse",
+        "Advanced data manipulation",
+        "Advanced visualisation",
+        "Working with larger datasets",
+        "Functional programming concepts",
+        "Working with APIs",
+        "Database connectivity",
+        "Introduction to machine learning with R",
+        "Classification fundamentals",
+        "Clustering fundamentals",
+      ],
+    },
+
+    {
+      module: "Module 8: Reproducible Analysis & Reporting",
+      topics: [
+        "Reproducible data science",
+        "R Markdown",
+        "Creating analytical reports",
+        "Embedding code and visualisations",
+        "Generating tables",
+        "Report formatting",
+        "Documenting analysis",
+        "Version control with Git",
+        "Publishing analytical work",
+        "Building a professional data science portfolio",
+      ],
+    },
+
+    {
+      module: "Module 9: R Data Science Capstone Project",
+      topics: [
+        "Define a real-world business problem",
+        "Acquire and import data",
+        "Clean and transform the dataset",
+        "Perform exploratory data analysis",
+        "Develop statistical analysis",
+        "Build visualisations",
+        "Develop a statistical model",
+        "Interpret results",
+        "Create an R Markdown report",
+        "Present business insights",
+        "Document the project",
+        "Publish the completed project",
+      ],
+    },
+  ],
+
+  projects: [
+    "Sales & Customer Behaviour Analysis",
+    "Employee Performance & Workforce Analytics",
+    "Customer Satisfaction Statistical Analysis",
+    "Healthcare Data Analysis",
+    "Financial & Economic Data Analysis",
+    "End-to-End R Data Science Capstone Project",
+  ],
+
+  tools: [
+    "R",
+    "RStudio",
+    "Tidyverse",
+    "dplyr",
+    "ggplot2",
+    "tidyr",
+    "readr",
+    "readxl",
+    "lubridate",
+    "Stats",
+    "R Markdown",
+    "Git & GitHub",
+  ],
+
+  prerequisites: [
+    "Basic computer literacy",
+    "No previous R programming experience required",
+    "Basic mathematics is recommended",
+    "Basic understanding of statistics is helpful but not required",
+  ],
+},
+  {
+  slug: "statistical-analysis-and-data-science-with-python",
+  title: "Statistical Analysis & Data Science with Python",
+  category: "data-science",
+  level: "Intermediate",
+  duration: "6 weeks",
+  delivery: "Both",
+  image: dataImg,
+
+  summary:
+    "Use Python and statistics to analyse real-world data, discover meaningful patterns and support data-driven decisions.",
+
+  overview:
+    "A practical, project-based programme designed to strengthen the statistical and analytical skills required for modern data science. Students learn how to work with real-world datasets using Python, perform exploratory data analysis, apply descriptive and inferential statistics, test hypotheses, analyse relationships between variables and communicate findings effectively. The course provides a strong foundation for advanced analytics and machine learning.",
+
+  audience:
+    "Data analysts, aspiring data scientists, researchers, business professionals, graduates and Python users who want to strengthen their statistical analysis and data science skills.",
+
+  outcomes: [
+    "Understand the data science workflow from data collection to insight generation",
+    "Use Python to load, clean and analyse real-world datasets",
+    "Perform exploratory data analysis using Pandas and NumPy",
+    "Apply descriptive statistics to understand datasets",
+    "Understand probability and common probability distributions",
+    "Perform statistical hypothesis tests",
+    "Interpret p-values, confidence intervals and statistical significance",
+    "Analyse relationships between variables using correlation and regression",
+    "Identify patterns, trends, outliers and anomalies in datasets",
+    "Create effective statistical visualisations with Python",
+    "Communicate statistical findings to technical and non-technical audiences",
+    "Apply statistical techniques to real-world business problems",
+    "Build reproducible data analysis workflows using Python and Jupyter",
+    "Develop a portfolio-ready statistical data science project",
+  ],
+
+  curriculum: [
+    {
+      module: "Module 1: Introduction to Data Science & Python",
+      topics: [
+        "Introduction to data science",
+        "Data science vs data analytics",
+        "The data science lifecycle",
+        "Types of data",
+        "Structured and unstructured data",
+        "Python environment setup",
+        "Jupyter Notebook",
+        "Python fundamentals for data science",
+        "NumPy fundamentals",
+        "Pandas fundamentals",
+      ],
+    },
+
+    {
+      module: "Module 2: Data Cleaning & Exploratory Data Analysis",
+      topics: [
+        "Understanding real-world datasets",
+        "Importing CSV and Excel data",
+        "Data inspection",
+        "Handling missing values",
+        "Removing duplicates",
+        "Data type conversion",
+        "Outlier detection",
+        "Data transformation",
+        "Grouping and aggregation",
+        "Exploratory Data Analysis",
+        "Identifying trends and patterns",
+      ],
+    },
+
+    {
+      module: "Module 3: Descriptive Statistics & Probability",
+      topics: [
+        "Measures of central tendency",
+        "Mean, median and mode",
+        "Range and variance",
+        "Standard deviation",
+        "Percentiles and quartiles",
+        "Probability fundamentals",
+        "Conditional probability",
+        "Independent and dependent events",
+        "Normal distribution",
+        "Binomial distribution",
+        "Poisson distribution",
+        "Understanding distributions in real-world data",
+      ],
+    },
+
+    {
+      module: "Module 4: Statistical Inference & Hypothesis Testing",
+      topics: [
+        "Population and sample",
+        "Sampling techniques",
+        "Sampling distributions",
+        "Central Limit Theorem",
+        "Confidence intervals",
+        "Null and alternative hypotheses",
+        "Type I and Type II errors",
+        "p-values",
+        "Statistical significance",
+        "One-sample hypothesis tests",
+        "Two-sample hypothesis tests",
+        "Chi-square tests",
+        "Practical hypothesis testing with Python",
+      ],
+    },
+
+    {
+      module: "Module 5: Correlation, Regression & Statistical Modelling",
+      topics: [
+        "Understanding relationships between variables",
+        "Correlation analysis",
+        "Pearson correlation",
+        "Spearman correlation",
+        "Correlation vs causation",
+        "Simple linear regression",
+        "Multiple linear regression",
+        "Regression assumptions",
+        "Model interpretation",
+        "Residual analysis",
+        "Regression evaluation",
+        "Predictive analysis with Python",
+      ],
+    },
+
+    {
+      module: "Module 6: Data Visualisation & Statistical Reporting",
+      topics: [
+        "Principles of effective data visualisation",
+        "Choosing the right chart",
+        "Matplotlib",
+        "Seaborn",
+        "Distribution plots",
+        "Box plots",
+        "Scatter plots",
+        "Correlation heatmaps",
+        "Statistical visualisation",
+        "Interactive visualisation fundamentals",
+        "Data storytelling",
+        "Communicating statistical findings",
+      ],
+    },
+
+    {
+      module: "Module 7: Applied Data Science Capstone Project",
+      topics: [
+        "Define a real-world business problem",
+        "Identify and acquire relevant data",
+        "Clean and prepare the dataset",
+        "Perform exploratory data analysis",
+        "Apply descriptive statistics",
+        "Develop statistical hypotheses",
+        "Perform hypothesis testing",
+        "Analyse relationships between variables",
+        "Build a statistical model",
+        "Create visualisations",
+        "Interpret and communicate findings",
+        "Prepare a professional data science report",
+        "Present the final project",
+      ],
+    },
+  ],
+
+  projects: [
+    "Customer Behaviour & Sales Analysis",
+    "Employee Performance & Workforce Analysis",
+    "Customer Satisfaction Statistical Analysis",
+    "Sales Forecasting & Trend Analysis",
+    "A/B Testing & Business Decision Analysis",
+    "End-to-End Statistical Data Science Capstone",
+  ],
+
+  tools: [
+    "Python",
+    "Pandas",
+    "NumPy",
+    "Matplotlib",
+    "Seaborn",
+    "SciPy",
+    "Statsmodels",
+    "Jupyter Notebook",
+    "Git & GitHub",
+  ],
+
+    prerequisites: [
+    "Basic Python knowledge is recommended",
+    "Basic understanding of spreadsheets is helpful",
+    "Basic mathematics is recommended",
+    "No previous statistics experience required",
+  ],
+  },
+  {
+    slug: "project-management",
+    title: "Project Management",
+    category: "management",
+    level: "Beginner",
+    duration: "6 weeks",
+    delivery: "Both",
+    featured: true,
+    image: managementImg,
+
+    summary:
+      "Learn how to plan, organise, execute and close projects using practical project management methods, tools and documentation.",
+
+    overview:
+      "A practical project management course designed for professionals, team leads, entrepreneurs and career starters who want to manage projects with more structure and confidence. Students learn how to define project goals, create schedules, manage stakeholders, monitor risks, coordinate teams and close projects professionally using real workplace scenarios.",
+
+    audience:
+      "Aspiring project managers, team leads, business owners, administrators, operations staff, graduates and professionals who coordinate projects or want to move into project management roles.",
+
+    outcomes: [
+      "Understand the project lifecycle from initiation to closure",
+      "Define project scope, objectives, deliverables and success criteria",
+      "Create work breakdown structures and practical project schedules",
+      "Identify stakeholders and communicate with project teams effectively",
+      "Manage project risks, issues, changes and dependencies",
+      "Track progress using project dashboards, reports and meetings",
+      "Apply agile and traditional project management concepts",
+      "Prepare project documentation for real workplace use",
+      "Close projects with lessons learned and final handover",
+    ],
+
+    curriculum: [
+      {
+        module: "Module 1: Project Management Foundations",
+        topics: [
+          "What project management is",
+          "Projects vs operations",
+          "The project lifecycle",
+          "Project roles and responsibilities",
+          "Common project management approaches",
+          "Project success factors",
+        ],
+      },
+      {
+        module: "Module 2: Project Initiation & Planning",
+        topics: [
+          "Project charters",
+          "Defining goals and deliverables",
+          "Scope planning",
+          "Work breakdown structures",
+          "Estimating time and resources",
+          "Creating a practical project plan",
+        ],
+      },
+      {
+        module: "Module 3: Scheduling, Budgeting & Resources",
+        topics: [
+          "Project scheduling fundamentals",
+          "Milestones and dependencies",
+          "Resource planning",
+          "Budget tracking basics",
+          "Project constraints",
+          "Using project planning tools",
+        ],
+      },
+      {
+        module: "Module 4: Stakeholder & Team Management",
+        topics: [
+          "Stakeholder identification",
+          "Communication planning",
+          "Running project meetings",
+          "Team coordination",
+          "Conflict handling",
+          "Project status reporting",
+        ],
+      },
+      {
+        module: "Module 5: Risk, Issue & Change Management",
+        topics: [
+          "Identifying project risks",
+          "Risk assessment and response planning",
+          "Issue tracking",
+          "Change requests",
+          "Decision logs",
+          "Escalation and accountability",
+        ],
+      },
+      {
+        module: "Module 6: Project Execution & Capstone",
+        topics: [
+          "Monitoring project progress",
+          "Managing deliverables",
+          "Project dashboards",
+          "Project closure",
+          "Lessons learned",
+          "Final project presentation",
+        ],
+      },
+    ],
+
+    prerequisites: [
+      "Basic computer literacy",
+      "No prior project management experience required",
+      "Experience working with teams is helpful but not required",
+    ],
+  },
   {
     slug: "applied-machine-learning-with-python",
     title: "Applied Machine Learning with Python",
@@ -543,9 +1379,9 @@ export const courses: Course[] = [
   {
   slug: "data-analysis-full-stack",
   title: "Data Analysis Full Stack",
-  category: "data-science",
+  category: "data-analysis",
   level: "Beginner to Intermediate",
-  duration: "8 - 10 weeks",
+  duration: "8 - 9 weeks",
   delivery: "Both",
   featured: true,
   image: dataImg,
