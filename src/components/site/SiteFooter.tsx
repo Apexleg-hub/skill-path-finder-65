@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Mail, Phone, MapPin, Linkedin, Twitter, Instagram } from "lucide-react";
 import { categories } from "@/data/courses";
-import logo from "@/assets/corepoint-tech.png";
+import logo from "@/assets/corepoint-tech.jpg";
 
 export function SiteFooter() {
   return (
