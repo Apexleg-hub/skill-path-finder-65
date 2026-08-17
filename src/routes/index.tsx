@@ -27,23 +27,23 @@ export const Route = createFileRoute("/")({
 const valueProps = [
   {
     icon: Users,
-    title: " Personal classes",
-    body: "Capped cohorts mean your questions get answered and your work gets reviewed.",
+    title: " One-On-One ",
+    body: "One-On-One classes with personalized attention, mentorship and feedback from instructors.",
   },
   {
     icon: Target,
-    title: "Project-based learning",
-    body: "Every course is built on real datasets and real codebases, not toy examples.",
+    title: "Real Projects",
+    body: "Build projects that can become part of your professional portfolio.",
   },
   {
     icon: Award,
-    title: "Instructors who practise",
-    body: "Trainers are working engineers, analysts and security professionals.",
+    title: "Industry Instructors",
+    body: "Learn from practitioners who work with the technologies they teach.",
   },
   {
     icon: HeartHandshake,
-    title: "Support after graduation",
-    body: "Portfolio reviews, CV feedback and an active alumni network.",
+    title: "Career Support",
+    body: "CV reviews, portfolio guidance, interview preparation and career direction.",
   },
 ];
 
@@ -57,7 +57,7 @@ function Index() {
               Live online &amp; in-person in Lagos
             </span>
             <h1 className="mt-5 text-4xl font-bold leading-[1.08] sm:text-5xl lg:text-6xl">
-              Build the technology skills that will shape your career
+               Master the Skills Behind Tomorrow's Technology
             </h1>
             <p className="mt-5 max-w-xl text-lg text-primary-foreground/80">
               Develop job-ready technology skills through practical, hands-on training in AI, data,
@@ -106,16 +106,15 @@ function Index() {
               <Building2 className="size-7 text-primary" />
               <h3 className="mt-4 text-xl font-semibold">Physical class</h3>
               <p className="mt-2 text-sm text-muted-foreground">
-                In-person at our Lekki training centre, with lab machines, weekend and weekday
-                options, and face-to-face mentoring.
+                In-person at our training centre, with weekend and weekday
+                 options, and face-to-face mentoring.
               </p>
             </div>
             <div className="rounded-2xl border border-border bg-card p-7 shadow-card">
               <Laptop className="size-7 text-primary" />
               <h3 className="mt-4 text-xl font-semibold">Live online</h3>
               <p className="mt-2 text-sm text-muted-foreground">
-                Instructor-led virtual classes with recordings, shared labs and the same weekly
-                feedback — join from anywhere.
+                Instructor-led virtual classes with recordings, you can learn from anywhere.
               </p>
             </div>
           </div>
@@ -126,7 +125,7 @@ function Index() {
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <h2 className="text-3xl font-bold">Course categories</h2>
-            <p className="mt-2 text-muted-foreground">Seven disciplines, one practical approach.</p>
+            <p className="mt-2 text-muted-foreground">Disciplines, one practical approach.</p>
           </div>
           <Link
             to="/courses"

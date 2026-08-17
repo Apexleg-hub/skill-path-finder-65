@@ -9,11 +9,13 @@ import automationImg from "@/assets/course-automation.jpg";
 export type CategoryId =
   | "ai"
   | "data-science"
+    "data-analysis"
   | "development"
   | "cybersecurity"
   | "cloud"
   | "database"
-  | "automation";
+  | "automation"
+    "management";
 
 export type Level = "Beginner" | "Intermediate" | "Advanced";
 export type Delivery = "Physical" | "Live Online" | "Both";
@@ -53,9 +55,24 @@ export const categories: Category[] = [
   },
   {
     id: "data-science",
-    name: "Data Science & Analytics",
+    name: "Data Science ",
     shortName: "Data Science",
     description: "Analysis, visualisation and decision-ready reporting.",
+    image: dataImg,
+  },
+  
+  {
+    id: "data-analysis",
+    name: "Data Analysis",
+    shortName: "Data Analysis",
+    description: "Exploring data, identifying patterns and drawing insights.",
+    image: dataImg,
+  },
+   {
+    id: "management",
+    name: "Project Management",
+    shortName: "Management",
+    description: "Planning, executing and closing projects effectively.",
     image: dataImg,
   },
   {
@@ -160,7 +177,7 @@ export const courses: Course[] = [
   },
   {
     slug: "data-analysis-with-python",
-    title: "Data Analysis with Python",
+    title: "Data Analysis ",
     category: "data-science",
     level: "Beginner",
     duration: "8 weeks",
@@ -188,7 +205,7 @@ export const courses: Course[] = [
     prerequisites: ["None — we start from zero"],
   },
   {
-    slug: "power-bi-business-intelligence",
+    slug: "Business-intelligence",
     title: "Power BI for Business Intelligence",
     category: "data-science",
     level: "Beginner",

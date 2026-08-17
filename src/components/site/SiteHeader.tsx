@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { categories } from "@/data/courses";
-import logo from "@/assets/corepoint-tech.jpg";
+import logo from "@/assets/corepoint-tech.png";
 
 const navLinks = [
   { to: "/", label: "Home" },

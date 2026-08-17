@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
-import { GraduationCap, Mail, Phone, MapPin, Linkedin, Twitter, Instagram } from "lucide-react";
+import { Mail, Phone, MapPin, Linkedin, Twitter, Instagram } from "lucide-react";
 import { categories } from "@/data/courses";
+import logo from "@/assets/Corepoint-tech.png";
 
 export function SiteFooter() {
   return (
@@ -8,9 +9,7 @@ export function SiteFooter() {
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <div className="flex items-center gap-2">
-            <span className="flex size-9 items-center justify-center rounded-lg bg-accent-gradient text-accent-foreground">
-              <GraduationCap className="size-5" />
-            </span>
+            <img src={logo} alt="Corepoint Tech Logo" className="h-9 w-auto rounded-md" />
             <span className="font-display text-lg font-bold">Corepoint Tech</span>
           </div>
           <p className="mt-4 text-sm text-ink-foreground/70">
@@ -68,15 +67,16 @@ export function SiteFooter() {
           <ul className="mt-4 space-y-3 text-sm text-ink-foreground/80">
             <li className="flex gap-2"><Phone className="size-4 shrink-0" /> +234 911 575 1406</li>
             <li className="flex gap-2"><Mail className="size-4 shrink-0" /> equallinelimited@gmail.com</li>
-            <li className="flex gap-2"><MapPin className="size-4 shrink-0" /> 50 Shiro street Fadeyi, Shomolu, Lagos</li>
+            <li className="flex gap-2"><MapPin className="size-4 shrink-0" />  Lagos</li>
           </ul>
         </div>
       </div>
 
       <div className="border-t border-ink-foreground/10">
-        <p className="mx-auto max-w-6xl px-4 py-6 text-xs text-ink-foreground/60">
-          © {new Date().getFullYear()} Equalline limited. All rights reserved.
-        </p>
+        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-6 text-xs text-ink-foreground/60">
+          <p>© {new Date().getFullYear()} Corepoint Tech Academy. All rights reserved.</p>
+          <p className="text-right">Owned and Managed by Equaline Limited</p>
+        </div>
       </div>
     </footer>
   );

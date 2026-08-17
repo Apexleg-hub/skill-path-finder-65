@@ -96,7 +96,7 @@ function ContactPage() {
               </li>
               <li className="flex gap-3">
                 <MapPin className="size-5 shrink-0 text-primary" />
-                <span>50 Shiro Street Fadeyi, Shomolu Lagos, Nigeria</span>
+                <span>Lagos, Nigeria</span>
               </li>
             </ul>
           </div>

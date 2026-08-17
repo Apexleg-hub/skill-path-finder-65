@@ -25,22 +25,22 @@ export const Route = createFileRoute("/about")({
 const values = [
   {
     icon: Users,
-    title: "Small cohorts",
+    title: "One-On-One",
     body: "We cap classes so every learner gets feedback on their own work, every week.",
   },
   {
     icon: Target,
     title: "Project-based",
-    body: "You learn on real, messy datasets and real codebases — not toy examples.",
+    body: "You learn on real, messy datasets and real codebases examples.",
   },
   {
     icon: Award,
-    title: "Practitioner instructors",
+    title: "Industry Instructors",
     body: "Every trainer works in the field they teach, so the advice is current.",
   },
   {
     icon: HeartHandshake,
-    title: "Support after class",
+    title: "Career Support",
     body: "Portfolio review, CV feedback and an alumni community that keeps hiring each other.",
   },
 ];
@@ -108,7 +108,7 @@ function AboutPage() {
         </p>
         <div className="mt-7 flex flex-wrap justify-center gap-3">
           <Button asChild variant="cta" size="lg">
-            <Link to="/courses">Explore Courses</Link>
+            <Link to="/courses">Apply Now</Link>
           </Button>
           <Button asChild variant="outline" size="lg">
             <Link to="/contact">Talk to us</Link>
