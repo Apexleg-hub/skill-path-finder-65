@@ -3,6 +3,7 @@ import { Award, HeartHandshake, Target, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import heroImg from "@/assets/hero-training.jpg";
 
+
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [

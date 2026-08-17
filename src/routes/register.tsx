@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { RegistrationForm } from "@/components/site/RegistrationForm";
 import { getCourse } from "@/data/courses";
 
+
 type RegisterSearch = { course?: string };
 
 export const Route = createFileRoute("/register")({

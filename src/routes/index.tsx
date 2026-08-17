@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { CourseCard } from "@/components/site/CourseCard";
 import { categories, featuredCourses } from "@/data/courses";
 import heroImg from "@/assets/hero-training.jpg";
+import { Analytics } from "@vercel/analytics/next";
 
 export const Route = createFileRoute("/")({
   head: () => ({

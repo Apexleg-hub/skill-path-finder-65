@@ -7,6 +7,7 @@ import cloudImg from "@/assets/course-cloud.jpg";
 import databaseImg from "@/assets/course-database.jpg";
 import automationImg from "@/assets/course-automation.jpg";
 import managementImg from "@/assets/project-management.png";
+import danImg from "@/assets/Applied-Machine- Learning-with- Python.png";
 
 export type CategoryId =
   | "ai"
@@ -55,12 +56,20 @@ export const categories: Category[] = [
     description: "Machine learning, generative AI and applied model building.",
     image: aiImg,
   },
+   {
+    id: "ai",
+    name: "Machine Learning",
+    shortName: "Apply Machine Learning",
+    description: "Build Business Solution.",
+    image: danImg,
+  },
   {
     id: "data-science",
     name: "Data Science",
     shortName: "Data Science",
     description: "Analysis, visualisation and decision-ready reporting.",
     image: dataImg,
+    
   },
 
   {
@@ -1936,7 +1945,7 @@ export const courses: Course[] = [
     title: "Full-Stack Web Development",
     category: "development",
     level: "Beginner to Intermediate",
-    duration: "16 weeks",
+    duration: "12-16 weeks",
     delivery: "Both",
     featured: true,
     image: devImg,
