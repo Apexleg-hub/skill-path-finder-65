@@ -91,7 +91,7 @@ function ContactPage() {
               <li className="flex gap-3">
                 <Mail className="size-5 shrink-0 text-primary" />
                 <span>
-                  equallinelimited@gmail.com
+                  info@corepointtech.com
                 </span>
               </li>
               <li className="flex gap-3">
