@@ -1387,10 +1387,10 @@ export const courses: Course[] = [
   },
   {
   slug: "data-analysis-full-stack",
-  title: "Data Analysis Full Stack",
+  title: "Full Stack Data Analysis ",
   category: "data-analysis",
   level: "Beginner to Intermediate",
-  duration: "8 - 9 weeks",
+  duration: "8-9 weeks",
   delivery: "Both",
   featured: true,
   image: dataImg,
