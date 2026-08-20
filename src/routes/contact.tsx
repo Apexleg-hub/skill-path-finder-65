@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { supabase } from "@/integrations/supabase/client";
 
 const west = 3.3657;
 const south = 6.5193;
@@ -44,23 +45,47 @@ function ContactPage() {
   const [errors, setErrors] = useState<Errors>({});
   const [sent, setSent] = useState(false);
 
-  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const fd = new FormData(e.currentTarget);
+
+    const form = e.currentTarget;
+    const fd = new FormData(form);
+
     const parsed = schema.safeParse({
       name: String(fd.get("name") ?? ""),
       email: String(fd.get("email") ?? ""),
       subject: String(fd.get("subject") ?? ""),
       message: String(fd.get("message") ?? ""),
     });
+
     if (!parsed.success) {
       const next: Errors = {};
-      for (const issue of parsed.error.issues) next[issue.path[0] as keyof Errors] = issue.message;
+      for (const issue of parsed.error.issues) {
+        next[issue.path[0] as keyof Errors] = issue.message;
+      }
       setErrors(next);
       return;
     }
+
     setErrors({});
+
+    const { error } = await supabase.from("contact_messages").insert({
+      name: parsed.data.name,
+      email: parsed.data.email,
+      subject: parsed.data.subject,
+      message: parsed.data.message,
+    });
+
+    if (error) {
+      console.error("Contact form submission error:", error);
+      setErrors({
+        message: "Unable to send your message. Please try again.",
+      });
+      return;
+    }
+
     setSent(true);
+    form.reset();
   }
 
   return (
@@ -90,9 +115,7 @@ function ContactPage() {
               </li>
               <li className="flex gap-3">
                 <Mail className="size-5 shrink-0 text-primary" />
-                <span>
-                  info@corepointtech.com.ng
-                </span>
+                <span>info@corepointtech.com.ng</span>
               </li>
               <li className="flex gap-3">
                 <MapPin className="size-5 shrink-0 text-primary" />
@@ -102,13 +125,13 @@ function ContactPage() {
           </div>
           <div className="overflow-hidden rounded-2xl border border-border shadow-card">
             <iframe
-              title="Corepoint Tech Academy — Lagos location map"
-              src="https://www.openstreetmap.org/export/embed.html?bbox=3.3657%2C6.5193%2C3.3757%2C6.5293&layer=mapnik"
+              title="Corepoint Tech Academy Lagos location map"
+              src={`https://www.openstreetmap.org/export/embed.html?bbox=${west}%2C${south}%2C${east}%2C${north}&layer=mapnik`}
               className="h-72 w-full border-0"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
             />
-              </div>
+          </div>
         </div>
 
         {sent ? (
@@ -116,7 +139,7 @@ function ContactPage() {
             <CheckCircle2 className="mx-auto size-10 text-primary" />
             <h2 className="mt-4 text-xl font-semibold">Message received</h2>
             <p className="mt-2 text-sm text-muted-foreground">
-              Thanks — we&apos;ll be in touch shortly.
+              Thanks, we will be in touch shortly.
             </p>
             <Button className="mt-6" variant="outline" onClick={() => setSent(false)}>
               Send another message
