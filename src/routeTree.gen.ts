@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as PaymentPlansAndFaqsRouteImport } from './routes/payment-plans-and-faqs'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as CoursesIndexRouteImport } from './routes/courses.index'
 import { Route as CoursesSlugRouteImport } from './routes/courses.$slug'
@@ -29,6 +30,11 @@ const AboutRoute = AboutRouteImport.update({
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PaymentPlansAndFaqsRoute = PaymentPlansAndFaqsRouteImport.update({
+  id: '/payment-plans-and-faqs',
+  path: '/payment-plans-and-faqs',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RegisterRoute = RegisterRouteImport.update({
@@ -51,6 +57,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/payment-plans-and-faqs': typeof PaymentPlansAndFaqsRoute
   '/register': typeof RegisterRoute
   '/courses/$slug': typeof CoursesSlugRoute
   '/courses/': typeof CoursesIndexRoute
@@ -59,6 +66,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/payment-plans-and-faqs': typeof PaymentPlansAndFaqsRoute
   '/register': typeof RegisterRoute
   '/courses/$slug': typeof CoursesSlugRoute
   '/courses': typeof CoursesIndexRoute
@@ -68,6 +76,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/payment-plans-and-faqs': typeof PaymentPlansAndFaqsRoute
   '/register': typeof RegisterRoute
   '/courses/$slug': typeof CoursesSlugRoute
   '/courses/': typeof CoursesIndexRoute
@@ -75,14 +84,28 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/about' | '/contact' | '/register' | '/courses/$slug' | '/courses/'
+    | '/'
+    | '/about'
+    | '/contact'
+    | '/payment-plans-and-faqs'
+    | '/register'
+    | '/courses/$slug'
+    | '/courses/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/contact' | '/register' | '/courses/$slug' | '/courses'
+  to:
+    | '/'
+    | '/about'
+    | '/contact'
+    | '/payment-plans-and-faqs'
+    | '/register'
+    | '/courses/$slug'
+    | '/courses'
   id:
     | '__root__'
     | '/'
     | '/about'
     | '/contact'
+    | '/payment-plans-and-faqs'
     | '/register'
     | '/courses/$slug'
     | '/courses/'
@@ -92,6 +115,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   ContactRoute: typeof ContactRoute
+  PaymentPlansAndFaqsRoute: typeof PaymentPlansAndFaqsRoute
   RegisterRoute: typeof RegisterRoute
   CoursesSlugRoute: typeof CoursesSlugRoute
   CoursesIndexRoute: typeof CoursesIndexRoute
@@ -118,6 +142,13 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/payment-plans-and-faqs': {
+      id: '/payment-plans-and-faqs'
+      path: '/payment-plans-and-faqs'
+      fullPath: '/payment-plans-and-faqs'
+      preLoaderRoute: typeof PaymentPlansAndFaqsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/register': {
@@ -148,6 +179,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   ContactRoute: ContactRoute,
+  PaymentPlansAndFaqsRoute: PaymentPlansAndFaqsRoute,
   RegisterRoute: RegisterRoute,
   CoursesSlugRoute: CoursesSlugRoute,
   CoursesIndexRoute: CoursesIndexRoute,

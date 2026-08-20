@@ -66,7 +66,7 @@ export function SiteFooter() {
           </h3>
           <ul className="mt-4 space-y-3 text-sm text-ink-foreground/80">
             <li className="flex gap-2"><Phone className="size-4 shrink-0" /> +234 911 575 1406</li>
-            <li className="flex gap-2"><Mail className="size-4 shrink-0" /> info@corepointtech.com</li>
+            <li className="flex gap-2"><Mail className="size-4 shrink-0" /> info@corepointtech.com.ng</li>
             <li className="flex gap-2"><MapPin className="size-4 shrink-0" /> Lagos</li>
           </ul>
         </div>
