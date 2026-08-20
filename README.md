@@ -1,6 +1,6 @@
 # Skill Catalyst Hub
 
-Tech Training Course Catalog Website — Spec
+Tech Training Course Catalog Website 
 
 Overview
 

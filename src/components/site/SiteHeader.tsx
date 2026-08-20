@@ -9,6 +9,7 @@ const navLinks = [
   { to: "/", label: "Home" },
   { to: "/about", label: "About" },
   { to: "/contact", label: "Contact" },
+  { to: "/payment-plans-and-faqs", label: "Payment Plans"},
 ] as const;
 
 export function SiteHeader() {
@@ -109,6 +110,9 @@ export function SiteHeader() {
             </Link>
             <Link to="/contact" onClick={() => setOpen(false)} className="py-2 text-sm font-medium">
               Contact
+            </Link>
+             <Link to="/payment-plans-and-faqs" onClick={() => setOpen(false)} className="py-2 text-sm font-medium">
+              Payment Plans
             </Link>
             <Button asChild variant="cta" className="mt-2">
               <Link to="/register" onClick={() => setOpen(false)}>
