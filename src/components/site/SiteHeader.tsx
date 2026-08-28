@@ -10,6 +10,7 @@ const navLinks = [
   { to: "/about", label: "About" },
   { to: "/contact", label: "Contact" },
   { to: "/payment-plans-and-faqs", label: "Payment Plans"},
+  {to: "/blog", label: "Blog"},
 ] as const;
 
 export function SiteHeader() {

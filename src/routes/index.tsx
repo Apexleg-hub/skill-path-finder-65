@@ -18,7 +18,7 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: "Corepoint Tech Academy | Hands-On Technology Training" },
       {
         property: "og:description",
-        content: "Small classes, real projects, working professionals as instructors.",
+        content: "One-on-One classes, real projects, working professionals as instructors.",
       },
     ],
   }),
