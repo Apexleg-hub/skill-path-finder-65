@@ -1,6 +1,17 @@
 import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
-import { ImageIcon, LogOut, Loader2, Save, Sparkles, X } from "lucide-react";
+import { useRef, useState } from "react";
+import {
+  ImageIcon,
+  Link as LinkIcon,
+  LogOut,
+  Loader2,
+  Minus,
+  Plus,
+  Save,
+  Sparkles,
+  Table as TableIcon,
+  X,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/lib/supabase"; // adjust this import to match your existing Supabase client path
 
@@ -33,6 +44,26 @@ function estimateReadTime(content: string) {
   return `${minutes} min read`;
 }
 
+function cellToMarkdown(value: string) {
+  // Escape pipe characters so they don't break the table structure
+  return value.replace(/\|/g, "\\|").trim() || " ";
+}
+
+function buildMarkdownTable(rows: string[][]) {
+  if (rows.length === 0) return "";
+
+  const header = rows[0];
+  const body = rows.slice(1);
+
+  const headerLine = `| ${header.map(cellToMarkdown).join(" | ")} |`;
+  const separatorLine = `| ${header.map(() => "---").join(" | ")} |`;
+  const bodyLines = body.map(
+    (row) => `| ${row.map(cellToMarkdown).join(" | ")} |`,
+  );
+
+  return [headerLine, separatorLine, ...bodyLines].join("\n");
+}
+
 function NewBlogPostPage() {
   const navigate = useNavigate();
 
@@ -47,6 +78,104 @@ function NewBlogPostPage() {
   const [imageUploading, setImageUploading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const contentRef = useRef<HTMLTextAreaElement>(null);
+
+  const [showTableBuilder, setShowTableBuilder] = useState(false);
+  const [tableRows, setTableRows] = useState<string[][]>([
+    ["Column 1", "Column 2"],
+    ["", ""],
+  ]);
+
+  const [showLinkBuilder, setShowLinkBuilder] = useState(false);
+  const [linkText, setLinkText] = useState("");
+  const [linkUrl, setLinkUrl] = useState("");
+
+  function insertAtCursor(textToInsert: string) {
+    const textarea = contentRef.current;
+
+    if (!textarea) {
+      setContent((prev) => `${prev}\n\n${textToInsert}\n\n`);
+      return;
+    }
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const before = content.slice(0, start);
+    const after = content.slice(end);
+
+    // Add surrounding blank lines so the inserted block doesn't run into
+    // neighbouring text
+    const needsLeadingBreak = before.length > 0 && !before.endsWith("\n\n");
+    const needsTrailingBreak = after.length > 0 && !after.startsWith("\n\n");
+
+    const insertion = `${needsLeadingBreak ? "\n\n" : ""}${textToInsert}${
+      needsTrailingBreak ? "\n\n" : ""
+    }`;
+
+    const newContent = `${before}${insertion}${after}`;
+    setContent(newContent);
+
+    // Move cursor to just after the inserted block on next render
+    requestAnimationFrame(() => {
+      const cursorPos = before.length + insertion.length;
+      textarea.focus();
+      textarea.setSelectionRange(cursorPos, cursorPos);
+    });
+  }
+
+  function updateTableCell(rowIndex: number, colIndex: number, value: string) {
+    setTableRows((prev) =>
+      prev.map((row, r) =>
+        r === rowIndex
+          ? row.map((cell, c) => (c === colIndex ? value : cell))
+          : row,
+      ),
+    );
+  }
+
+  function addTableRow() {
+    setTableRows((prev) => [...prev, prev[0].map(() => "")]);
+  }
+
+  function removeTableRow(rowIndex: number) {
+    setTableRows((prev) =>
+      prev.length > 2 ? prev.filter((_, r) => r !== rowIndex) : prev,
+    );
+  }
+
+  function addTableColumn() {
+    setTableRows((prev) =>
+      prev.map((row, r) =>
+        r === 0 ? [...row, `Column ${row.length + 1}`] : [...row, ""],
+      ),
+    );
+  }
+
+  function removeTableColumn(colIndex: number) {
+    setTableRows((prev) =>
+      prev[0].length > 2
+        ? prev.map((row) => row.filter((_, c) => c !== colIndex))
+        : prev,
+    );
+  }
+
+  function handleInsertTable() {
+    insertAtCursor(buildMarkdownTable(tableRows));
+    setShowTableBuilder(false);
+    setTableRows([
+      ["Column 1", "Column 2"],
+      ["", ""],
+    ]);
+  }
+
+  function handleInsertLink() {
+    if (!linkText.trim() || !linkUrl.trim()) return;
+    insertAtCursor(`[${linkText.trim()}](${linkUrl.trim()})`);
+    setShowLinkBuilder(false);
+    setLinkText("");
+    setLinkUrl("");
+  }
 
   function handleTitleChange(value: string) {
     setTitle(value);
@@ -254,14 +383,179 @@ function NewBlogPostPage() {
         </div>
 
         <div>
-          <label className="mb-1.5 block text-sm font-semibold">
-            Article content
-          </label>
+          <div className="mb-1.5 flex items-center justify-between">
+            <label className="block text-sm font-semibold">
+              Article content
+            </label>
+
+            <div className="flex gap-2">
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  setShowLinkBuilder(false);
+                  setShowTableBuilder((prev) => !prev);
+                }}
+              >
+                <TableIcon className="size-4" />
+                Insert Table
+              </Button>
+
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  setShowTableBuilder(false);
+                  setShowLinkBuilder((prev) => !prev);
+                }}
+              >
+                <LinkIcon className="size-4" />
+                Insert Link
+              </Button>
+            </div>
+          </div>
+
+          {/* Table builder panel */}
+          {showTableBuilder && (
+            <div className="mb-3 rounded-lg border border-border bg-muted/30 p-4">
+              <div className="overflow-x-auto">
+                <table className="w-full border-collapse">
+                  <tbody>
+                    {tableRows.map((row, rowIndex) => (
+                      <tr key={rowIndex}>
+                        {row.map((cell, colIndex) => (
+                          <td key={colIndex} className="border border-border p-1">
+                            <input
+                              type="text"
+                              value={cell}
+                              onChange={(event) =>
+                                updateTableCell(rowIndex, colIndex, event.target.value)
+                              }
+                              placeholder={rowIndex === 0 ? "Header" : "Cell"}
+                              className={`w-full min-w-[100px] rounded px-2 py-1.5 text-sm outline-none ring-primary/20 focus:ring-2 ${
+                                rowIndex === 0
+                                  ? "bg-primary/10 font-semibold"
+                                  : "bg-background"
+                              }`}
+                            />
+                          </td>
+                        ))}
+                        <td className="p-1">
+                          <button
+                            type="button"
+                            onClick={() => removeTableRow(rowIndex)}
+                            className="flex size-7 items-center justify-center rounded text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
+                            title="Remove row"
+                          >
+                            <Minus className="size-4" />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                    <tr>
+                      {tableRows[0].map((_, colIndex) => (
+                        <td key={colIndex} className="p-1 text-center">
+                          <button
+                            type="button"
+                            onClick={() => removeTableColumn(colIndex)}
+                            className="flex size-7 items-center justify-center rounded text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
+                            title="Remove column"
+                          >
+                            <Minus className="size-4" />
+                          </button>
+                        </td>
+                      ))}
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div className="mt-3 flex flex-wrap items-center gap-2">
+                <Button type="button" variant="outline" size="sm" onClick={addTableRow}>
+                  <Plus className="size-4" />
+                  Add Row
+                </Button>
+                <Button type="button" variant="outline" size="sm" onClick={addTableColumn}>
+                  <Plus className="size-4" />
+                  Add Column
+                </Button>
+
+                <div className="ml-auto flex gap-2">
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setShowTableBuilder(false)}
+                  >
+                    Cancel
+                  </Button>
+                  <Button type="button" size="sm" variant="cta" onClick={handleInsertTable}>
+                    Insert into article
+                  </Button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Link builder panel */}
+          {showLinkBuilder && (
+            <div className="mb-3 space-y-3 rounded-lg border border-border bg-muted/30 p-4">
+              <div>
+                <label className="mb-1 block text-xs font-semibold text-muted-foreground">
+                  Link text
+                </label>
+                <input
+                  type="text"
+                  value={linkText}
+                  onChange={(event) => setLinkText(event.target.value)}
+                  placeholder="e.g. our Data Science course"
+                  className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none ring-primary/20 focus:ring-2"
+                />
+              </div>
+
+              <div>
+                <label className="mb-1 block text-xs font-semibold text-muted-foreground">
+                  Course / page URL
+                </label>
+                <input
+                  type="text"
+                  value={linkUrl}
+                  onChange={(event) => setLinkUrl(event.target.value)}
+                  placeholder="https://corepointtech.com.ng/courses/data-science"
+                  className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none ring-primary/20 focus:ring-2"
+                />
+              </div>
+
+              <div className="flex justify-end gap-2">
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setShowLinkBuilder(false)}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="cta"
+                  disabled={!linkText.trim() || !linkUrl.trim()}
+                  onClick={handleInsertLink}
+                >
+                  Insert into article
+                </Button>
+              </div>
+            </div>
+          )}
+
           <textarea
+            ref={contentRef}
             value={content}
             onChange={(event) => setContent(event.target.value)}
             rows={16}
-            placeholder="Paste the full article here. Markdown is supported (## headings, **bold**, lists, links, etc.)."
+            placeholder="Paste the full article here. Use the Insert Table / Insert Link buttons above, or type Markdown directly (## headings, **bold**, lists, etc.)."
             className="w-full resize-y rounded-lg border border-border bg-background px-3.5 py-2.5 font-mono text-sm leading-6 outline-none ring-primary/20 focus:ring-2"
           />
           <p className="mt-1 text-xs text-muted-foreground">
