@@ -13,7 +13,7 @@ export function SiteFooter() {
             <span className="font-display text-lg font-bold">Corepoint Tech</span>
           </div>
           <p className="mt-4 text-sm text-ink-foreground/70">
-            Practical, instructor-led technology training. One-On-One Classes, real projects, working
+            Practical, instructor-led technology training. One-On-One Classes, Cohort classes, real projects, working
             professionals as trainers.
           </p>
           <div className="mt-5 flex gap-3">
@@ -38,6 +38,8 @@ export function SiteFooter() {
             <li><Link to="/about" className="text-ink-foreground/80 hover:text-ink-foreground">About Us</Link></li>
             <li><Link to="/contact" className="text-ink-foreground/80 hover:text-ink-foreground">Contact</Link></li>
             <li><Link to="/register" className="text-ink-foreground/80 hover:text-ink-foreground">Register</Link></li>
+            <li><Link to="/register" className="text-ink-foreground/80 hover:text-ink-foreground">Payment Plan</Link></li>
+            <li><Link to="/register" className="text-ink-foreground/80 hover:text-ink-foreground">Blog</Link></li>
           </ul>
         </div>
 
@@ -67,7 +69,7 @@ export function SiteFooter() {
           <ul className="mt-4 space-y-3 text-sm text-ink-foreground/80">
             <li className="flex gap-2"><Phone className="size-4 shrink-0" /> +234 911 575 1406</li>
             <li className="flex gap-2"><Mail className="size-4 shrink-0" /> info@corepointtech.com.ng</li>
-            <li className="flex gap-2"><MapPin className="size-4 shrink-0" /> Shomolu, Lagos</li>
+            <li className="flex gap-2"><MapPin className="size-4 shrink-0" /> Shomolu, Lagos Nigeria</li>
           </ul>
         </div>
       </div>
