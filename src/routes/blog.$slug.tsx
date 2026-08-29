@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import remarkBreaks from "remark-breaks";
 import {
   ArrowLeft,
   BookOpen,
@@ -145,7 +146,7 @@ function BlogPostPage() {
       {/* Article body */}
       <section className="mx-auto max-w-3xl px-4 py-12 sm:py-16">
         <div className="prose prose-neutral max-w-none prose-headings:font-bold prose-a:text-primary prose-img:rounded-xl prose-table:w-full prose-th:border prose-th:border-border prose-th:bg-muted/40 prose-th:p-3 prose-td:border prose-td:border-border prose-td:p-3">
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>{post.content}</ReactMarkdown>
+          <ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]}>{post.content}</ReactMarkdown>
         </div>
       </section>
 
