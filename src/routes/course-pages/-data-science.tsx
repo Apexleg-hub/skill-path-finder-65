@@ -1,2 +1,0 @@
-// full stack Data science 
-

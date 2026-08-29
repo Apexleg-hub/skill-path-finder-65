@@ -1,6 +1,6 @@
 import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { LogOut, Loader2, Save, Sparkles } from "lucide-react";
+import { ImageIcon, LogOut, Loader2, Save, Sparkles, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/lib/supabase"; // adjust this import to match your existing Supabase client path
 
@@ -43,6 +43,8 @@ function NewBlogPostPage() {
   const [author, setAuthor] = useState("Corepoint Tech Team");
   const [content, setContent] = useState("");
   const [featured, setFeatured] = useState(false);
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [imageUploading, setImageUploading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -51,6 +53,31 @@ function NewBlogPostPage() {
     if (!slugTouched) {
       setSlug(slugify(value));
     }
+  }
+
+  async function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    setError(null);
+    setImageUploading(true);
+
+    const fileExt = file.name.split(".").pop();
+    const fileName = `${Date.now()}-${Math.random().toString(36).slice(2)}.${fileExt}`;
+
+    const { error: uploadError } = await supabase.storage
+      .from("blog-images")
+      .upload(fileName, file);
+
+    if (uploadError) {
+      setError(`Image upload failed: ${uploadError.message}`);
+      setImageUploading(false);
+      return;
+    }
+
+    const { data } = supabase.storage.from("blog-images").getPublicUrl(fileName);
+    setImageUrl(data.publicUrl);
+    setImageUploading(false);
   }
 
   async function handleSignOut() {
@@ -74,6 +101,7 @@ function NewBlogPostPage() {
       excerpt: excerpt.trim(),
       author: author.trim() || "Corepoint Tech Team",
       content,
+      image_url: imageUrl,
       read_time: estimateReadTime(content),
       featured,
       published: publish,
@@ -175,6 +203,54 @@ function NewBlogPostPage() {
             onChange={(event) => setAuthor(event.target.value)}
             className="w-full rounded-lg border border-border bg-background px-3.5 py-2.5 text-sm outline-none ring-primary/20 focus:ring-2"
           />
+        </div>
+
+        <div>
+          <label className="mb-1.5 block text-sm font-semibold">
+            Featured image
+          </label>
+
+          {imageUrl ? (
+            <div className="relative overflow-hidden rounded-lg border border-border">
+              <img
+                src={imageUrl}
+                alt="Featured"
+                className="aspect-video w-full object-cover"
+              />
+              <button
+                type="button"
+                onClick={() => setImageUrl(null)}
+                className="absolute right-2 top-2 flex size-8 items-center justify-center rounded-full bg-background/90 text-foreground shadow-sm hover:bg-background"
+              >
+                <X className="size-4" />
+              </button>
+            </div>
+          ) : (
+            <label className="flex aspect-video w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border border-dashed border-border bg-background text-sm text-muted-foreground hover:bg-muted/40">
+              {imageUploading ? (
+                <>
+                  <Loader2 className="size-6 animate-spin" />
+                  Uploading...
+                </>
+              ) : (
+                <>
+                  <ImageIcon className="size-6" />
+                  Click to upload an image
+                </>
+              )}
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                disabled={imageUploading}
+                className="hidden"
+              />
+            </label>
+          )}
+          <p className="mt-1 text-xs text-muted-foreground">
+            Shown on the blog listing card and at the top of the article.
+            Optional — leave blank to use a placeholder.
+          </p>
         </div>
 
         <div>

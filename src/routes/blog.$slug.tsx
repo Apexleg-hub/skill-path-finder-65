@@ -24,6 +24,7 @@ type BlogPost = {
   content: string;
   created_at: string;
   read_time: string | null;
+  image_url: string | null;
 };
 
 function formatDate(dateString: string) {
@@ -50,7 +51,7 @@ function BlogPostPage() {
 
       const { data, error } = await supabase
         .from("blog_posts")
-        .select("slug, title, excerpt, author, content, created_at, read_time")
+        .select("slug, title, excerpt, author, content, created_at, read_time, image_url")
         .eq("slug", slug)
         .eq("published", true)
         .single();
@@ -128,6 +129,17 @@ function BlogPostPage() {
           </div>
         </div>
       </section>
+
+      {/* Featured image */}
+      {post.image_url && (
+        <div className="mx-auto max-w-3xl px-4 pt-8">
+          <img
+            src={post.image_url}
+            alt={post.title}
+            className="aspect-video w-full rounded-2xl object-cover"
+          />
+        </div>
+      )}
 
       {/* Article body */}
       <section className="mx-auto max-w-3xl px-4 py-12 sm:py-16">

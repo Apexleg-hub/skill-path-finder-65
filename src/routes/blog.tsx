@@ -45,6 +45,7 @@ type BlogPost = {
   created_at: string;
   read_time: string | null;
   featured: boolean;
+  image_url: string | null;
 };
 
 function formatDate(dateString: string) {
@@ -69,7 +70,7 @@ function BlogPage() {
 
       const { data, error: fetchError } = await supabase
         .from("blog_posts")
-        .select("slug, title, excerpt, author, created_at, read_time, featured")
+        .select("slug, title, excerpt, author, created_at, read_time, featured, image_url")
         .eq("published", true)
         .order("created_at", { ascending: false });
 
@@ -167,8 +168,16 @@ function BlogPage() {
                 params={{ slug: featuredPost.slug }}
                 className="group grid gap-6 overflow-hidden rounded-2xl border border-border bg-card p-6 shadow-card transition-all duration-200 hover:-translate-y-1 hover:shadow-lg sm:p-8 lg:grid-cols-[1fr_1.2fr] lg:items-center"
               >
-                <div className="flex aspect-video items-center justify-center rounded-xl bg-primary/10">
-                  <BookOpen className="size-16 text-primary/60" />
+                <div className="flex aspect-video items-center justify-center overflow-hidden rounded-xl bg-primary/10">
+                  {featuredPost.image_url ? (
+                    <img
+                      src={featuredPost.image_url}
+                      alt={featuredPost.title}
+                      className="size-full object-cover"
+                    />
+                  ) : (
+                    <BookOpen className="size-16 text-primary/60" />
+                  )}
                 </div>
 
                 <div>
@@ -215,8 +224,16 @@ function BlogPage() {
                     params={{ slug: post.slug }}
                     className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-card transition-all duration-200 hover:-translate-y-1 hover:shadow-lg"
                   >
-                    <div className="flex aspect-video items-center justify-center bg-primary/10">
-                      <BookOpen className="size-10 text-primary/60" />
+                    <div className="flex aspect-video items-center justify-center overflow-hidden bg-primary/10">
+                      {post.image_url ? (
+                        <img
+                          src={post.image_url}
+                          alt={post.title}
+                          className="size-full object-cover"
+                        />
+                      ) : (
+                        <BookOpen className="size-10 text-primary/60" />
+                      )}
                     </div>
 
                     <div className="flex flex-1 flex-col p-6">
