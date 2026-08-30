@@ -1,8 +1,11 @@
 import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
 import { useRef, useState } from "react";
 import {
+  Bold,
+  Heading2,
   ImageIcon,
   Link as LinkIcon,
+  List,
   LogOut,
   Loader2,
   Minus,
@@ -175,6 +178,97 @@ function NewBlogPostPage() {
     setShowLinkBuilder(false);
     setLinkText("");
     setLinkUrl("");
+  }
+
+  function makeHeading() {
+    const textarea = contentRef.current;
+    if (!textarea) return;
+
+    const cursorPos = textarea.selectionStart;
+    const lineStart = content.lastIndexOf("\n", cursorPos - 1) + 1;
+    const nextBreak = content.indexOf("\n", cursorPos);
+    const lineEnd = nextBreak === -1 ? content.length : nextBreak;
+
+    const line = content.slice(lineStart, lineEnd);
+    const cleanedLine = line.replace(/^#{1,6}\s*/, "").trim();
+
+    if (!cleanedLine) {
+      setError("Select or click into the line you want to turn into a heading first.");
+      return;
+    }
+
+    const newLine = `## ${cleanedLine}`;
+    const newContent = content.slice(0, lineStart) + newLine + content.slice(lineEnd);
+    setContent(newContent);
+
+    requestAnimationFrame(() => {
+      textarea.focus();
+      const pos = lineStart + newLine.length;
+      textarea.setSelectionRange(pos, pos);
+    });
+  }
+
+  function makeBulletList() {
+    const textarea = contentRef.current;
+    if (!textarea) return;
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+
+    const blockStart = content.lastIndexOf("\n", start - 1) + 1;
+    const nextBreak = content.indexOf("\n", end > start ? end - 1 : end);
+    const blockEnd = nextBreak === -1 ? content.length : nextBreak;
+
+    const block = content.slice(blockStart, blockEnd);
+
+    if (!block.trim()) {
+      setError("Select the lines you want to turn into a bullet list first.");
+      return;
+    }
+
+    const bulletedBlock = block
+      .split("\n")
+      .map((line) => {
+        const trimmed = line.trim();
+        if (!trimmed) return line;
+        if (/^(-|\*|\+)\s/.test(trimmed)) return line; // already a bullet
+        return `- ${trimmed}`;
+      })
+      .join("\n");
+
+    const newContent =
+      content.slice(0, blockStart) + bulletedBlock + content.slice(blockEnd);
+    setContent(newContent);
+
+    requestAnimationFrame(() => {
+      textarea.focus();
+      const pos = blockStart + bulletedBlock.length;
+      textarea.setSelectionRange(pos, pos);
+    });
+  }
+
+  function makeBold() {
+    const textarea = contentRef.current;
+    if (!textarea) return;
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const selected = content.slice(start, end);
+
+    if (!selected.trim()) {
+      setError("Select the text you want to make bold first.");
+      return;
+    }
+
+    const newContent =
+      content.slice(0, start) + `**${selected}**` + content.slice(end);
+    setContent(newContent);
+
+    requestAnimationFrame(() => {
+      textarea.focus();
+      const pos = end + 4;
+      textarea.setSelectionRange(pos, pos);
+    });
   }
 
   function handleTitleChange(value: string) {
@@ -383,12 +477,51 @@ function NewBlogPostPage() {
         </div>
 
         <div>
-          <div className="mb-1.5 flex items-center justify-between">
-            <label className="block text-sm font-semibold">
+          <div className="mb-1.5">
+            <label className="mb-2 block text-sm font-semibold">
               Article content
             </label>
 
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-2">
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  setError(null);
+                  makeHeading();
+                }}
+              >
+                <Heading2 className="size-4" />
+                Heading
+              </Button>
+
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  setError(null);
+                  makeBulletList();
+                }}
+              >
+                <List className="size-4" />
+                Bullet List
+              </Button>
+
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  setError(null);
+                  makeBold();
+                }}
+              >
+                <Bold className="size-4" />
+                Bold
+              </Button>
+
               <Button
                 type="button"
                 variant="outline"
@@ -416,6 +549,11 @@ function NewBlogPostPage() {
               </Button>
             </div>
           </div>
+
+          <p className="mb-2 text-xs text-muted-foreground">
+            To use Heading, click into the line first. To use Bullet List or
+            Bold, select the text first, then click the button.
+          </p>
 
           {/* Table builder panel */}
           {showTableBuilder && (
