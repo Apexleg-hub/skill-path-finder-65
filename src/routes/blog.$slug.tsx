@@ -2,7 +2,6 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import remarkBreaks from "remark-breaks";
 import {
   ArrowLeft,
   BookOpen,
@@ -35,6 +34,50 @@ function formatDate(dateString: string) {
     month: "long",
     day: "numeric",
   });
+}
+
+// Treats plain single-line-broken text as separate paragraphs (with real
+// spacing) while leaving Markdown tables, lists, and headings untouched, so
+// pasted articles look properly spaced without needing manual blank lines.
+function normalizeParagraphs(text: string) {
+  const lines = text.split("\n");
+
+  function isStructuralLine(line: string) {
+    const trimmed = line.trim();
+    if (trimmed === "") return true;
+    if (trimmed.startsWith("|")) return true; // table row
+    if (/^(-|\*|\+)\s/.test(trimmed)) return true; // bullet list
+    if (/^\d+\.\s/.test(trimmed)) return true; // numbered list
+    if (trimmed.startsWith("#")) return true; // heading
+    if (trimmed.startsWith(">")) return true; // blockquote
+    return false;
+  }
+
+  const output: string[] = [];
+
+  for (let i = 0; i < lines.length; i++) {
+    const current = lines[i];
+    output.push(current);
+
+    const next = lines[i + 1];
+    if (next === undefined) continue;
+
+    const currentTrim = current.trim();
+    const nextTrim = next.trim();
+
+    if (currentTrim === "" || nextTrim === "") continue;
+
+    const currentStructural = isStructuralLine(current);
+    const nextStructural = isStructuralLine(next);
+
+    // Keep consecutive table rows / list items / blockquote lines adjacent,
+    // since Markdown needs them unbroken to parse correctly.
+    if (currentStructural && nextStructural) continue;
+
+    output.push("");
+  }
+
+  return output.join("\n");
 }
 
 function BlogPostPage() {
@@ -145,8 +188,10 @@ function BlogPostPage() {
 
       {/* Article body */}
       <section className="mx-auto max-w-3xl px-4 py-12 sm:py-16">
-        <div className="prose prose-neutral max-w-none prose-headings:font-bold prose-a:text-primary prose-img:rounded-xl prose-table:w-full prose-th:border prose-th:border-border prose-th:bg-muted/40 prose-th:p-3 prose-td:border prose-td:border-border prose-td:p-3">
-          <ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]}>{post.content}</ReactMarkdown>
+        <div className="prose prose-neutral max-w-none prose-headings:font-bold prose-p:leading-7 prose-a:text-primary prose-img:rounded-xl prose-table:w-full prose-th:border prose-th:border-border prose-th:bg-muted/40 prose-th:p-3 prose-td:border prose-td:border-border prose-td:p-3">
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+            {normalizeParagraphs(post.content)}
+          </ReactMarkdown>
         </div>
       </section>
 
