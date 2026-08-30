@@ -188,7 +188,22 @@ function BlogPostPage() {
 
       {/* Article body */}
       <section className="mx-auto max-w-3xl px-4 py-12 sm:py-16">
-        <div className="prose prose-neutral max-w-none prose-headings:font-bold prose-p:leading-7 prose-a:text-primary prose-img:rounded-xl prose-table:w-full prose-th:border prose-th:border-border prose-th:bg-muted/40 prose-th:p-3 prose-td:border prose-td:border-border prose-td:p-3">
+        <div
+          className="[&_h1]:mb-5 [&_h1]:mt-10 [&_h1]:text-3xl [&_h1]:font-bold
+                     [&_h2]:mb-4 [&_h2]:mt-10 [&_h2]:text-2xl [&_h2]:font-bold
+                     [&_h3]:mb-3 [&_h3]:mt-8 [&_h3]:text-xl [&_h3]:font-bold
+                     [&_p]:mb-5 [&_p]:leading-7 [&_p]:text-foreground
+                     [&_ul]:mb-5 [&_ul]:list-disc [&_ul]:space-y-2 [&_ul]:pl-6
+                     [&_ol]:mb-5 [&_ol]:list-decimal [&_ol]:space-y-2 [&_ol]:pl-6
+                     [&_li]:leading-7
+                     [&_a]:font-medium [&_a]:text-primary [&_a]:underline [&_a]:underline-offset-2
+                     [&_strong]:font-semibold
+                     [&_blockquote]:mb-5 [&_blockquote]:border-l-4 [&_blockquote]:border-primary/30 [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:text-muted-foreground
+                     [&_img]:mb-5 [&_img]:rounded-xl
+                     [&_table]:mb-5 [&_table]:w-full [&_table]:border-collapse
+                     [&_th]:border [&_th]:border-border [&_th]:bg-muted/40 [&_th]:p-3 [&_th]:text-left
+                     [&_td]:border [&_td]:border-border [&_td]:p-3"
+        >
           <ReactMarkdown remarkPlugins={[remarkGfm]}>
             {normalizeParagraphs(post.content)}
           </ReactMarkdown>
