@@ -12,7 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/lib/supabase"; // adjust this import to match your existing Supabase client path
 
-export const Route = createFileRoute("/blog")({
+export const Route = createFileRoute("/blog/")({
   head: () => ({
     meta: [
       {

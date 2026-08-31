@@ -119,7 +119,7 @@ function ContactPage() {
               </li>
               <li className="flex gap-3">
                 <MapPin className="size-5 shrink-0 text-primary" />
-                <span>Shomolu, Lagos, Nigeria</span>
+                <span>Somolu, Lagos, Nigeria</span>
               </li>
             </ul>
           </div>
