@@ -94,7 +94,7 @@ function ContactPage() {
         <div className="mx-auto max-w-6xl px-4 py-16">
           <h1 className="text-4xl font-bold sm:text-5xl">Contact us</h1>
           <p className="mt-3 max-w-2xl text-primary-foreground/80">
-            Ask about cohort dates, fees, corporate training or anything else. We reply within one
+            Ask about cohort dates, personalized learning, fees, corporate training or anything else. We reply within one
             working day.
           </p>
         </div>

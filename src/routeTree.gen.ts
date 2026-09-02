@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as DataScienceAiCourseRouteImport } from './routes/data-science-ai-course'
 import { Route as PaymentPlansAndFaqsRouteImport } from './routes/payment-plans-and-faqs'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as AdminLoginRouteImport } from './routes/admin.login'
@@ -34,6 +35,11 @@ const AboutRoute = AboutRouteImport.update({
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DataScienceAiCourseRoute = DataScienceAiCourseRouteImport.update({
+  id: '/data-science-ai-course',
+  path: '/data-science-ai-course',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PaymentPlansAndFaqsRoute = PaymentPlansAndFaqsRouteImport.update({
@@ -81,6 +87,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/data-science-ai-course': typeof DataScienceAiCourseRoute
   '/payment-plans-and-faqs': typeof PaymentPlansAndFaqsRoute
   '/register': typeof RegisterRoute
   '/admin/login': typeof AdminLoginRoute
@@ -94,6 +101,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/data-science-ai-course': typeof DataScienceAiCourseRoute
   '/payment-plans-and-faqs': typeof PaymentPlansAndFaqsRoute
   '/register': typeof RegisterRoute
   '/admin/login': typeof AdminLoginRoute
@@ -108,6 +116,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/data-science-ai-course': typeof DataScienceAiCourseRoute
   '/payment-plans-and-faqs': typeof PaymentPlansAndFaqsRoute
   '/register': typeof RegisterRoute
   '/admin/login': typeof AdminLoginRoute
@@ -123,6 +132,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/contact'
+    | '/data-science-ai-course'
     | '/payment-plans-and-faqs'
     | '/register'
     | '/admin/login'
@@ -136,6 +146,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/contact'
+    | '/data-science-ai-course'
     | '/payment-plans-and-faqs'
     | '/register'
     | '/admin/login'
@@ -149,6 +160,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/contact'
+    | '/data-science-ai-course'
     | '/payment-plans-and-faqs'
     | '/register'
     | '/admin/login'
@@ -163,6 +175,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   ContactRoute: typeof ContactRoute
+  DataScienceAiCourseRoute: typeof DataScienceAiCourseRoute
   PaymentPlansAndFaqsRoute: typeof PaymentPlansAndFaqsRoute
   RegisterRoute: typeof RegisterRoute
   AdminLoginRoute: typeof AdminLoginRoute
@@ -194,6 +207,13 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/data-science-ai-course': {
+      id: '/data-science-ai-course'
+      path: '/data-science-ai-course'
+      fullPath: '/data-science-ai-course'
+      preLoaderRoute: typeof DataScienceAiCourseRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/payment-plans-and-faqs': {
@@ -259,6 +279,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   ContactRoute: ContactRoute,
+  DataScienceAiCourseRoute: DataScienceAiCourseRoute,
   PaymentPlansAndFaqsRoute: PaymentPlansAndFaqsRoute,
   RegisterRoute: RegisterRoute,
   AdminLoginRoute: AdminLoginRoute,

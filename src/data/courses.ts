@@ -46,6 +46,15 @@ export interface Course {
   prerequisites: string[];
   featured?: boolean;
   image: string;
+  // Already used by several course entries below but not previously declared
+  // here — adding them so TypeScript stops silently allowing (or flagging)
+  // excess properties on those objects.
+  tools?: string[];
+  projects?: string[];
+  // New: SEO-focused fields. All optional, so existing courses keep working
+  // without changes. Fill these in gradually, course by course.
+  seoIntro?: string;
+  faqs?: { question: string; answer: string }[];
 }
 
 export const categories: Category[] = [
@@ -140,6 +149,9 @@ export const courses: Course[] = [
   summary:
     "Master the complete data workflow with Excel, SQL, Python, SPSS, Power BI and Tableau. From raw data to analysis, visualisation and business insight.",
 
+  seoIntro:
+    "Looking for a Data Science course in Lagos that actually takes you from beginner to job-ready? The Full-Stack Data Science programme at Corepoint Tech Academy is a 10-week, project-based course covering the entire modern data workflow — Excel, SQL, Python, SPSS, Power BI and Tableau — so you learn to work with data the way real analysts and data scientists do, not just watch tutorials. Whether you're a graduate starting out, a data analyst looking to add Python and machine learning to your toolkit, or a career changer in Nigeria aiming for a data science role, this course is built to get you from raw data to real, portfolio-ready insight.",
+
   overview:
     "A comprehensive, project-based Data Science programme designed to take learners from foundational data analysis to advanced data science workflows. Students work with industry-relevant tools including Microsoft Excel, SQL, Python, SPSS, Power BI and Tableau while developing practical skills in data cleaning, statistical analysis, exploratory data analysis, data visualisation, business intelligence and predictive analytics. Throughout the programme, learners work with real-world datasets and complete portfolio projects that demonstrate their ability to transform raw data into actionable insights.",
 
@@ -163,6 +175,29 @@ export const courses: Course[] = [
     "Combine multiple tools into an end-to-end data workflow",
     "Develop portfolio-ready data analytics and data science projects",
     "Present data-driven recommendations to technical and non-technical stakeholders",
+  ],
+
+  faqs: [
+    {
+      question: "Do I need a data or programming background to join this course?",
+      answer:
+        "No. The course starts with foundational data analysis using Excel before introducing SQL and Python, so no prior programming or data experience is required.",
+    },
+    {
+      question: "Is this course focused on Data Analysis or Data Science?",
+      answer:
+        "Both. It's designed as a full-stack progression: you start with data analysis fundamentals (Excel, SQL, statistics) and build up to data science skills (Python, predictive analytics), so you finish with both skill sets.",
+    },
+    {
+      question: "Will I get hands-on practice, or is it mostly theory?",
+      answer:
+        "The course is project-based throughout. You'll work with real-world datasets and build portfolio projects using each tool covered — Excel, SQL, Python, SPSS, Power BI, and Tableau.",
+    },
+    {
+      question: "Is this course available online, or only in Lagos?",
+      answer:
+        "This course is available both physically in Lagos and live online, so you can join from anywhere in Nigeria.",
+    },
   ],
 
   curriculum: [
@@ -3752,6 +3787,291 @@ export const courses: Course[] = [
       "Basic computer literacy",
       "No programming experience required",
       "Basic understanding of spreadsheets is helpful but not required",
+    ],
+  },
+
+  {
+    slug: "generative-ai-prompt-engineering",
+    title: "Generative AI & Prompt Engineering",
+    category: "ai",
+    level: "Beginner",
+    duration: "6 weeks",
+    delivery: "Both",
+    featured: true,
+    image: aiImg,
+
+    summary:
+      "Learn to use generative AI tools effectively prompting, AI-assisted content creation, workflow automation, and integrating AI into everyday work.",
+
+    seoIntro:
+      "Searching for a Generative AI course in Lagos or Prompt Engineering training in Nigeria? This 6-week programme at Corepoint Tech Academy teaches you how to work effectively with modern AI tools — from writing prompts that actually get useful results, to using generative AI for content, research, and automation. No coding background required. It's built for professionals, students, and business owners who want to use AI as a practical productivity tool, not just talk about it.",
+
+    overview:
+      "A practical, hands-on programme focused on understanding and working effectively with generative AI. Rather than treating AI as an abstract concept, this course teaches prompting techniques, AI-assisted content generation, research workflows, and how to integrate generative AI into real tasks — writing, analysis, automation, and decision-making. Learners leave with practical prompting skills and a portfolio of AI-assisted projects.",
+
+    audience:
+      "Professionals, students, content creators, marketers, business owners, and career changers who want to use generative AI productively in their work, without needing a programming background.",
+
+    outcomes: [
+      "Understand how large language models and generative AI systems work at a practical level",
+      "Write effective prompts for text, image, and code generation tasks",
+      "Use AI-assisted research and writing techniques",
+      "Apply prompt engineering frameworks to get consistent, high-quality outputs",
+      "Use generative AI for content creation, summarization, and analysis",
+      "Combine generative AI with basic automation tools for repetitive tasks",
+      "Evaluate AI outputs critically and recognize common failure modes",
+      "Apply generative AI responsibly, including data privacy considerations",
+      "Build a portfolio of practical AI-assisted projects",
+    ],
+
+    curriculum: [
+      {
+        module: "Module 1: Understanding Generative AI",
+        topics: [
+          "What generative AI is and how it works",
+          "Large language models explained simply",
+          "Text, image, audio, and code generation",
+          "Popular generative AI tools and platforms",
+          "Capabilities and limitations of current AI systems",
+        ],
+      },
+      {
+        module: "Module 2: Prompt Engineering Fundamentals",
+        topics: [
+          "Anatomy of an effective prompt",
+          "Zero-shot, few-shot, and chain-of-thought prompting",
+          "Role-based and context-based prompting",
+          "Iterative prompt refinement",
+          "Common prompting mistakes and how to avoid them",
+        ],
+      },
+      {
+        module: "Module 3: AI-Assisted Writing & Content Creation",
+        topics: [
+          "Drafting and editing with AI",
+          "Summarization and repurposing content",
+          "Tone, style, and audience control",
+          "AI-assisted research workflows",
+          "Fact-checking and verifying AI outputs",
+        ],
+      },
+      {
+        module: "Module 4: Generative AI for Business & Productivity",
+        topics: [
+          "Using AI for reports, presentations, and proposals",
+          "AI-assisted data analysis and summarization",
+          "Customer communication and support use cases",
+          "Combining AI with spreadsheets and documents",
+          "Building repeatable AI-assisted workflows",
+        ],
+      },
+      {
+        module: "Module 5: Introduction to AI Automation",
+        topics: [
+          "Connecting generative AI to simple workflows",
+          "Using AI within no-code automation tools",
+          "Practical automation examples",
+          "When to automate vs. when to keep a human in the loop",
+        ],
+      },
+      {
+        module: "Module 6: Responsible & Practical AI Use",
+        topics: [
+          "Data privacy when using AI tools",
+          "Bias and limitations in AI outputs",
+          "Ethical considerations in AI-assisted work",
+          "Building your personal AI toolkit",
+          "Final portfolio project",
+        ],
+      },
+    ],
+
+    projects: [
+      "AI-Assisted Content Calendar & Writing Workflow",
+      "AI-Powered Research & Summary Report",
+      "Prompt Library for a Specific Business Use Case",
+      "Simple AI + Automation Workflow",
+    ],
+
+    tools: [
+      "ChatGPT / Claude",
+      "Prompt engineering frameworks",
+      "AI image generation tools",
+      "Basic automation tools (n8n / Zapier)",
+    ],
+
+    prerequisites: [
+      "Basic computer literacy",
+      "No programming experience required",
+      "No prior AI experience required",
+    ],
+
+    faqs: [
+      {
+        question: "Do I need to know how to code for this course?",
+        answer:
+          "No. This course is designed for non-technical learners who want to use generative AI effectively in their work, without any programming background required.",
+      },
+      {
+        question: "How is this different from your main AI course?",
+        answer:
+          "This course focuses specifically on using generative AI tools effectively through prompting and practical workflows. Our broader AI programme covers machine learning and AI engineering in more technical depth.",
+      },
+      {
+        question: "Will this help me in my current job, even if it's not tech-related?",
+        answer:
+          "Yes. Generative AI skills apply across marketing, writing, customer service, research, administration, and many other roles — the course is built around practical, everyday use cases.",
+      },
+      {
+        question: "Is this course available online?",
+        answer:
+          "Yes, it's available both physically in Lagos and live online.",
+      },
+    ],
+  },
+
+  {
+    slug: "professional-certificate-ai-engineering",
+    title: "Professional Certificate in AI Engineering",
+    category: "ai",
+    level: "Intermediate to Advanced",
+    duration: "16 weeks",
+    delivery: "Both",
+    featured: true,
+    image: aiImg,
+
+    summary:
+      "An advanced, professional level programme covering machine learning, deep learning, AI system design, and deployment for those ready to build and ship real AI applications.",
+
+    seoIntro:
+      "Looking for a professional AI Engineering course in Lagos that goes beyond the basics? This 16-week advanced programme at Corepoint Tech Academy is built for developers, data professionals, and career changers who already have some technical foundation and want to become job-ready AI Engineers. You'll cover machine learning, deep learning, model deployment, and applied generative AI system design with a heavy emphasis on shipping real, working applications rather than just completing tutorials.",
+
+    overview:
+      "A rigorous, project-based programme designed to take learners with an existing technical foundation into professional AI Engineering. The programme covers advanced machine learning, deep learning fundamentals, model evaluation and optimization, AI application architecture, deployment of models as APIs, and applied generative AI system design, including retrieval-augmented generation and AI agents. Learners complete a substantial capstone project that mirrors real-world AI engineering work from problem definition to deployed application.",
+
+    audience:
+      "Software developers, data analysts, data scientists, and technically-inclined professionals who already have basic Python experience and want to specialize in building and deploying AI systems professionally.",
+
+    outcomes: [
+      "Design and train machine learning models for real-world problems",
+      "Understand deep learning fundamentals and neural network architectures",
+      "Evaluate, tune, and optimize models for production use",
+      "Build APIs to serve machine learning and AI models",
+      "Design applied generative AI systems, including retrieval-augmented generation",
+      "Understand the fundamentals of AI agents and tool-using systems",
+      "Apply MLOps practices for model versioning, monitoring, and deployment",
+      "Architect end-to-end AI applications from data to deployed product",
+      "Evaluate AI system performance, cost, and reliability trade-offs",
+      "Complete and present a full AI engineering capstone project",
+    ],
+
+    curriculum: [
+      {
+        module: "Module 1: Advanced Machine Learning Foundations",
+        topics: [
+          "Review of supervised and unsupervised learning",
+          "Feature engineering at scale",
+          "Model selection and evaluation strategies",
+          "Handling imbalanced and real-world messy data",
+          "Cross-validation and hyperparameter tuning",
+        ],
+      },
+      {
+        module: "Module 2: Deep Learning Fundamentals",
+        topics: [
+          "Neural network fundamentals",
+          "Training, backpropagation, and optimization",
+          "Convolutional neural networks",
+          "Sequence models and transformers (conceptual)",
+          "Working with pre-trained models",
+        ],
+      },
+      {
+        module: "Module 3: Applied Generative AI Systems",
+        topics: [
+          "How modern generative AI systems are architected",
+          "Retrieval-augmented generation (RAG)",
+          "Vector databases and embeddings",
+          "Building applications on top of AI APIs",
+          "Introduction to AI agents and tool use",
+        ],
+      },
+      {
+        module: "Module 4: Model Deployment & APIs",
+        topics: [
+          "Serving models with FastAPI",
+          "Containerization basics with Docker",
+          "API design for AI applications",
+          "Handling latency, cost, and scaling considerations",
+          "Basic cloud deployment (Render / AWS / Azure)",
+        ],
+      },
+      {
+        module: "Module 5: MLOps & Production Practices",
+        topics: [
+          "Model versioning and experiment tracking",
+          "Monitoring model performance in production",
+          "Data and model drift",
+          "CI/CD concepts for machine learning",
+          "Documentation and handover practices",
+        ],
+      },
+      {
+        module: "Module 6: AI Engineering Capstone Project",
+        topics: [
+          "Defining a real-world AI engineering problem",
+          "Data collection and preparation",
+          "Model or system design and development",
+          "Deployment as a working application",
+          "Technical documentation and final presentation",
+        ],
+      },
+    ],
+
+    projects: [
+      "Production-Ready Predictive Model with Deployed API",
+      "Retrieval-Augmented Generation (RAG) Application",
+      "AI Agent for a Real Business Workflow",
+      "End-to-End AI Engineering Capstone Project",
+    ],
+
+    tools: [
+      "Python",
+      "scikit-learn",
+      "PyTorch or TensorFlow",
+      "FastAPI",
+      "Docker",
+      "Vector databases",
+      "Git & GitHub",
+    ],
+
+    prerequisites: [
+      "Basic Python programming experience",
+      "Familiarity with fundamental machine learning concepts is helpful but not required",
+      "Comfortable using the command line at a basic level",
+    ],
+
+    faqs: [
+      {
+        question: "Is this course for complete beginners?",
+        answer:
+          "No. This is an advanced, professional-level programme designed for learners who already have basic Python experience. If you're completely new to programming, we recommend starting with our Data Science or AI Fundamentals course first.",
+      },
+      {
+        question: "What makes this 'professional' rather than a general AI course?",
+        answer:
+          "This programme focuses specifically on the engineering side of AI — deployment, APIs, MLOps, and production practices — rather than just model building. It's designed to prepare you for an actual AI Engineer role, not just conceptual understanding.",
+      },
+      {
+        question: "Will I deploy real, working applications?",
+        answer:
+          "Yes. You'll deploy models as APIs during the course, and your capstone project is a full end-to-end AI application, not just a notebook or slide deck.",
+      },
+      {
+        question: "Is this course available live online?",
+        answer:
+          "Yes, it's available both physically in Lagos and live online, so you can join from anywhere in Nigeria.",
+      },
     ],
   },
 ];

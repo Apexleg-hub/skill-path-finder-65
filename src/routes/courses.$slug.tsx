@@ -24,13 +24,57 @@ export const Route = createFileRoute("/courses/$slug")({
       };
     }
     const { course } = loaderData;
-    const title = `${course.title} | Corepoint Tech Academy`;
+    const title = `${course.title} in Lagos | Corepoint Tech Academy`;
+    const description = `${course.summary} Learn ${course.title} in Lagos or live online with Corepoint Tech Academy.`;
+
+    const structuredData = {
+      "@context": "https://schema.org",
+      "@type": "Course",
+      name: course.title,
+      description: course.summary,
+      provider: {
+        "@type": "Organization",
+        name: "Corepoint Tech Academy",
+        sameAs: "https://corepointtech.com.ng",
+      },
+    };
+
+    const faqStructuredData =
+      course.faqs && course.faqs.length > 0
+        ? {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: course.faqs.map((f) => ({
+              "@type": "Question",
+              name: f.question,
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: f.answer,
+              },
+            })),
+          }
+        : null;
+
     return {
       meta: [
         { title },
-        { name: "description", content: course.summary },
+        { name: "description", content: description },
         { property: "og:title", content: title },
-        { property: "og:description", content: course.summary },
+        { property: "og:description", content: description },
+      ],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify(structuredData),
+        },
+        ...(faqStructuredData
+          ? [
+              {
+                type: "application/ld+json",
+                children: JSON.stringify(faqStructuredData),
+              },
+            ]
+          : []),
       ],
     };
   },
@@ -87,6 +131,12 @@ function CourseDetail() {
           />
         </div>
       </section>
+
+      {course.seoIntro && (
+        <section className="mx-auto max-w-6xl px-4 pt-10">
+          <p className="max-w-3xl text-muted-foreground">{course.seoIntro}</p>
+        </section>
+      )}
 
       <section className="mx-auto max-w-6xl px-4">
         <div className="-mt-8 grid gap-px overflow-hidden rounded-2xl border border-border bg-border shadow-card sm:grid-cols-2 lg:grid-cols-4">
@@ -148,6 +198,36 @@ function CourseDetail() {
             </Accordion>
           </div>
 
+          {course.tools && course.tools.length > 0 && (
+            <div>
+              <h2 className="text-2xl font-bold">Tools you'll use</h2>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {course.tools.map((tool) => (
+                  <span
+                    key={tool}
+                    className="rounded-full border border-border bg-card px-4 py-1.5 text-sm font-medium shadow-sm"
+                  >
+                    {tool}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {course.projects && course.projects.length > 0 && (
+            <div>
+              <h2 className="text-2xl font-bold">Projects you'll build</h2>
+              <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
+                {course.projects.map((project) => (
+                  <li key={project} className="flex gap-2.5">
+                    <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-primary" />
+                    <span>{project}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
           <div>
             <h2 className="text-2xl font-bold">Prerequisites</h2>
             <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
@@ -156,6 +236,22 @@ function CourseDetail() {
               ))}
             </ul>
           </div>
+
+          {course.faqs && course.faqs.length > 0 && (
+            <div>
+              <h2 className="text-2xl font-bold">Frequently asked questions</h2>
+              <Accordion type="single" collapsible className="mt-4 rounded-2xl border border-border bg-card px-5">
+                {course.faqs.map((faq) => (
+                  <AccordionItem key={faq.question} value={faq.question}>
+                    <AccordionTrigger className="text-left">{faq.question}</AccordionTrigger>
+                    <AccordionContent>
+                      <p className="text-sm text-muted-foreground">{faq.answer}</p>
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </div>
+          )}
         </div>
 
         <aside className="lg:sticky lg:top-24 lg:self-start">

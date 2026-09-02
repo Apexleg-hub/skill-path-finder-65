@@ -13,7 +13,7 @@ export function SiteFooter() {
             <span className="font-display text-lg font-bold">Corepoint Tech</span>
           </div>
           <p className="mt-4 text-sm text-ink-foreground/70">
-            Practical, instructor-led technology training. One-On-One Classes, Cohort classes, real projects, working
+            Practical, instructor-led technology training. one-on-one class, cohort classes, real projects, working
             professionals as trainers.
           </p>
           <div className="mt-5 flex gap-3">
