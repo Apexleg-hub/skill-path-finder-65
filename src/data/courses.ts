@@ -3804,10 +3804,10 @@ export const courses: Course[] = [
       "Learn to use generative AI tools effectively prompting, AI-assisted content creation, workflow automation, and integrating AI into everyday work.",
 
     seoIntro:
-      "Searching for a Generative AI course in Lagos or Prompt Engineering training in Nigeria? This 6-week programme at Corepoint Tech Academy teaches you how to work effectively with modern AI tools — from writing prompts that actually get useful results, to using generative AI for content, research, and automation. No coding background required. It's built for professionals, students, and business owners who want to use AI as a practical productivity tool, not just talk about it.",
+      "Searching for a Generative AI course in Lagos or Prompt Engineering training in Nigeria? This 6-week programme at Corepoint Tech Academy teaches you how to work effectively with modern AI tools from writing prompts that actually get useful results, to using generative AI for content, research, and automation. No coding background required. It's built for professionals, students, and business owners who want to use AI as a practical productivity tool, not just talk about it.",
 
     overview:
-      "A practical, hands-on programme focused on understanding and working effectively with generative AI. Rather than treating AI as an abstract concept, this course teaches prompting techniques, AI-assisted content generation, research workflows, and how to integrate generative AI into real tasks — writing, analysis, automation, and decision-making. Learners leave with practical prompting skills and a portfolio of AI-assisted projects.",
+      "A practical, hands-on programme focused on understanding and working effectively with generative AI. Rather than treating AI as an abstract concept, this course teaches prompting techniques, AI-assisted content generation, research workflows, and how to integrate generative AI into real tasks  writing, analysis, automation, and decision-making. Learners leave with practical prompting skills and a portfolio of AI-assisted projects.",
 
     audience:
       "Professionals, students, content creators, marketers, business owners, and career changers who want to use generative AI productively in their work, without needing a programming background.",

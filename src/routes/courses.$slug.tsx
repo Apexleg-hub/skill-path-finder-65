@@ -132,12 +132,6 @@ function CourseDetail() {
         </div>
       </section>
 
-      {course.seoIntro && (
-        <section className="mx-auto max-w-6xl px-4 pt-10">
-          <p className="max-w-3xl text-muted-foreground">{course.seoIntro}</p>
-        </section>
-      )}
-
       <section className="mx-auto max-w-6xl px-4">
         <div className="-mt-8 grid gap-px overflow-hidden rounded-2xl border border-border bg-border shadow-card sm:grid-cols-2 lg:grid-cols-4">
           {facts.map((f) => (
@@ -149,6 +143,12 @@ function CourseDetail() {
           ))}
         </div>
       </section>
+
+      {course.seoIntro && (
+        <section className="mx-auto max-w-6xl px-4 pt-10">
+          <p className="max-w-3xl text-muted-foreground">{course.seoIntro}</p>
+        </section>
+      )}
 
       <section className="mx-auto grid max-w-6xl gap-12 px-4 py-14 lg:grid-cols-[1.6fr_1fr]">
         <div className="space-y-12">
