@@ -488,6 +488,9 @@ export const courses: Course[] = [
   summary:
     "Learn R for data analysis, statistical modelling, visualisation and data-driven decision-making using real-world datasets.",
 
+
+    seoIntro:
+      "Searching for an R Programming course in Lagos? This 6-week programme at Corepoint Tech Academy teaches R for statistical analysis, data visualisation, and data-driven decision-making using real datasets. It's built for students, researchers, and analysts in Nigeria who need R specifically — whether for academic research, statistical reporting, or roles that require R over Python.",
   overview:
     "A practical, project-based R programming programme designed for learners who want to develop professional skills in data analysis and statistical computing. Students learn how to work with datasets in R, clean and transform data, perform exploratory and statistical analysis, create professional visualisations with ggplot2 and build reproducible analytical workflows. The programme combines R programming with practical statistics and real-world data science projects.",
 
@@ -700,6 +703,24 @@ export const courses: Course[] = [
     "Basic mathematics is recommended",
     "Basic understanding of statistics is helpful but not required",
   ],
+
+  faqs: [
+    {
+      question: "Why choose R instead of Python for data science?",
+      answer:
+        "R is widely used in academic research, statistics, and specific industries like health and social sciences. If your work or programme specifically requires R, this course focuses entirely on it rather than splitting time with another language.",
+    },
+    {
+      question: "Do I need a statistics background to join?",
+      answer:
+        "A basic understanding of statistics is helpful but not required. The course introduces statistical concepts alongside the R skills needed to apply them.",
+    },
+    {
+      question: "Is this course available online?",
+      answer:
+        "Yes, it's available both physically in Lagos and live online.",
+    },
+  ],
 },
   {
   slug: "statistical-analysis-and-data-science-with-python",
@@ -713,6 +734,9 @@ export const courses: Course[] = [
   summary:
     "Use Python and statistics to analyse real-world data, discover meaningful patterns and support data-driven decisions.",
 
+
+    seoIntro:
+      "Looking for a Python for Data Science course in Lagos with a strong statistics foundation? This 6-week intermediate programme at Corepoint Tech Academy teaches you to use Python and statistical methods together to analyse real data, uncover patterns, and support decisions with evidence — not just run code, but understand what the numbers mean.",
   overview:
     "A practical, project-based programme designed to strengthen the statistical and analytical skills required for modern data science. Students learn how to work with real-world datasets using Python, perform exploratory data analysis, apply descriptive and inferential statistics, test hypotheses, analyse relationships between variables and communicate findings effectively. The course provides a strong foundation for advanced analytics and machine learning.",
 
@@ -890,7 +914,25 @@ export const courses: Course[] = [
     "Basic mathematics is recommended",
     "No previous statistics experience required",
   ],
-  },
+  
+  faqs: [
+    {
+      question: "Is this course only about Python, or does it cover statistics too?",
+      answer:
+        "Both. The course pairs Python programming with statistical analysis techniques, so you learn to apply the right statistical method and implement it correctly in code.",
+    },
+    {
+      question: "Do I need prior Python experience?",
+      answer:
+        "Since this is an intermediate-level course, some basic Python familiarity is expected. If you're completely new to Python, consider starting with a foundational Python or data analysis course first.",
+    },
+    {
+      question: "Is this course available live online?",
+      answer:
+        "Yes, it's available both physically in Lagos and live online.",
+    },
+  ],
+},
   {
     slug: "project-management",
     title: "Project Management",
@@ -904,6 +946,9 @@ export const courses: Course[] = [
     summary:
       "Learn how to plan, organise, execute and close projects using practical project management methods, tools and documentation.",
 
+
+    seoIntro:
+      "Looking for a Project Management course in Lagos that's practical rather than purely theoretical? This 6-week programme at Corepoint Tech Academy teaches you to plan, organise, execute, and close projects using real methods, templates, and documentation — the kind of practical skill set that applies across tech, business, and operations roles in Nigeria.",
     overview:
       "A practical project management course designed for professionals, team leads, entrepreneurs and career starters who want to manage projects with more structure and confidence. Students learn how to define project goals, create schedules, manage stakeholders, monitor risks, coordinate teams and close projects professionally using real workplace scenarios.",
 
@@ -996,7 +1041,25 @@ export const courses: Course[] = [
       "No prior project management experience required",
       "Experience working with teams is helpful but not required",
     ],
-  },
+  
+  faqs: [
+    {
+      question: "Is this course only for people working in tech?",
+      answer:
+        "No. Project management skills apply across industries — this course is useful for anyone responsible for planning and delivering work, whether in tech, business operations, construction, or other fields.",
+    },
+    {
+      question: "Will I learn a specific project management methodology?",
+      answer:
+        "The course covers practical project management methods and tools used in real workplaces, including planning, documentation, and tracking techniques you can apply immediately.",
+    },
+    {
+      question: "Is this course available online?",
+      answer:
+        "Yes, it's available both physically in Lagos and live online.",
+    },
+  ],
+},
   {
     slug: "applied-machine-learning-with-python",
     title: "Applied Machine Learning with Python",
@@ -1010,6 +1073,9 @@ export const courses: Course[] = [
     summary:
       "Learn how to build, evaluate and deploy machine learning models with Python using real-world datasets and practical business problems.",
 
+
+    seoIntro:
+      "Searching for a Machine Learning course in Lagos that goes beyond theory? This 10-week intermediate programme at Corepoint Tech Academy teaches you to build, evaluate, and deploy machine learning models with Python using real datasets and real business problems — not just toy examples. It's built for developers, data analysts, and career changers ready to move into applied ML work.",
     overview:
       "A practical, project-based machine learning programme designed to take learners from data preparation and problem definition to model development, evaluation and deployment. Students work with real-world datasets, learn both supervised and unsupervised learning techniques, develop production-ready workflows and complete portfolio projects that demonstrate practical machine learning skills.",
 
@@ -1225,7 +1291,30 @@ export const courses: Course[] = [
       "Comfort working with spreadsheets or SQL",
       "Basic statistics is recommended",
     ],
-  },
+  
+  faqs: [
+    {
+      question: "Do I need prior Python experience for this course?",
+      answer:
+        "Yes, since this is an intermediate-level course, basic Python programming experience is expected before you start.",
+    },
+    {
+      question: "Will I deploy models, or just train them?",
+      answer:
+        "Both. The course covers building and evaluating models, and also how to deploy them so they can actually be used in an application, not just tested in a notebook.",
+    },
+    {
+      question: "How is this different from your Data Science courses?",
+      answer:
+        "This course focuses specifically on machine learning — model building, evaluation, and deployment — rather than the broader data workflow of collection, cleaning, and visualisation covered in our Data Science programmes.",
+    },
+    {
+      question: "Is this course available online?",
+      answer:
+        "Yes, it's available both physically in Lagos and live online.",
+    },
+  ],
+},
   {
     slug: "generative-ai-and-llm-applications",
     title: "Generative AI & LLM Applications",
@@ -1239,6 +1328,9 @@ export const courses: Course[] = [
     summary:
       "Learn to design, build and deploy practical Generative AI applications using large language models, prompt engineering, RAG, AI agents and modern AI development tools.",
 
+
+    seoIntro:
+      "Looking for a Generative AI and LLM course in Lagos focused on actually building applications? This 8-week, live-online programme at Corepoint Tech Academy teaches you to design, build, and deploy real Generative AI applications using large language models, prompt engineering, retrieval-augmented generation (RAG), and AI agents. It's built for developers and technical professionals ready to build with AI, not just use it.",
     overview:
       "A practical, project-based programme for developers, data professionals and technology practitioners who want to move beyond using AI chatbots and learn how to build real-world Generative AI applications. Students explore how large language models work, develop reliable prompts, work with embeddings and vector databases, build Retrieval-Augmented Generation systems, integrate APIs, implement AI agents and apply evaluation, security and deployment practices.",
 
@@ -1419,7 +1511,25 @@ export const courses: Course[] = [
       "Basic Python knowledge is recommended",
       "Basic understanding of APIs is helpful but not required",
     ],
-  },
+  
+  faqs: [
+    {
+      question: "How is this different from your Generative AI & Prompt Engineering course?",
+      answer:
+        "That course teaches you to use generative AI tools effectively without needing to code. This course is for developers who want to build applications on top of LLMs — RAG systems, AI agents, and deployed AI products.",
+    },
+    {
+      question: "Do I need programming experience for this course?",
+      answer:
+        "Yes. Since this is an intermediate-level, application-building course, prior programming experience is expected.",
+    },
+    {
+      question: "Is this course available in person, or only online?",
+      answer:
+        "This course is delivered live online only.",
+    },
+  ],
+},
   {
   slug: "data-analysis-full-stack",
   title: "Full Stack Data Analysis ",
@@ -1433,6 +1543,9 @@ export const courses: Course[] = [
   summary:
     "Master Advanced Excel, SQL and Power BI to clean, analyse, transform and communicate real-world business data.",
 
+
+    seoIntro:
+      "Looking for a Data Analysis course in Lagos covering Excel, SQL, and Power BI together? This 8-9 week programme at Corepoint Tech Academy takes you through the full data analysis workflow — cleaning and analysing data in Excel, querying it with SQL, and presenting it through Power BI dashboards — so you graduate able to handle a real analyst's workload, not just one tool in isolation.",
   overview:
     "A practical, career-focused data analysis programme designed to take learners from spreadsheet-based analysis to professional business intelligence. Students learn Advanced Excel, SQL and Power BI through real-world datasets, practical exercises and portfolio projects.",
 
@@ -1639,6 +1752,24 @@ export const courses: Course[] = [
     "Basic computer skills",
     "Basic understanding of Microsoft Excel is helpful but not required",
   ],
+
+  faqs: [
+    {
+      question: "How is this different from your Full-Stack Data Science course?",
+      answer:
+        "This course focuses specifically on data analysis — Excel, SQL, and Power BI. Our Full-Stack Data Science programme goes further, adding Python, SPSS, and Tableau for a broader data science skill set.",
+    },
+    {
+      question: "Do I need prior experience with Excel or SQL?",
+      answer:
+        "No prior experience is required. The course builds from data analysis fundamentals through to more advanced Excel, SQL, and Power BI skills.",
+    },
+    {
+      question: "Is this course available online?",
+      answer:
+        "Yes, it's available both physically in Lagos and live online.",
+    },
+  ],
 },
   {
     slug: "advanced-excel-for-data-analysis",
@@ -1652,6 +1783,9 @@ export const courses: Course[] = [
     summary:
       "Master advanced Excel techniques for data cleaning, analysis, dashboard development, reporting and business decision-making.",
 
+
+    seoIntro:
+      "Searching for an Advanced Excel course in Lagos for data analysis and dashboards? This 5-week programme at Corepoint Tech Academy teaches advanced Excel techniques for cleaning data, building dashboards, and creating reports that support real business decisions — ideal for professionals who already know basic Excel and want to go further, fast.",
     overview:
       "A practical, project-based Excel programme designed for professionals and analysts who want to move beyond basic spreadsheet tasks and develop advanced data analysis skills. Students learn advanced formulas, lookup functions, data cleaning, PivotTables, Power Query, dashboard development, data visualisation and Excel automation using real-world business datasets.",
 
@@ -1834,7 +1968,25 @@ export const courses: Course[] = [
       "Basic formulas and spreadsheet operations",
       "Basic understanding of tables and charts",
     ],
-  },
+  
+  faqs: [
+    {
+      question: "Is this course for Excel beginners?",
+      answer:
+        "This course is aimed at intermediate learners who already know basic Excel. If you're completely new to Excel, our Full Stack Data Analysis course starts from the fundamentals.",
+    },
+    {
+      question: "Will I build dashboards during the course?",
+      answer:
+        "Yes, dashboard development is a core part of this course, alongside data cleaning, analysis techniques, and reporting for business decision-making.",
+    },
+    {
+      question: "Is this course available online?",
+      answer:
+        "Yes, it's available both physically in Lagos and live online.",
+    },
+  ],
+},
   {
     slug: "business-intelligence",
     title: "Power BI for Business Intelligence",
@@ -1845,6 +1997,9 @@ export const courses: Course[] = [
     image: dataImg,
     summary:
       "Transform raw business data into interactive dashboards, meaningful KPIs and actionable insights with Power BI.",
+
+    seoIntro:
+      "Looking for a Power BI course in Lagos focused on real business intelligence work? This 6-week programme at Corepoint Tech Academy teaches you to turn raw business data into interactive dashboards, meaningful KPIs, and insights decision-makers can actually act on — built for analysts, business owners, and professionals in Nigerian companies who need to report on data clearly.",
     overview:
       "A practical, project-based Power BI programme designed to take learners from raw data to professional business intelligence solutions. Students learn how to connect and transform data with Power Query, build robust data models, write DAX measures, create interactive dashboards and publish reports for decision-makers.",
     audience:
@@ -1974,7 +2129,25 @@ export const courses: Course[] = [
       "Basic Excel knowledge is recommended",
       "No prior Power BI experience required",
     ],
-  },
+  
+  faqs: [
+    {
+      question: "Do I need a data analysis background before this course?",
+      answer:
+        "No, this course is suitable for beginners to intermediate learners. Basic familiarity with spreadsheets is helpful but not required.",
+    },
+    {
+      question: "Will I learn DAX and data modelling in Power BI?",
+      answer:
+        "Yes, the course covers building interactive dashboards, KPI tracking, and the data modelling skills needed to make Power BI reports genuinely useful for business decisions.",
+    },
+    {
+      question: "Is this course available online?",
+      answer:
+        "Yes, it's available both physically in Lagos and live online.",
+    },
+  ],
+},
   {
     slug: "full-stack-web-development",
     title: "Full-Stack Web Development",
@@ -1988,6 +2161,9 @@ export const courses: Course[] = [
     summary:
       "Learn to design, build, test and deploy modern full-stack web applications using HTML, CSS, JavaScript, TypeScript, React, APIs and databases.",
 
+
+    seoIntro:
+      "Searching for a Full-Stack Web Development course in Lagos that covers modern tools? This 12-16 week programme at Corepoint Tech Academy takes you from HTML, CSS, and JavaScript through TypeScript, React, APIs, and databases — building real, deployed web applications along the way. It's built for beginners and career changers who want to become job-ready web developers in Nigeria's tech industry.",
     overview:
       "A comprehensive, project-based web development programme designed to take learners from the fundamentals of web development to building and deploying production-ready full-stack applications. Students learn modern frontend and backend development, database design, authentication, APIs, testing, Git, deployment and professional development workflows. The programme includes multiple portfolio projects and code reviews to help learners develop practical, industry-ready skills.",
 
@@ -2265,7 +2441,25 @@ export const courses: Course[] = [
       "No previous programming experience required",
       "A personal laptop is recommended for practical exercises",
     ],
-  },
+  
+  faqs: [
+    {
+      question: "Do I need any coding experience to start this course?",
+      answer:
+        "No prior coding experience is required. The course starts from HTML, CSS, and JavaScript fundamentals before progressing to more advanced tools like React and TypeScript.",
+    },
+    {
+      question: "Will I build and deploy real projects?",
+      answer:
+        "Yes, the course is project-based throughout, and you'll deploy full-stack applications rather than just building isolated exercises.",
+    },
+    {
+      question: "Is this course available online?",
+      answer:
+        "Yes, it's available both physically in Lagos and live online.",
+    },
+  ],
+},
   {
     slug: "mobile-app-development-react-native",
     title: "Mobile App Development with React Native",
@@ -2278,6 +2472,9 @@ export const courses: Course[] = [
     summary:
       "Build modern, production-ready Android and iOS applications with React Native from a single codebase.",
 
+
+    seoIntro:
+      "Looking for a React Native course in Lagos to build real mobile apps? This 10-week, live-online programme at Corepoint Tech Academy teaches you to build production-ready Android and iOS applications from a single codebase — ideal for web developers looking to move into mobile, or anyone wanting to build a mobile app for their own business idea.",
     overview:
       "A practical, project-based mobile development programme designed for developers who want to build and deploy cross-platform applications. Students learn React Native, navigation, APIs, authentication, device features, local storage, backend integration, testing and app deployment while building a complete mobile application.",
 
@@ -2456,7 +2653,25 @@ export const courses: Course[] = [
       "Basic understanding of HTML and CSS is recommended",
       "A laptop capable of running the development environment",
     ],
-  },
+  
+  faqs: [
+    {
+      question: "Do I need prior JavaScript or React experience?",
+      answer:
+        "Since this is an intermediate-level course, some prior JavaScript experience is expected. Familiarity with React is helpful but not strictly required.",
+    },
+    {
+      question: "Will I be able to build apps for both Android and iOS?",
+      answer:
+        "Yes, React Native lets you build for both platforms from a single codebase, and this course covers building genuinely production-ready apps, not just prototypes.",
+    },
+    {
+      question: "Is this course delivered online?",
+      answer:
+        "Yes, this course is delivered live online.",
+    },
+  ],
+},
   {
     slug: "cybersecurity-fundamentals",
     title: "Cybersecurity Fundamentals",
@@ -2470,6 +2685,9 @@ export const courses: Course[] = [
     summary:
       "Build practical cybersecurity skills by learning how to identify threats, secure systems, analyse security events and respond to incidents.",
 
+
+    seoIntro:
+      "Searching for a Cybersecurity course in Lagos for beginners? This 10-week programme at Corepoint Tech Academy builds practical cybersecurity skills from the ground up — identifying threats, securing systems, analysing security events, and responding to incidents. With cyberattacks and fraud a growing concern for Nigerian banks, fintechs, and businesses, this course is built to make you genuinely useful in a security role, not just certificate-holding.",
     overview:
       "A practical, lab-driven cybersecurity programme designed for beginners and aspiring security professionals. Students develop a strong foundation in cybersecurity, networking, system security, identity and access management, security monitoring, threat detection and incident response through guided labs and simulated security scenarios.",
 
@@ -2675,7 +2893,30 @@ export const courses: Course[] = [
       "Basic networking knowledge is helpful but not required",
       "No previous cybersecurity experience required",
     ],
-  },
+  
+  faqs: [
+    {
+      question: "Do I need an IT background to start this course?",
+      answer:
+        "No prior cybersecurity experience is required, though basic computer literacy is expected. The course is designed to build your skills from the fundamentals up.",
+    },
+    {
+      question: "Is this course more theory or hands-on practice?",
+      answer:
+        "The course emphasises practical, hands-on skills — identifying real threats, analysing security events, and practising incident response, not just memorising concepts.",
+    },
+    {
+      question: "How is this different from your Ethical Hacking course?",
+      answer:
+        "This course covers foundational cybersecurity — defence, monitoring, and response. Our Ethical Hacking & Penetration Testing course is a more advanced, offensive-security-focused programme for those ready to go further.",
+    },
+    {
+      question: "Is this course available online?",
+      answer:
+        "Yes, it's available both physically in Lagos and live online.",
+    },
+  ],
+},
   {
     slug: "ethical-hacking-and-penetration-testing",
     title: "Ethical Hacking & Penetration Testing",
@@ -2688,6 +2929,9 @@ export const courses: Course[] = [
     summary:
       "Develop practical offensive security skills by learning how to assess, exploit and secure systems through authorised penetration testing in controlled lab environments.",
 
+
+    seoIntro:
+      "Looking for an Ethical Hacking course in Lagos with real, hands-on penetration testing practice? This 10-week, live-online, advanced-level programme at Corepoint Tech Academy teaches you to assess, exploit, and secure systems through authorised penetration testing in controlled lab environments — built for those ready to move into offensive security work.",
     overview:
       "An advanced, hands-on ethical hacking and penetration testing programme designed for cybersecurity professionals who want to develop practical offensive security capabilities. Students learn the complete penetration testing lifecycle, from engagement planning and reconnaissance to vulnerability assessment, controlled exploitation, privilege escalation, post-exploitation analysis and professional security reporting. All practical activities are performed in authorised, isolated lab environments.",
 
@@ -2904,7 +3148,25 @@ export const courses: Course[] = [
       "Basic cybersecurity knowledge",
       "Familiarity with TCP/IP and common network protocols",
     ],
-  },
+  
+  faqs: [
+    {
+      question: "Is this course suitable for beginners?",
+      answer:
+        "No, this is an advanced-level course. We recommend completing our Cybersecurity Fundamentals course first if you're new to security.",
+    },
+    {
+      question: "Will I practice on real systems, or only in labs?",
+      answer:
+        "All hands-on exercises are conducted in controlled, authorised lab environments — this is what makes the practice both effective and ethical.",
+    },
+    {
+      question: "Is this course delivered online?",
+      answer:
+        "Yes, this course is delivered live online.",
+    },
+  ],
+},
   {
     slug: "aws-cloud-practitioner-to-solutions-architect",
     title: "AWS Cloud Practitioner to Solutions Architect",
@@ -2917,6 +3179,9 @@ export const courses: Course[] = [
     summary:
       "Build practical AWS cloud skills, design secure and highly available architectures, and prepare for the AWS Certified Solutions Architect – Associate certification.",
 
+
+    seoIntro:
+      "Searching for an AWS course in Lagos that prepares you for certification? This 10-week programme at Corepoint Tech Academy builds practical AWS cloud skills and prepares you for the AWS Certified Solutions Architect – Associate exam, covering how to design secure, highly available cloud architectures — not just pass a test, but actually work with AWS professionally.",
     overview:
       "A practical, hands-on AWS cloud programme designed to take learners from foundational cloud concepts to designing and deploying scalable solutions on AWS. Students work with core AWS services, networking, security, storage, databases, monitoring and cost management while applying cloud architecture principles through real-world labs and projects.",
 
@@ -3138,7 +3403,25 @@ export const courses: Course[] = [
       "Basic networking knowledge is recommended",
       "No previous AWS experience required",
     ],
-  },
+  
+  faqs: [
+    {
+      question: "Do I need prior cloud experience to join?",
+      answer:
+        "No prior AWS or cloud experience is required. The course is designed to take you from cloud practitioner fundamentals up to solutions architect-level skills.",
+    },
+    {
+      question: "Does this course prepare me for an actual AWS certification exam?",
+      answer:
+        "Yes, the course is structured around the AWS Certified Solutions Architect – Associate certification, alongside practical, hands-on architecture design skills.",
+    },
+    {
+      question: "Is this course available online?",
+      answer:
+        "Yes, it's available both physically in Lagos and live online.",
+    },
+  ],
+},
   {
     slug: "devops-with-docker-and-kubernetes",
     title: "DevOps with Docker & Kubernetes",
@@ -3150,6 +3433,9 @@ export const courses: Course[] = [
 
     summary:
       "Learn modern DevOps practices by containerising applications, automating deployments and managing scalable workloads with Docker and Kubernetes.",
+
+    seoIntro:
+      "Looking for a DevOps course in Lagos that covers Docker and Kubernetes properly, not just the basics? This 10-week, live-online programme at Corepoint Tech Academy takes you from containerising your first application to deploying and operating production-style workloads on Kubernetes. You'll work through CI/CD pipelines, Infrastructure as Code, and monitoring — the same tools and workflows used by DevOps and cloud engineering teams in real Nigerian tech companies. Built for developers, sysadmins, and IT professionals ready to move into cloud-native, container-based infrastructure work.",
 
     overview:
       "A practical, project-based DevOps programme designed for developers, system administrators and IT professionals who want to build modern software delivery and infrastructure skills. Students learn containerisation with Docker, orchestration with Kubernetes, CI/CD automation, Infrastructure as Code, configuration and secrets management, cloud deployment, monitoring and reliability practices. The programme focuses on real-world deployment workflows rather than theory alone.",
@@ -3377,6 +3663,29 @@ export const courses: Course[] = [
       "Some software development or deployment experience is recommended",
       "Basic networking knowledge is helpful",
     ],
+
+    faqs: [
+      {
+        question: "Do I need prior DevOps experience to join this course?",
+        answer:
+          "You don't need prior DevOps experience specifically, but you should be comfortable with basic Linux commands, Git, and have some exposure to how web applications are built or deployed. This isn't a course for complete programming beginners.",
+      },
+      {
+        question: "Will I actually deploy applications to Kubernetes, or is this mostly theory?",
+        answer:
+          "You'll containerise a real application with Docker, deploy it to Kubernetes, and build a working CI/CD pipeline as part of your capstone project — the course is built around hands-on deployment work throughout, not just concepts.",
+      },
+      {
+        question: "Is Docker or Kubernetes experience required before starting?",
+        answer:
+          "No. The course starts with containerisation fundamentals using Docker before moving into Kubernetes, so you build up from the basics of each tool.",
+      },
+      {
+        question: "Is this course delivered online?",
+        answer:
+          "Yes, this course is delivered live online, so you can join from anywhere in Nigeria.",
+      },
+    ],
   },
   {
     slug: "sql-and-database-administration",
@@ -3390,6 +3699,9 @@ export const courses: Course[] = [
     summary:
       "Develop strong SQL skills, design reliable relational databases, optimise queries and learn essential database administration practices using PostgreSQL and SQL Server.",
 
+
+    seoIntro:
+      "Looking to learn SQL in Lagos, including how to actually administer a database, not just query one? This 8-week programme at Corepoint Tech Academy covers SQL fundamentals, relational database design, query optimisation, and essential database administration practices using PostgreSQL and SQL Server — a strong foundation for data analyst, backend developer, or database administrator roles.",
     overview:
       "A practical, project-based programme that takes learners from SQL fundamentals to advanced querying and core database administration. Students learn how to retrieve and analyse data, design normalised relational schemas, manage users and permissions, optimise database performance, perform backups and recovery, and automate routine database operations using PostgreSQL and Microsoft SQL Server.",
 
@@ -3608,7 +3920,25 @@ export const courses: Course[] = [
       "No prior SQL experience required",
       "Basic understanding of spreadsheets is helpful but not required",
     ],
-  },
+  
+  faqs: [
+    {
+      question: "Is this course only about writing SQL queries?",
+      answer:
+        "No. Alongside SQL querying, this course covers database design and essential administration practices, so you understand how to build and maintain databases, not just query existing ones.",
+    },
+    {
+      question: "Do I need prior database experience?",
+      answer:
+        "No prior experience is required. The course starts from SQL fundamentals before progressing to design and administration topics.",
+    },
+    {
+      question: "Is this course available online?",
+      answer:
+        "Yes, it's available both physically in Lagos and live online.",
+    },
+  ],
+},
   {
     slug: "workflow-automation-no-code",
     title: "Workflow Automation & No-Code",
@@ -3621,6 +3951,9 @@ export const courses: Course[] = [
     summary:
       "Automate repetitive business processes, reports, emails and data workflows using Python, n8n, Zapier, Make and other automation tools.",
 
+
+    seoIntro:
+      "Searching for a workflow automation course in Lagos using no-code tools? This 6-week, live-online programme at Corepoint Tech Academy teaches you to automate repetitive business processes, reports, emails, and data workflows using Python, n8n, Zapier, Make, and other automation tools — practical skills for freelancers, business owners, and operations professionals looking to save hours of manual work every week.",
     overview:
       "A practical, project-based automation programme designed to help professionals identify repetitive tasks, design efficient workflows and automate business processes with little or no code. Students learn both no-code and low-code automation using platforms such as n8n, Zapier and Make, alongside Python scripting for more advanced automation. The programme focuses on real-world business processes including email automation, data processing, reporting, file management, API integration and workflow monitoring.",
 
@@ -3788,7 +4121,25 @@ export const courses: Course[] = [
       "No programming experience required",
       "Basic understanding of spreadsheets is helpful but not required",
     ],
-  },
+  
+  faqs: [
+    {
+      question: "Do I need to know how to code for this course?",
+      answer:
+        "Most of the course focuses on no-code and low-code automation tools like n8n, Zapier, and Make, so heavy coding knowledge isn't required, though basic Python is introduced for more advanced automations.",
+    },
+    {
+      question: "What kind of tasks can I automate after this course?",
+      answer:
+        "Common examples include automated reports, email workflows, data syncing between apps, customer follow-ups, and repetitive data entry tasks.",
+    },
+    {
+      question: "Is this course delivered online?",
+      answer:
+        "Yes, this course is delivered live online.",
+    },
+  ],
+},
 
   {
     slug: "generative-ai-prompt-engineering",
@@ -3801,13 +4152,13 @@ export const courses: Course[] = [
     image: aiImg,
 
     summary:
-      "Learn to use generative AI tools effectively prompting, AI-assisted content creation, workflow automation, and integrating AI into everyday work.",
+      "Learn to use generative AI tools effectively — prompting, AI-assisted content creation, workflow automation, and integrating AI into everyday work.",
 
     seoIntro:
-      "Searching for a Generative AI course in Lagos or Prompt Engineering training in Nigeria? This 6-week programme at Corepoint Tech Academy teaches you how to work effectively with modern AI tools from writing prompts that actually get useful results, to using generative AI for content, research, and automation. No coding background required. It's built for professionals, students, and business owners who want to use AI as a practical productivity tool, not just talk about it.",
+      "Searching for a Generative AI course in Lagos or Prompt Engineering training in Nigeria? This 6-week programme at Corepoint Tech Academy teaches you how to work effectively with modern AI tools — from writing prompts that actually get useful results, to using generative AI for content, research, and automation. No coding background required. It's built for professionals, students, and business owners who want to use AI as a practical productivity tool, not just talk about it.",
 
     overview:
-      "A practical, hands-on programme focused on understanding and working effectively with generative AI. Rather than treating AI as an abstract concept, this course teaches prompting techniques, AI-assisted content generation, research workflows, and how to integrate generative AI into real tasks  writing, analysis, automation, and decision-making. Learners leave with practical prompting skills and a portfolio of AI-assisted projects.",
+      "A practical, hands-on programme focused on understanding and working effectively with generative AI. Rather than treating AI as an abstract concept, this course teaches prompting techniques, AI-assisted content generation, research workflows, and how to integrate generative AI into real tasks — writing, analysis, automation, and decision-making. Learners leave with practical prompting skills and a portfolio of AI-assisted projects.",
 
     audience:
       "Professionals, students, content creators, marketers, business owners, and career changers who want to use generative AI productively in their work, without needing a programming background.",
@@ -3941,13 +4292,13 @@ export const courses: Course[] = [
     image: aiImg,
 
     summary:
-      "An advanced, professional level programme covering machine learning, deep learning, AI system design, and deployment for those ready to build and ship real AI applications.",
+      "An advanced, professional-level programme covering machine learning, deep learning, AI system design, and deployment — for those ready to build and ship real AI applications.",
 
     seoIntro:
-      "Looking for a professional AI Engineering course in Lagos that goes beyond the basics? This 16-week advanced programme at Corepoint Tech Academy is built for developers, data professionals, and career changers who already have some technical foundation and want to become job-ready AI Engineers. You'll cover machine learning, deep learning, model deployment, and applied generative AI system design with a heavy emphasis on shipping real, working applications rather than just completing tutorials.",
+      "Looking for a professional AI Engineering course in Lagos that goes beyond the basics? This 16-week advanced programme at Corepoint Tech Academy is built for developers, data professionals, and career changers who already have some technical foundation and want to become job-ready AI Engineers. You'll cover machine learning, deep learning, model deployment, and applied generative AI system design — with a heavy emphasis on shipping real, working applications rather than just completing tutorials.",
 
     overview:
-      "A rigorous, project-based programme designed to take learners with an existing technical foundation into professional AI Engineering. The programme covers advanced machine learning, deep learning fundamentals, model evaluation and optimization, AI application architecture, deployment of models as APIs, and applied generative AI system design, including retrieval-augmented generation and AI agents. Learners complete a substantial capstone project that mirrors real-world AI engineering work from problem definition to deployed application.",
+      "A rigorous, project-based programme designed to take learners with an existing technical foundation into professional AI Engineering. The programme covers advanced machine learning, deep learning fundamentals, model evaluation and optimization, AI application architecture, deployment of models as APIs, and applied generative AI system design, including retrieval-augmented generation and AI agents. Learners complete a substantial capstone project that mirrors real-world AI engineering work — from problem definition to deployed application.",
 
     audience:
       "Software developers, data analysts, data scientists, and technically-inclined professionals who already have basic Python experience and want to specialize in building and deploying AI systems professionally.",
