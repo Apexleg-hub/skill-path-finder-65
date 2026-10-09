@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CourseCard } from "@/components/site/CourseCard";
 import { categoryName, courses, getCourse } from "@/data/courses";
+import { SITE_URL, toAbsoluteUrl } from "@/lib/site";
 
 export const Route = createFileRoute("/courses/$slug")({
   loader: ({ params }) => {
@@ -24,18 +25,24 @@ export const Route = createFileRoute("/courses/$slug")({
       };
     }
     const { course } = loaderData;
-    const title = `${course.title} in Lagos | Corepoint Tech Academy`;
-    const description = `${course.summary} Learn ${course.title} in Lagos or live online with Corepoint Tech Academy.`;
+    const title = course.seoTitle ?? `${course.title} in Lagos | Corepoint Tech Academy`;
+    const description =
+      course.seoDescription ??
+      `${course.summary} Learn ${course.title} in Lagos or live online with Corepoint Tech Academy.`;
+    const canonicalUrl = toAbsoluteUrl(`/courses/${course.slug}`);
+    const imageUrl = toAbsoluteUrl(course.image);
 
     const structuredData = {
       "@context": "https://schema.org",
       "@type": "Course",
       name: course.title,
-      description: course.summary,
+      description: course.seoDescription ?? course.summary,
+      url: canonicalUrl,
+      image: imageUrl,
       provider: {
         "@type": "Organization",
         name: "Corepoint Tech Academy",
-        sameAs: "https://corepointtech.com.ng",
+        sameAs: SITE_URL,
       },
     };
 
@@ -59,9 +66,17 @@ export const Route = createFileRoute("/courses/$slug")({
       meta: [
         { title },
         { name: "description", content: description },
+        { property: "og:type", content: "website" },
+        { property: "og:url", content: canonicalUrl },
         { property: "og:title", content: title },
         { property: "og:description", content: description },
+        { property: "og:image", content: imageUrl },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:title", content: title },
+        { name: "twitter:description", content: description },
+        { name: "twitter:image", content: imageUrl },
       ],
+      links: [{ rel: "canonical", href: canonicalUrl }],
       scripts: [
         {
           type: "application/ld+json",

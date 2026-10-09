@@ -15,6 +15,7 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as DataScienceAiCourseRouteImport } from './routes/data-science-ai-course'
 import { Route as PaymentPlansAndFaqsRouteImport } from './routes/payment-plans-and-faqs'
 import { Route as RegisterRouteImport } from './routes/register'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as AdminLoginRouteImport } from './routes/admin.login'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
@@ -50,6 +51,11 @@ const PaymentPlansAndFaqsRoute = PaymentPlansAndFaqsRouteImport.update({
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
   path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminLoginRoute = AdminLoginRouteImport.update({
@@ -90,6 +96,7 @@ export interface FileRoutesByFullPath {
   '/data-science-ai-course': typeof DataScienceAiCourseRoute
   '/payment-plans-and-faqs': typeof PaymentPlansAndFaqsRoute
   '/register': typeof RegisterRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin/login': typeof AdminLoginRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/courses/$slug': typeof CoursesSlugRoute
@@ -104,6 +111,7 @@ export interface FileRoutesByTo {
   '/data-science-ai-course': typeof DataScienceAiCourseRoute
   '/payment-plans-and-faqs': typeof PaymentPlansAndFaqsRoute
   '/register': typeof RegisterRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin/login': typeof AdminLoginRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/courses/$slug': typeof CoursesSlugRoute
@@ -119,6 +127,7 @@ export interface FileRoutesById {
   '/data-science-ai-course': typeof DataScienceAiCourseRoute
   '/payment-plans-and-faqs': typeof PaymentPlansAndFaqsRoute
   '/register': typeof RegisterRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin/login': typeof AdminLoginRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/courses/$slug': typeof CoursesSlugRoute
@@ -135,6 +144,7 @@ export interface FileRouteTypes {
     | '/data-science-ai-course'
     | '/payment-plans-and-faqs'
     | '/register'
+    | '/sitemap.xml'
     | '/admin/login'
     | '/blog/$slug'
     | '/courses/$slug'
@@ -149,6 +159,7 @@ export interface FileRouteTypes {
     | '/data-science-ai-course'
     | '/payment-plans-and-faqs'
     | '/register'
+    | '/sitemap.xml'
     | '/admin/login'
     | '/blog/$slug'
     | '/courses/$slug'
@@ -163,6 +174,7 @@ export interface FileRouteTypes {
     | '/data-science-ai-course'
     | '/payment-plans-and-faqs'
     | '/register'
+    | '/sitemap.xml'
     | '/admin/login'
     | '/blog/$slug'
     | '/courses/$slug'
@@ -178,6 +190,7 @@ export interface RootRouteChildren {
   DataScienceAiCourseRoute: typeof DataScienceAiCourseRoute
   PaymentPlansAndFaqsRoute: typeof PaymentPlansAndFaqsRoute
   RegisterRoute: typeof RegisterRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   AdminLoginRoute: typeof AdminLoginRoute
   BlogSlugRoute: typeof BlogSlugRoute
   CoursesSlugRoute: typeof CoursesSlugRoute
@@ -228,6 +241,13 @@ declare module '@tanstack/react-router' {
       path: '/register'
       fullPath: '/register'
       preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/login': {
@@ -282,6 +302,7 @@ const rootRouteChildren: RootRouteChildren = {
   DataScienceAiCourseRoute: DataScienceAiCourseRoute,
   PaymentPlansAndFaqsRoute: PaymentPlansAndFaqsRoute,
   RegisterRoute: RegisterRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   AdminLoginRoute: AdminLoginRoute,
   BlogSlugRoute: BlogSlugRoute,
   CoursesSlugRoute: CoursesSlugRoute,

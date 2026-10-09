@@ -9,6 +9,26 @@ import automationImg from "@/assets/course-automation.jpg";
 import managementImg from "@/assets/project-management.png";
 import danImg from "@/assets/Applied-Machine- Learning-with- Python.png";
 
+const courseImageAssets = import.meta.glob<string>(
+  "../assets/courses/*.{avif,jpg,jpeg,png,webp}",
+  {
+  eager: true,
+  query: "?url",
+  import: "default",
+  },
+);
+
+const courseImageExtensions = ["webp", "png", "jpg", "jpeg", "avif"] as const;
+
+const resolveCourseImage = (slug: string, fallback: string) => {
+  for (const extension of courseImageExtensions) {
+    const image = courseImageAssets[`../assets/courses/${slug}.${extension}`];
+    if (image) return image;
+  }
+
+  return fallback;
+};
+
 export type CategoryId =
   | "ai"
   | "data-science"
@@ -54,6 +74,8 @@ export interface Course {
   // New: SEO-focused fields. All optional, so existing courses keep working
   // without changes. Fill these in gradually, course by course.
   seoIntro?: string;
+  seoTitle?: string;
+  seoDescription?: string;
   faqs?: { question: string; answer: string }[];
 }
 
@@ -77,7 +99,7 @@ export const categories: Category[] = [
     name: "Data Science",
     shortName: "Data Science",
     description: "Analysis, visualisation and decision-ready reporting.",
-    image: dataImg,
+    image: resolveCourseImage("full-stack-data-science", dataImg),
     
   },
 
@@ -125,7 +147,7 @@ export const categories: Category[] = [
   },
   {
     id: "automation",
-    name: "Automation",
+    name: "AI Automation",
     shortName: "Automation",
     description: "Scripting and no-code workflow automation for real work.",
     image: automationImg,
@@ -135,7 +157,7 @@ export const categories: Category[] = [
 export const categoryName = (id: CategoryId) =>
   categories.find((c) => c.id === id)?.name ?? id;
 
-export const courses: Course[] = [
+const courseRecords: Course[] = [
   {
   slug: "full-stack-data-science",
   title: "Full-Stack Data Science",
@@ -150,7 +172,7 @@ export const courses: Course[] = [
     "Master the complete data workflow with Excel, SQL, Python, SPSS, Power BI and Tableau. From raw data to analysis, visualisation and business insight.",
 
   seoIntro:
-    "Looking for a Data Science course in Lagos that actually takes you from beginner to job-ready? The Full-Stack Data Science programme at Corepoint Tech Academy is a 10-week, project-based course covering the entire modern data workflow — Excel, SQL, Python, SPSS, Power BI and Tableau — so you learn to work with data the way real analysts and data scientists do, not just watch tutorials. Whether you're a graduate starting out, a data analyst looking to add Python and machine learning to your toolkit, or a career changer in Nigeria aiming for a data science role, this course is built to get you from raw data to real, portfolio-ready insight.",
+    "Looking for a Data Science course in Lagos that actually takes you from beginner to job-ready? The Full-Stack Data Science programme at Corepoint Tech Academy is a 10-week, project-based course covering the entire modern data workflow Excel, SQL, Python, SPSS, Power BI and Tableau. so you learn to work with data the way real analysts and data scientists do, not just watch tutorials. Whether you're a graduate starting out, a data analyst looking to add Python and machine learning to your toolkit, or a career changer in Nigeria aiming for a data science role, this course is built to get you from raw data to real, portfolio-ready insight.",
 
   overview:
     "A comprehensive, project-based Data Science programme designed to take learners from foundational data analysis to advanced data science workflows. Students work with industry-relevant tools including Microsoft Excel, SQL, Python, SPSS, Power BI and Tableau while developing practical skills in data cleaning, statistical analysis, exploratory data analysis, data visualisation, business intelligence and predictive analytics. Throughout the programme, learners work with real-world datasets and complete portfolio projects that demonstrate their ability to transform raw data into actionable insights.",
@@ -191,7 +213,7 @@ export const courses: Course[] = [
     {
       question: "Will I get hands-on practice, or is it mostly theory?",
       answer:
-        "The course is project-based throughout. You'll work with real-world datasets and build portfolio projects using each tool covered — Excel, SQL, Python, SPSS, Power BI, and Tableau.",
+        "The course is project-based throughout. You'll work with real-world datasets and build portfolio projects using each tool covered Excel, SQL, Python, SPSS, Power BI, and Tableau.",
     },
     {
       question: "Is this course available online, or only in Lagos?",
@@ -483,14 +505,14 @@ export const courses: Course[] = [
   level: "Beginner to Intermediate",
   duration: "6 weeks",
   delivery: "Both",
-  image: dataImg,
+  image: resolveCourseImage("r-programming-for-data-science", dataImg),
 
   summary:
     "Learn R for data analysis, statistical modelling, visualisation and data-driven decision-making using real-world datasets.",
 
 
     seoIntro:
-      "Searching for an R Programming course in Lagos? This 6-week programme at Corepoint Tech Academy teaches R for statistical analysis, data visualisation, and data-driven decision-making using real datasets. It's built for students, researchers, and analysts in Nigeria who need R specifically — whether for academic research, statistical reporting, or roles that require R over Python.",
+      "Searching for an R Programming course in Lagos? This 6-week programme at Corepoint Tech Academy teaches R for statistical analysis, data visualisation, and data-driven decision-making using real datasets. It's built for students, researchers, and analysts in Nigeria who need R specifically whether for academic research, statistical reporting, or roles that require R over Python.",
   overview:
     "A practical, project-based R programming programme designed for learners who want to develop professional skills in data analysis and statistical computing. Students learn how to work with datasets in R, clean and transform data, perform exploratory and statistical analysis, create professional visualisations with ggplot2 and build reproducible analytical workflows. The programme combines R programming with practical statistics and real-world data science projects.",
 
@@ -736,7 +758,7 @@ export const courses: Course[] = [
 
 
     seoIntro:
-      "Looking for a Python for Data Science course in Lagos with a strong statistics foundation? This 6-week intermediate programme at Corepoint Tech Academy teaches you to use Python and statistical methods together to analyse real data, uncover patterns, and support decisions with evidence — not just run code, but understand what the numbers mean.",
+      "Looking for a Python for Data Science course in Lagos with a strong statistics foundation? This 6-week intermediate programme at Corepoint Tech Academy teaches you to use Python and statistical methods together to analyse real data, uncover patterns, and support decisions with evidence, not just run code, but understand what the numbers mean.",
   overview:
     "A practical, project-based programme designed to strengthen the statistical and analytical skills required for modern data science. Students learn how to work with real-world datasets using Python, perform exploratory data analysis, apply descriptive and inferential statistics, test hypotheses, analyse relationships between variables and communicate findings effectively. The course provides a strong foundation for advanced analytics and machine learning.",
 
@@ -948,7 +970,7 @@ export const courses: Course[] = [
 
 
     seoIntro:
-      "Looking for a Project Management course in Lagos that's practical rather than purely theoretical? This 6-week programme at Corepoint Tech Academy teaches you to plan, organise, execute, and close projects using real methods, templates, and documentation — the kind of practical skill set that applies across tech, business, and operations roles in Nigeria.",
+      "Looking for a Project Management course in Lagos that's practical rather than purely theoretical? This 6-week programme at Corepoint Tech Academy teaches you to plan, organise, execute, and close projects using real methods, templates, and documentation. The kind of practical skill set that applies across tech, business, and operations roles in Nigeria.",
     overview:
       "A practical project management course designed for professionals, team leads, entrepreneurs and career starters who want to manage projects with more structure and confidence. Students learn how to define project goals, create schedules, manage stakeholders, monitor risks, coordinate teams and close projects professionally using real workplace scenarios.",
 
@@ -1046,7 +1068,7 @@ export const courses: Course[] = [
     {
       question: "Is this course only for people working in tech?",
       answer:
-        "No. Project management skills apply across industries — this course is useful for anyone responsible for planning and delivering work, whether in tech, business operations, construction, or other fields.",
+        "No. Project management skills apply across industries this course is useful for anyone responsible for planning and delivering work, whether in tech, business operations, construction, or other fields.",
     },
     {
       question: "Will I learn a specific project management methodology?",
@@ -1062,7 +1084,7 @@ export const courses: Course[] = [
 },
   {
     slug: "applied-machine-learning-with-python",
-    title: "Applied Machine Learning with Python",
+    title: "Machine Learning with Python",
     category: "ai",
     level: "Intermediate",
     duration: "10 weeks",
@@ -1075,7 +1097,7 @@ export const courses: Course[] = [
 
 
     seoIntro:
-      "Searching for a Machine Learning course in Lagos that goes beyond theory? This 10-week intermediate programme at Corepoint Tech Academy teaches you to build, evaluate, and deploy machine learning models with Python using real datasets and real business problems — not just toy examples. It's built for developers, data analysts, and career changers ready to move into applied ML work.",
+      "Searching for a Machine Learning course in Lagos that goes beyond theory? This 10-week intermediate programme at Corepoint Tech Academy teaches you to build, evaluate, and deploy machine learning models with Python using real datasets and real business problems not just toy examples. It's built for developers, data analysts, and career changers ready to move into applied ML work.",
     overview:
       "A practical, project-based machine learning programme designed to take learners from data preparation and problem definition to model development, evaluation and deployment. Students work with real-world datasets, learn both supervised and unsupervised learning techniques, develop production-ready workflows and complete portfolio projects that demonstrate practical machine learning skills.",
 
@@ -1306,7 +1328,7 @@ export const courses: Course[] = [
     {
       question: "How is this different from your Data Science courses?",
       answer:
-        "This course focuses specifically on machine learning — model building, evaluation, and deployment — rather than the broader data workflow of collection, cleaning, and visualisation covered in our Data Science programmes.",
+        "This course focuses specifically on machine learning, model building, evaluation, and deployment rather than the broader data workflow of collection, cleaning, and visualisation covered in our Data Science programmes.",
     },
     {
       question: "Is this course available online?",
@@ -1516,7 +1538,7 @@ export const courses: Course[] = [
     {
       question: "How is this different from your Generative AI & Prompt Engineering course?",
       answer:
-        "That course teaches you to use generative AI tools effectively without needing to code. This course is for developers who want to build applications on top of LLMs — RAG systems, AI agents, and deployed AI products.",
+        "That course teaches you to use generative AI tools effectively without needing to code. This course is for developers who want to build applications on top of LLMs, RAG systems, AI agents, and deployed AI products.",
     },
     {
       question: "Do I need programming experience for this course?",
@@ -1545,7 +1567,7 @@ export const courses: Course[] = [
 
 
     seoIntro:
-      "Looking for a Data Analysis course in Lagos covering Excel, SQL, and Power BI together? This 8-9 week programme at Corepoint Tech Academy takes you through the full data analysis workflow — cleaning and analysing data in Excel, querying it with SQL, and presenting it through Power BI dashboards — so you graduate able to handle a real analyst's workload, not just one tool in isolation.",
+      "Looking for a Data Analysis course in Lagos covering Excel, SQL, and Power BI together? This 8-9 week programme at Corepoint Tech Academy takes you through the full data analysis workflow, cleaning and analysing data in Excel, querying it with SQL, and presenting it through Power BI dashboards, so you graduate able to handle a real analyst's workload, not just one tool in isolation.",
   overview:
     "A practical, career-focused data analysis programme designed to take learners from spreadsheet-based analysis to professional business intelligence. Students learn Advanced Excel, SQL and Power BI through real-world datasets, practical exercises and portfolio projects.",
 
@@ -1757,7 +1779,7 @@ export const courses: Course[] = [
     {
       question: "How is this different from your Full-Stack Data Science course?",
       answer:
-        "This course focuses specifically on data analysis — Excel, SQL, and Power BI. Our Full-Stack Data Science programme goes further, adding Python, SPSS, and Tableau for a broader data science skill set.",
+        "This course focuses specifically on data analysis Excel, SQL, and Power BI. Our Full-Stack Data Science programme goes further, adding Python, SPSS, and Tableau for a broader data science skill set.",
     },
     {
       question: "Do I need prior experience with Excel or SQL?",
@@ -1785,7 +1807,7 @@ export const courses: Course[] = [
 
 
     seoIntro:
-      "Searching for an Advanced Excel course in Lagos for data analysis and dashboards? This 5-week programme at Corepoint Tech Academy teaches advanced Excel techniques for cleaning data, building dashboards, and creating reports that support real business decisions — ideal for professionals who already know basic Excel and want to go further, fast.",
+      "Searching for an Advanced Excel course in Lagos for data analysis and dashboards? This 5-week programme at Corepoint Tech Academy teaches advanced Excel techniques for cleaning data, building dashboards, and creating reports that support real business decisions ideal for professionals who already know basic Excel and want to go further, fast.",
     overview:
       "A practical, project-based Excel programme designed for professionals and analysts who want to move beyond basic spreadsheet tasks and develop advanced data analysis skills. Students learn advanced formulas, lookup functions, data cleaning, PivotTables, Power Query, dashboard development, data visualisation and Excel automation using real-world business datasets.",
 
@@ -1999,7 +2021,7 @@ export const courses: Course[] = [
       "Transform raw business data into interactive dashboards, meaningful KPIs and actionable insights with Power BI.",
 
     seoIntro:
-      "Looking for a Power BI course in Lagos focused on real business intelligence work? This 6-week programme at Corepoint Tech Academy teaches you to turn raw business data into interactive dashboards, meaningful KPIs, and insights decision-makers can actually act on — built for analysts, business owners, and professionals in Nigerian companies who need to report on data clearly.",
+      "Looking for a Power BI course in Lagos focused on real business intelligence work? This 6-week programme at Corepoint Tech Academy teaches you to turn raw business data into interactive dashboards, meaningful KPIs, and insights decision-makers can actually act on, built for analysts, business owners, and professionals in Nigerian companies who need to report on data clearly.",
     overview:
       "A practical, project-based Power BI programme designed to take learners from raw data to professional business intelligence solutions. Students learn how to connect and transform data with Power Query, build robust data models, write DAX measures, create interactive dashboards and publish reports for decision-makers.",
     audience:
@@ -2163,7 +2185,7 @@ export const courses: Course[] = [
 
 
     seoIntro:
-      "Searching for a Full-Stack Web Development course in Lagos that covers modern tools? This 12-16 week programme at Corepoint Tech Academy takes you from HTML, CSS, and JavaScript through TypeScript, React, APIs, and databases — building real, deployed web applications along the way. It's built for beginners and career changers who want to become job-ready web developers in Nigeria's tech industry.",
+      "Searching for a Full-Stack Web Development course in Lagos that covers modern tools? This 12-16 week programme at Corepoint Tech Academy takes you from HTML, CSS, and JavaScript through TypeScript, React, APIs, and databases building real, deployed web applications along the way. It's built for beginners and career changers who want to become job-ready web developers in Nigeria's tech industry.",
     overview:
       "A comprehensive, project-based web development programme designed to take learners from the fundamentals of web development to building and deploying production-ready full-stack applications. Students learn modern frontend and backend development, database design, authentication, APIs, testing, Git, deployment and professional development workflows. The programme includes multiple portfolio projects and code reviews to help learners develop practical, industry-ready skills.",
 
@@ -2474,7 +2496,7 @@ export const courses: Course[] = [
 
 
     seoIntro:
-      "Looking for a React Native course in Lagos to build real mobile apps? This 10-week, live-online programme at Corepoint Tech Academy teaches you to build production-ready Android and iOS applications from a single codebase — ideal for web developers looking to move into mobile, or anyone wanting to build a mobile app for their own business idea.",
+      "Looking for a React Native course in Lagos to build real mobile apps? This 10-week, live-online programme at Corepoint Tech Academy teaches you to build production-ready Android and iOS applications from a single codebase ideal for web developers looking to move into mobile, or anyone wanting to build a mobile app for their own business idea.",
     overview:
       "A practical, project-based mobile development programme designed for developers who want to build and deploy cross-platform applications. Students learn React Native, navigation, APIs, authentication, device features, local storage, backend integration, testing and app deployment while building a complete mobile application.",
 
@@ -2687,7 +2709,7 @@ export const courses: Course[] = [
 
 
     seoIntro:
-      "Searching for a Cybersecurity course in Lagos for beginners? This 10-week programme at Corepoint Tech Academy builds practical cybersecurity skills from the ground up — identifying threats, securing systems, analysing security events, and responding to incidents. With cyberattacks and fraud a growing concern for Nigerian banks, fintechs, and businesses, this course is built to make you genuinely useful in a security role, not just certificate-holding.",
+      "Searching for a Cybersecurity course in Lagos for beginners? This 10-week programme at Corepoint Tech Academy builds practical cybersecurity skills from the ground up identifying threats, securing systems, analysing security events, and responding to incidents. With cyberattacks and fraud a growing concern for Nigerian banks, fintechs, and businesses, this course is built to make you genuinely useful in a security role, not just certificate-holding.",
     overview:
       "A practical, lab-driven cybersecurity programme designed for beginners and aspiring security professionals. Students develop a strong foundation in cybersecurity, networking, system security, identity and access management, security monitoring, threat detection and incident response through guided labs and simulated security scenarios.",
 
@@ -2903,12 +2925,12 @@ export const courses: Course[] = [
     {
       question: "Is this course more theory or hands-on practice?",
       answer:
-        "The course emphasises practical, hands-on skills — identifying real threats, analysing security events, and practising incident response, not just memorising concepts.",
+        "The course emphasises practical, hands-on skills identifying real threats, analysing security events, and practising incident response, not just memorising concepts.",
     },
     {
       question: "How is this different from your Ethical Hacking course?",
       answer:
-        "This course covers foundational cybersecurity — defence, monitoring, and response. Our Ethical Hacking & Penetration Testing course is a more advanced, offensive-security-focused programme for those ready to go further.",
+        "This course covers foundational cybersecurity defence, monitoring, and response. Our Ethical Hacking & Penetration Testing course is a more advanced, offensive-security-focused programme for those ready to go further.",
     },
     {
       question: "Is this course available online?",
@@ -2931,7 +2953,7 @@ export const courses: Course[] = [
 
 
     seoIntro:
-      "Looking for an Ethical Hacking course in Lagos with real, hands-on penetration testing practice? This 10-week, live-online, advanced-level programme at Corepoint Tech Academy teaches you to assess, exploit, and secure systems through authorised penetration testing in controlled lab environments — built for those ready to move into offensive security work.",
+      "Looking for an Ethical Hacking course in Lagos with real, hands-on penetration testing practice? This 10-week, live-online, advanced-level programme at Corepoint Tech Academy teaches you to assess, exploit, and secure systems through authorised penetration testing in controlled lab environments built for those ready to move into offensive security work.",
     overview:
       "An advanced, hands-on ethical hacking and penetration testing programme designed for cybersecurity professionals who want to develop practical offensive security capabilities. Students learn the complete penetration testing lifecycle, from engagement planning and reconnaissance to vulnerability assessment, controlled exploitation, privilege escalation, post-exploitation analysis and professional security reporting. All practical activities are performed in authorised, isolated lab environments.",
 
@@ -3158,7 +3180,7 @@ export const courses: Course[] = [
     {
       question: "Will I practice on real systems, or only in labs?",
       answer:
-        "All hands-on exercises are conducted in controlled, authorised lab environments — this is what makes the practice both effective and ethical.",
+        "All hands-on exercises are conducted in controlled, authorised lab environments this is what makes the practice both effective and ethical.",
     },
     {
       question: "Is this course delivered online?",
@@ -3181,7 +3203,7 @@ export const courses: Course[] = [
 
 
     seoIntro:
-      "Searching for an AWS course in Lagos that prepares you for certification? This 10-week programme at Corepoint Tech Academy builds practical AWS cloud skills and prepares you for the AWS Certified Solutions Architect – Associate exam, covering how to design secure, highly available cloud architectures — not just pass a test, but actually work with AWS professionally.",
+      "Searching for an AWS course in Lagos that prepares you for certification? This 10-week programme at Corepoint Tech Academy builds practical AWS cloud skills and prepares you for the AWS Certified Solutions Architect – Associate exam, covering how to design secure, highly available cloud architectures not just pass a test, but actually work with AWS professionally.",
     overview:
       "A practical, hands-on AWS cloud programme designed to take learners from foundational cloud concepts to designing and deploying scalable solutions on AWS. Students work with core AWS services, networking, security, storage, databases, monitoring and cost management while applying cloud architecture principles through real-world labs and projects.",
 
@@ -3435,7 +3457,7 @@ export const courses: Course[] = [
       "Learn modern DevOps practices by containerising applications, automating deployments and managing scalable workloads with Docker and Kubernetes.",
 
     seoIntro:
-      "Looking for a DevOps course in Lagos that covers Docker and Kubernetes properly, not just the basics? This 10-week, live-online programme at Corepoint Tech Academy takes you from containerising your first application to deploying and operating production-style workloads on Kubernetes. You'll work through CI/CD pipelines, Infrastructure as Code, and monitoring — the same tools and workflows used by DevOps and cloud engineering teams in real Nigerian tech companies. Built for developers, sysadmins, and IT professionals ready to move into cloud-native, container-based infrastructure work.",
+      "Looking for a DevOps course in Lagos that covers Docker and Kubernetes properly, not just the basics? This 10-week, live-online programme at Corepoint Tech Academy takes you from containerising your first application to deploying and operating production-style workloads on Kubernetes. You'll work through CI/CD pipelines, Infrastructure as Code, and monitoring the same tools and workflows used by DevOps and cloud engineering teams in real Nigerian tech companies. Built for developers, sysadmins, and IT professionals ready to move into cloud-native, container-based infrastructure work.",
 
     overview:
       "A practical, project-based DevOps programme designed for developers, system administrators and IT professionals who want to build modern software delivery and infrastructure skills. Students learn containerisation with Docker, orchestration with Kubernetes, CI/CD automation, Infrastructure as Code, configuration and secrets management, cloud deployment, monitoring and reliability practices. The programme focuses on real-world deployment workflows rather than theory alone.",
@@ -3673,7 +3695,7 @@ export const courses: Course[] = [
       {
         question: "Will I actually deploy applications to Kubernetes, or is this mostly theory?",
         answer:
-          "You'll containerise a real application with Docker, deploy it to Kubernetes, and build a working CI/CD pipeline as part of your capstone project — the course is built around hands-on deployment work throughout, not just concepts.",
+          "You'll containerise a real application with Docker, deploy it to Kubernetes, and build a working CI/CD pipeline as part of your capstone project the course is built around hands-on deployment work throughout, not just concepts.",
       },
       {
         question: "Is Docker or Kubernetes experience required before starting?",
@@ -3689,7 +3711,7 @@ export const courses: Course[] = [
   },
   {
     slug: "sql-and-database-administration",
-    title: "SQL & Database Administration",
+    title: "Database Administration",
     category: "database",
     level: "Beginner to Intermediate",
     duration: "8 weeks",
@@ -3701,7 +3723,7 @@ export const courses: Course[] = [
 
 
     seoIntro:
-      "Looking to learn SQL in Lagos, including how to actually administer a database, not just query one? This 8-week programme at Corepoint Tech Academy covers SQL fundamentals, relational database design, query optimisation, and essential database administration practices using PostgreSQL and SQL Server — a strong foundation for data analyst, backend developer, or database administrator roles.",
+      "Looking to learn SQL in Lagos, including how to actually administer a database, not just query one? This 8-week programme at Corepoint Tech Academy covers SQL fundamentals, relational database design, query optimisation, and essential database administration practices using PostgreSQL and SQL Server a strong foundation for data analyst, backend developer, or database administrator roles.",
     overview:
       "A practical, project-based programme that takes learners from SQL fundamentals to advanced querying and core database administration. Students learn how to retrieve and analyse data, design normalised relational schemas, manage users and permissions, optimise database performance, perform backups and recovery, and automate routine database operations using PostgreSQL and Microsoft SQL Server.",
 
@@ -3941,7 +3963,7 @@ export const courses: Course[] = [
 },
   {
     slug: "workflow-automation-no-code",
-    title: "Workflow Automation & No-Code",
+    title: "AI Automation & No-Code",
     category: "automation",
     level: "Beginner to Intermediate",
     duration: "6 weeks",
@@ -3953,7 +3975,7 @@ export const courses: Course[] = [
 
 
     seoIntro:
-      "Searching for a workflow automation course in Lagos using no-code tools? This 6-week, live-online programme at Corepoint Tech Academy teaches you to automate repetitive business processes, reports, emails, and data workflows using Python, n8n, Zapier, Make, and other automation tools — practical skills for freelancers, business owners, and operations professionals looking to save hours of manual work every week.",
+      "Searching for a workflow automation course in Lagos using no-code tools? This 6-week, live-online programme at Corepoint Tech Academy teaches you to automate repetitive business processes, reports, emails, and data workflows using Python, n8n, Zapier, Make, and other automation tools practical skills for freelancers, business owners, and operations professionals looking to save hours of manual work every week.",
     overview:
       "A practical, project-based automation programme designed to help professionals identify repetitive tasks, design efficient workflows and automate business processes with little or no code. Students learn both no-code and low-code automation using platforms such as n8n, Zapier and Make, alongside Python scripting for more advanced automation. The programme focuses on real-world business processes including email automation, data processing, reporting, file management, API integration and workflow monitoring.",
 
@@ -4142,8 +4164,8 @@ export const courses: Course[] = [
 },
 
   {
-    slug: "generative-ai-prompt-engineering",
-    title: "Generative AI & Prompt Engineering",
+    slug: "prompt-engineering",
+    title: "Prompt Engineering",
     category: "ai",
     level: "Beginner",
     duration: "6 weeks",
@@ -4152,13 +4174,13 @@ export const courses: Course[] = [
     image: aiImg,
 
     summary:
-      "Learn to use generative AI tools effectively — prompting, AI-assisted content creation, workflow automation, and integrating AI into everyday work.",
+      "Learn to use generative AI tools effectively prompting, AI-assisted content creation, workflow automation, and integrating AI into everyday work.",
 
     seoIntro:
-      "Searching for a Generative AI course in Lagos or Prompt Engineering training in Nigeria? This 6-week programme at Corepoint Tech Academy teaches you how to work effectively with modern AI tools — from writing prompts that actually get useful results, to using generative AI for content, research, and automation. No coding background required. It's built for professionals, students, and business owners who want to use AI as a practical productivity tool, not just talk about it.",
+      "Searching for a Generative AI course in Lagos or Prompt Engineering training in Nigeria? This 6-week programme at Corepoint Tech Academy teaches you how to work effectively with modern AI tools from writing prompts that actually get useful results, to using generative AI for content, research, and automation. No coding background required. It's built for professionals, students, and business owners who want to use AI as a practical productivity tool, not just talk about it.",
 
     overview:
-      "A practical, hands-on programme focused on understanding and working effectively with generative AI. Rather than treating AI as an abstract concept, this course teaches prompting techniques, AI-assisted content generation, research workflows, and how to integrate generative AI into real tasks — writing, analysis, automation, and decision-making. Learners leave with practical prompting skills and a portfolio of AI-assisted projects.",
+      "A practical, hands-on programme focused on understanding and working effectively with generative AI. Rather than treating AI as an abstract concept, this course teaches prompting techniques, AI-assisted content generation, research workflows, and how to integrate generative AI into real tasks writing, analysis, automation, and decision-making. Learners leave with practical prompting skills and a portfolio of AI-assisted projects.",
 
     audience:
       "Professionals, students, content creators, marketers, business owners, and career changers who want to use generative AI productively in their work, without needing a programming background.",
@@ -4271,7 +4293,7 @@ export const courses: Course[] = [
       {
         question: "Will this help me in my current job, even if it's not tech-related?",
         answer:
-          "Yes. Generative AI skills apply across marketing, writing, customer service, research, administration, and many other roles — the course is built around practical, everyday use cases.",
+          "Yes. Generative AI skills apply across marketing, writing, customer service, research, administration, and many other roles the course is built around practical, everyday use cases.",
       },
       {
         question: "Is this course available online?",
@@ -4283,7 +4305,7 @@ export const courses: Course[] = [
 
   {
     slug: "professional-certificate-ai-engineering",
-    title: "Professional Certificate in AI Engineering",
+    title: "AI Engineering",
     category: "ai",
     level: "Intermediate to Advanced",
     duration: "16 weeks",
@@ -4292,13 +4314,13 @@ export const courses: Course[] = [
     image: aiImg,
 
     summary:
-      "An advanced, professional-level programme covering machine learning, deep learning, AI system design, and deployment — for those ready to build and ship real AI applications.",
+      "An advanced, professional-level programme covering machine learning, deep learning, AI system design, and deployment for those ready to build and ship real AI applications.",
 
     seoIntro:
-      "Looking for a professional AI Engineering course in Lagos that goes beyond the basics? This 16-week advanced programme at Corepoint Tech Academy is built for developers, data professionals, and career changers who already have some technical foundation and want to become job-ready AI Engineers. You'll cover machine learning, deep learning, model deployment, and applied generative AI system design — with a heavy emphasis on shipping real, working applications rather than just completing tutorials.",
+      "Looking for a professional AI Engineering course in Lagos that goes beyond the basics? This 16-week advanced programme at Corepoint Tech Academy is built for developers, data professionals, and career changers who already have some technical foundation and want to become job-ready AI Engineers. You'll cover machine learning, deep learning, model deployment, and applied generative AI system design with a heavy emphasis on shipping real, working applications rather than just completing tutorials.",
 
     overview:
-      "A rigorous, project-based programme designed to take learners with an existing technical foundation into professional AI Engineering. The programme covers advanced machine learning, deep learning fundamentals, model evaluation and optimization, AI application architecture, deployment of models as APIs, and applied generative AI system design, including retrieval-augmented generation and AI agents. Learners complete a substantial capstone project that mirrors real-world AI engineering work — from problem definition to deployed application.",
+      "A rigorous, project-based programme designed to take learners with an existing technical foundation into professional AI Engineering. The programme covers advanced machine learning, deep learning fundamentals, model evaluation and optimization, AI application architecture, deployment of models as APIs, and applied generative AI system design, including retrieval-augmented generation and AI agents. Learners complete a substantial capstone project that mirrors real-world AI engineering work from problem definition to deployed application.",
 
     audience:
       "Software developers, data analysts, data scientists, and technically-inclined professionals who already have basic Python experience and want to specialize in building and deploying AI systems professionally.",
@@ -4411,7 +4433,7 @@ export const courses: Course[] = [
       {
         question: "What makes this 'professional' rather than a general AI course?",
         answer:
-          "This programme focuses specifically on the engineering side of AI — deployment, APIs, MLOps, and production practices — rather than just model building. It's designed to prepare you for an actual AI Engineer role, not just conceptual understanding.",
+          "This programme focuses specifically on the engineering side of AI, deployment, APIs, MLOps, and production practices rather than just model building. It's designed to prepare you for an actual AI Engineer role, not just conceptual understanding.",
       },
       {
         question: "Will I deploy real, working applications?",
@@ -4425,7 +4447,415 @@ export const courses: Course[] = [
       },
     ],
   },
+  {
+    slug: "frontend-engineering",
+    title: "Frontend Engineering",
+    category: "development",
+    level: "Intermediate",
+    duration: "10 weeks",
+    delivery: "Both",
+    image: devImg,
+    summary: "Build accessible, performant frontend applications with modern JavaScript, TypeScript, React, testing, and production workflows.",
+    seoIntro: "Develop the engineering skills to build reliable frontend applications, from component architecture and accessibility to testing and performance.",
+    overview: "An applied frontend engineering programme for learners who know basic web development and want to build maintainable production interfaces. Learners deepen their JavaScript and TypeScript skills, work with React architecture, connect applications to APIs, and practice accessibility, testing, performance, and deployment workflows.",
+    audience: "Junior developers, self-taught programmers, and web developers who want to specialize in building maintainable frontend applications.",
+    outcomes: ["Build component-based interfaces with React and TypeScript", "Design reusable frontend architecture and state flows", "Implement accessible and responsive user experiences", "Test, profile, and deploy production frontend applications"],
+    curriculum: [
+      { module: "Modern Frontend Foundations", topics: ["JavaScript and TypeScript", "Semantic HTML and CSS architecture", "Responsive layout systems"] },
+      { module: "React Application Engineering", topics: ["Component composition", "Routing, forms, and data fetching", "State management and API integration"] },
+      { module: "Quality and Production", topics: ["Accessibility and usability testing", "Unit and integration testing", "Performance, deployment, and monitoring"] },
+    ],
+    projects: ["Accessible component library", "API-driven dashboard", "Tested and deployed frontend application"],
+    tools: ["JavaScript", "TypeScript", "React", "HTML", "CSS", "Git"],
+    prerequisites: ["Basic HTML, CSS, and JavaScript", "A laptop for development exercises"],
+  },
+  {
+    slug: "backend-development",
+    title: "Backend Development",
+    category: "development",
+    level: "Intermediate",
+    duration: "10 weeks",
+    delivery: "Both",
+    image: devImg,
+    summary: "Design and build secure backend services, APIs, and database-backed applications with practical testing and deployment workflows.",
+    seoIntro: "Learn backend development through API design, databases, authentication, testing, and deploying reliable server-side applications.",
+    overview: "A practical server-side development course focused on API and service design rather than full-stack interface development. Learners build backend services, model relational data, implement authentication and authorization, test service behavior, and prepare applications for deployment.",
+    audience: "Developers with basic programming experience who want to build APIs, server-side applications, and database-backed services.",
+    outcomes: ["Design REST APIs and validate requests and responses", "Model relational data and write efficient database queries", "Implement authentication, authorization, and secure configuration", "Test, document, and deploy backend services"],
+    curriculum: [
+      { module: "Server-Side Foundations", topics: ["HTTP and API fundamentals", "Node.js and service structure", "Validation and error handling"] },
+      { module: "Data and Identity", topics: ["Relational data modelling", "SQL queries and migrations", "Authentication and access control"] },
+      { module: "Reliable Services", topics: ["API and integration testing", "Logging and security", "Deployment and service documentation"] },
+    ],
+    projects: ["Secure REST API", "Role-based account service", "Deployed database-backed application"],
+    tools: ["JavaScript", "Node.js", "Express", "SQL", "PostgreSQL", "Git"],
+    prerequisites: ["Basic programming experience", "Familiarity with command-line tools is helpful"],
+  },
+  {
+    slug: "mobile-development-cross-platform",
+    title: "Mobile Development",
+    category: "development",
+    level: "Intermediate",
+    duration: "10 weeks",
+    delivery: "Live Online",
+    image: devImg,
+    
+    summary: "Create cross-platform mobile applications with React Native, focusing on app architecture, device capabilities, offline behavior, and release workflows.",
+    seoIntro: "Build cross-platform mobile applications and learn the workflow from mobile interface design through app testing and release preparation.",
+    overview: "A cross-platform mobile development course that develops mobile product engineering skills beyond introductory React Native usage. Learners work with navigation, device features, offline data, application performance, mobile testing, and release preparation for Android and iOS.",
+    audience: "JavaScript developers and aspiring mobile engineers who want to build and prepare cross-platform applications for release.",
+    outcomes: ["Structure multi-screen mobile applications with reusable components", "Integrate device APIs, remote services, and local storage", "Handle mobile permissions, connectivity, and application lifecycle", "Test and prepare applications for Android and iOS release"],
+    curriculum: [
+      { module: "Mobile Application Foundations", topics: ["React Native project structure", "Navigation and mobile layouts", "Forms and application state"] },
+      { module: "Device and Data Integration", topics: ["REST API integration", "Local storage and offline states", "Camera, location, and permissions"] },
+      { module: "Testing and Release", topics: ["Mobile debugging and testing", "Performance and accessibility", "Build and store-release preparation"] },
+    ],
+    projects: ["Offline-capable task app", "Location-aware service app", "Mobile capstone prepared for release"],
+    tools: ["React Native", "Expo", "JavaScript", "REST APIs", "Git"],
+    prerequisites: ["Basic JavaScript knowledge", "A laptop and mobile device or emulator for practice"],
+  },
+  {
+    slug: "devops-engineering",
+    title: "DevOps Engineering",
+    category: "cloud",
+    level: "Intermediate",
+    duration: "12 weeks",
+    delivery: "Live Online",
+    image: resolveCourseImage("devops-engineering", cloudImg),
+
+    summary: "Automate software delivery and operate cloud services with infrastructure as code, CI/CD, observability, and reliability practices.",
+    seoIntro: "Develop practical DevOps engineering skills in delivery automation, infrastructure management, observability, and service reliability.",
+    overview: "A delivery-operations programme focused on repeatable releases, cloud infrastructure, and service reliability. It complements container and Kubernetes training by emphasizing infrastructure as code, pipeline design, environment management, observability, and incident response.",
+    audience: "Developers, system administrators, and cloud practitioners who want to automate delivery and improve software service reliability.",
+    outcomes: ["Build CI/CD workflows with testing and release controls", "Provision cloud infrastructure using infrastructure as code", "Monitor service health with metrics, logs, and alerts", "Apply incident response and reliability practices"],
+    curriculum: [
+      { module: "Delivery Automation", topics: ["Version control workflows", "CI pipeline design", "Release strategies and rollback"] },
+      { module: "Cloud Operations", topics: ["Infrastructure as code", "Environment and secret management", "Configuration and access controls"] },
+      { module: "Reliability Engineering", topics: ["Metrics, logs, and traces", "Alerting and incident response", "Capacity and service reliability reviews"] },
+    ],
+    projects: ["Automated application release pipeline", "Infrastructure-as-code environment", "Service monitoring and incident exercise"],
+    tools: ["GitHub Actions", "Terraform", "Linux", "Cloud services", "Prometheus", "Grafana"],
+    prerequisites: ["Basic Linux and Git experience", "Experience deploying an application is helpful"],
+  },
+  {
+    slug: "data-engineering",
+    title: "Data Engineering",
+    category: "data-science",
+    level: "Intermediate",
+    duration: "10 weeks",
+    delivery: "Both",
+    image: dataImg,
+
+    summary: "Build data pipelines that collect, transform, validate, and deliver dependable datasets for analytics and reporting.",
+    seoIntro: "Learn to design and operate data pipelines, from source ingestion and transformation to data quality checks and analytics-ready models.",
+    overview: "A practical data engineering course centered on reliable data movement and modelling, distinct from analytics courses that focus on interpreting datasets. Learners develop batch pipelines, transform data with SQL and Python, validate outputs, and organize data for downstream reporting.",
+    audience: "Data analysts, software developers, and technical professionals who want to build reliable data platforms and analytics pipelines.",
+    outcomes: ["Ingest data from files, databases, and APIs", "Build repeatable batch transformation pipelines with SQL and Python", "Model analytics-ready datasets and apply data quality checks", "Schedule, monitor, and document data workflows"],
+    curriculum: [
+      { module: "Data Pipeline Foundations", topics: ["Data sources and formats", "SQL and Python ingestion", "Batch processing concepts"] },
+      { module: "Transformation and Modelling", topics: ["Data cleaning and validation", "Dimensional modelling", "Reusable transformation workflows"] },
+      { module: "Operations and Delivery", topics: ["Workflow scheduling", "Pipeline monitoring and recovery", "Publishing analytics-ready datasets"] },
+    ],
+    projects: ["API-to-warehouse batch pipeline", "Quality-tested analytics model", "Scheduled data reporting workflow"],
+    tools: ["Python", "SQL", "PostgreSQL", "Pandas", "Git"],
+    prerequisites: ["Basic SQL and Python familiarity", "Basic relational database concepts"],
+  },
+  {
+    slug: "ai-ml-engineering",
+    title: "AI/ML Engineering",
+    category: "ai",
+    level: "Advanced",
+    duration: "12 weeks",
+    delivery: "Both",
+    image: aiImg,
+
+    summary: "Engineer machine-learning systems from data preparation and model evaluation through reproducible serving and operational monitoring.",
+    seoIntro: "Practice the engineering lifecycle for machine-learning systems, including reproducible experiments, model serving, evaluation, and monitoring.",
+    overview: "An applied ML systems course emphasizing the engineering lifecycle around model development: experiment reproducibility, data and model validation, deployment interfaces, monitoring, and maintenance. It complements the broader AI Engineering certificate with a focused implementation track.",
+    audience: "Python developers and data practitioners with foundational machine-learning knowledge who want to engineer maintainable model services.",
+    outcomes: ["Build reproducible training and evaluation workflows", "Package models behind versioned prediction interfaces", "Track model quality and data changes after deployment", "Document and maintain an end-to-end ML service"],
+    curriculum: [
+      { module: "Reliable Model Development", topics: ["Data and feature validation", "Experiment tracking", "Model evaluation and comparison"] },
+      { module: "Model Serving", topics: ["Model packaging and versioning", "Prediction APIs", "Containerized model services"] },
+      { module: "ML Operations", topics: ["Deployment checks", "Quality and drift monitoring", "Retraining and rollback workflows"] },
+    ],
+    projects: ["Reproducible ML pipeline", "Versioned prediction API", "Monitored model service"],
+    tools: ["Python", "scikit-learn", "FastAPI", "Docker", "Git"],
+    prerequisites: ["Python programming experience", "Foundational machine-learning concepts"],
+  },
+  {
+    slug: "systems-software-engineering",
+    title: "Systems/Software Engineering",
+    category: "development",
+    level: "Intermediate",
+    duration: "10 weeks",
+    delivery: "Live Online",
+    image: devImg,
+
+    summary: "Understand software systems through architecture, operating-system concepts, networking, concurrency, and dependable design practices.",
+    seoIntro: "Study how software systems are designed and operated, with practical work in architecture, networking, concurrency, and reliability.",
+    overview: "A systems-oriented course focused on how software behaves across processes, networks, storage, and service boundaries. Learners analyze system requirements, design components, reason about concurrency and failure, and document architectural trade-offs rather than building another web application.",
+    audience: "Developers with programming experience who want stronger foundations in software architecture and system behavior.",
+    outcomes: ["Explain processes, memory, files, and network communication", "Design modular systems and document architecture decisions", "Reason about concurrency, failure, and data consistency", "Apply testing and observability to system components"],
+    curriculum: [
+      { module: "Computer and Operating-System Concepts", topics: ["Processes and threads", "Memory and file systems", "Command-line and networking foundations"] },
+      { module: "Software Architecture", topics: ["Modularity and interfaces", "Service and event-driven patterns", "Architecture decision records"] },
+      { module: "Reliability and Integration", topics: ["Concurrency and consistency", "Failure handling and observability", "System design capstone"] },
+    ],
+    projects: ["Architecture decision record set", "Resilient service design", "Systems behavior analysis"],
+    tools: ["Linux", "Git", "TypeScript or Python", "Diagramming tools"],
+    prerequisites: ["Experience writing programs in one language", "Basic command-line familiarity"],
+  },
+  {
+    slug: "business-analysis",
+    title: "Business Analysis",
+    category: "management",
+    level: "Beginner",
+    duration: "6 weeks",
+    delivery: "Both",
+    image: resolveCourseImage("business-analysis",managementImg),
+
+    summary: "Elicit business needs, model processes, define requirements, and help stakeholders make clear, testable decisions.",
+    seoIntro: "Build practical business analysis skills in stakeholder discovery, process modelling, requirements, and solution validation.",
+    overview: "A professional business analysis course focused on understanding organizational needs and translating them into actionable requirements. Learners practice stakeholder interviews, process analysis, user stories, acceptance criteria, and validation with delivery teams.",
+    audience: "Aspiring business analysts, project coordinators, operations professionals, and team members who translate business needs into delivery requirements.",
+    outcomes: ["Plan stakeholder discovery and document business needs", "Model current and future business processes", "Write clear requirements, user stories, and acceptance criteria", "Validate solutions against business objectives"],
+    curriculum: [
+      { module: "Discovery and Stakeholders", topics: ["Business analysis lifecycle", "Stakeholder mapping and interviews", "Problem and opportunity statements"] },
+      { module: "Processes and Requirements", topics: ["Process modelling", "Functional and non-functional requirements", "User stories and acceptance criteria"] },
+      { module: "Validation and Change", topics: ["Requirements prioritization", "Solution evaluation", "Change and traceability practices"] },
+    ],
+    projects: ["Stakeholder analysis", "Current-to-future process model", "Requirements and acceptance-criteria pack"],
+    tools: ["Process diagrams", "User story maps", "Spreadsheets", "Documentation tools"],
+    prerequisites: ["Basic computer literacy", "Interest in business processes and problem solving"],
+  },
+  {
+    slug: "product-analytics",
+    title: "Product Analysis",
+    category: "data-analysis",
+    level: "Beginner",
+    duration: "6 weeks",
+    delivery: "Live Online",
+    image: dataImg,
+    summary: "Use product metrics, funnels, cohorts, and experiments to understand user behavior and guide product decisions.",
+    seoIntro: "Learn product analytics methods for measuring activation, engagement, retention, and experiments across digital products.",
+    overview: "A product analytics course focused on behavioral data and evidence-based product decisions, distinct from product management or business requirements analysis. Learners define events and metrics, analyze funnels and cohorts, and communicate findings with product teams.",
+    audience: "Product analysts, product managers, UX researchers, and data analysts who work with digital product usage data.",
+    outcomes: ["Define product events and metrics aligned to user outcomes", "Analyze funnels, cohorts, engagement, and retention", "Design experiments and interpret results responsibly", "Present product insights and recommendations to stakeholders"],
+    curriculum: [
+      { module: "Product Measurement", topics: ["Product goals and metric trees", "Event taxonomy", "Instrumentation quality"] },
+      { module: "Behavioral Analysis", topics: ["Funnels and conversion", "Cohort and retention analysis", "Segmentation and user journeys"] },
+      { module: "Experiments and Decisions", topics: ["A/B test fundamentals", "Experiment interpretation", "Insight communication and recommendations"] },
+    ],
+    projects: ["Product event plan", "Activation and retention analysis", "Experiment readout"],
+    tools: ["SQL", "Spreadsheets", "Product analytics concepts", "Data visualization"],
+    prerequisites: ["Basic spreadsheet skills", "Basic statistics is helpful but not required"],
+  },
+  {
+    slug: "marketing-analytics",
+    title: "Marketing Analysis",
+    category: "data-analysis",
+    level: "Beginner",
+    duration: "6 weeks",
+    delivery: "Both",
+    image: dataImg,
+    summary: "Measure campaign performance, customer acquisition, conversion, and return on marketing investment using practical data analysis.",
+    seoIntro: "Develop marketing analytics skills to connect campaign activity with leads, conversions, customer value, and business outcomes.",
+    overview: "A domain-focused analytics course for marketers and analysts who need to evaluate channel performance and campaign outcomes. Learners organize campaign data, define comparable metrics, analyze customer journeys, and communicate recommendations without assuming a specific advertising platform.",
+    audience: "Marketing professionals, business owners, campaign coordinators, and analysts who need to measure marketing performance.",
+    outcomes: ["Define channel and campaign performance metrics", "Clean and combine marketing and conversion datasets", "Analyze acquisition, conversion, and customer value", "Present campaign findings and budget recommendations"],
+    curriculum: [
+      { module: "Marketing Measurement", topics: ["Marketing objectives and KPIs", "Campaign data concepts", "Data quality and attribution limits"] },
+      { module: "Campaign and Customer Analysis", topics: ["Channel and campaign comparisons", "Conversion funnel analysis", "Customer acquisition cost and value"] },
+      { module: "Reporting and Optimization", topics: ["Dashboard design", "Budget and performance recommendations", "Communicating uncertainty and attribution"] },
+    ],
+    projects: ["Campaign performance report", "Channel conversion dashboard", "Marketing budget recommendation"],
+    tools: ["Spreadsheets", "SQL fundamentals", "Power BI", "Web analytics concepts"],
+    prerequisites: ["Basic spreadsheet skills", "No previous analytics experience required"],
+  },
+  {
+    slug: "operations-analysis",
+    title: "Operations Analysis",
+    category: "data-analysis",
+    level: "Beginner",
+    duration: "6 weeks",
+    delivery: "Both",
+    image: dataImg,
+    summary: "Analyze operational workflows, service levels, capacity, and process performance to identify measurable improvement opportunities.",
+    seoIntro: "Learn operations analysis through process metrics, capacity analysis, service-level reporting, and practical improvement projects.",
+    overview: "An applied analytics course for improving operational performance. Learners map processes, define throughput and service metrics, analyze bottlenecks and variation, and build reports that support practical improvement decisions.",
+    audience: "Operations staff, process analysts, service managers, and data analysts working with operational performance data.",
+    outcomes: ["Map workflows and define operational performance measures", "Analyze throughput, wait times, capacity, and service levels", "Identify bottlenecks and prioritize improvement opportunities", "Build operational reports and communicate findings"],
+    curriculum: [
+      { module: "Process and Metrics", topics: ["Process mapping", "Operational KPI design", "Data collection and quality"] },
+      { module: "Performance Analysis", topics: ["Throughput and cycle time", "Capacity and demand", "Bottleneck and variation analysis"] },
+      { module: "Improvement and Reporting", topics: ["Root-cause analysis", "Improvement prioritization", "Operations dashboards and reviews"] },
+    ],
+    projects: ["Service process map", "Capacity and bottleneck analysis", "Operational performance dashboard"],
+    tools: ["Spreadsheets", "SQL fundamentals", "Power BI", "Process mapping"],
+    prerequisites: ["Basic spreadsheet skills", "Familiarity with a business or service process is helpful"],
+  },
+  {
+    slug: "risk-analysis",
+    title: "Risk Analysis",
+    category: "data-analysis",
+    level: "Intermediate",
+    duration: "6 weeks",
+    delivery: "Live Online",
+    image: dataImg,
+    summary: "Identify, assess, quantify, and communicate business risks using structured analysis, scenarios, and monitoring indicators.",
+    seoIntro: "Build practical risk analysis skills in risk identification, assessment, scenario analysis, controls, and reporting.",
+    overview: "A cross-industry risk analysis course that introduces a structured approach to uncertainty and exposure. Learners define risk statements, assess likelihood and impact, analyze scenarios and controls, and prepare clear risk registers and monitoring reports.",
+    audience: "Business analysts, operations professionals, project teams, and aspiring risk practitioners who support organizational decisions.",
+    outcomes: ["Identify and describe risks with clear causes and consequences", "Assess likelihood, impact, controls, and residual exposure", "Use scenarios and sensitivity analysis to examine uncertainty", "Create risk registers, indicators, and stakeholder reports"],
+    curriculum: [
+      { module: "Risk Foundations", topics: ["Risk concepts and context", "Risk identification techniques", "Risk statements and categories"] },
+      { module: "Assessment and Analysis", topics: ["Likelihood and impact assessment", "Controls and residual risk", "Scenario and sensitivity analysis"] },
+      { module: "Response and Monitoring", topics: ["Risk treatment planning", "Key risk indicators", "Risk reporting and review"] },
+    ],
+    projects: ["Organizational risk register", "Scenario analysis brief", "Risk monitoring dashboard"],
+    tools: ["Spreadsheets", "Risk registers", "Scenario analysis", "Data visualization"],
+    prerequisites: ["Basic spreadsheet skills", "No previous risk-management role required"],
+  },
+  {
+    slug: "healthcare-data-analysis",
+    title: "Healthcare Analysis",
+    category: "data-analysis",
+    level: "Beginner",
+    duration: "6 weeks",
+    delivery: "Live Online",
+    image: dataImg,
+    summary: "Analyze healthcare operations and outcomes data with attention to data quality, privacy, indicators, and responsible interpretation.",
+    seoIntro: "Learn healthcare data analysis using operational and outcome indicators, with careful attention to privacy and responsible interpretation.",
+    overview: "A domain-focused analytics course using sample and de-identified healthcare datasets. Learners work with service and outcome indicators, check data quality, build clear reports, and discuss privacy and interpretation limits. This course does not provide clinical training or medical advice.",
+    audience: "Healthcare administrators, public-health learners, researchers, and analysts interested in health service data.",
+    outcomes: ["Interpret common healthcare service and outcome indicators", "Prepare and validate de-identified healthcare datasets", "Analyze trends and service performance responsibly", "Communicate findings while respecting privacy and limitations"],
+    curriculum: [
+      { module: "Healthcare Data Foundations", topics: ["Healthcare data sources", "Indicators and denominators", "Privacy and data governance"] },
+      { module: "Analysis and Quality", topics: ["Data cleaning and validation", "Trend and service analysis", "Equity and subgroup comparisons"] },
+      { module: "Reporting and Interpretation", topics: ["Healthcare dashboards", "Responsible interpretation", "Communicating operational findings"] },
+    ],
+    projects: ["Healthcare indicator dictionary", "Service utilization analysis", "De-identified performance dashboard"],
+    tools: ["Spreadsheets", "SQL fundamentals", "Power BI", "Data quality checklists"],
+    prerequisites: ["Basic spreadsheet skills", "No clinical background required"],
+  },
+  {
+    slug: "financial-analysis",
+    title: "Financial Analysis",
+    category: "data-analysis",
+    level: "Beginner",
+    duration: "6 weeks",
+    delivery: "Both",
+    image: dataImg,
+
+    summary: "Use financial statements, budgets, ratios, and cash-flow analysis to explain business performance and support planning.",
+    seoIntro: "Practice financial analysis with statements, budgets, cash flows, ratios, and spreadsheet models for business decision-making.",
+    overview: "A practical business finance analytics course focused on interpreting company performance rather than investment advice. Learners structure financial data, analyze statements and budgets, build spreadsheet models, and communicate assumptions and findings.",
+    audience: "Business owners, finance staff, analysts, and managers who need to understand and report business financial performance.",
+    outcomes: ["Read and compare core financial statements", "Analyze margins, liquidity, efficiency, and cash flow", "Build budget and variance analysis models", "Explain financial assumptions and findings to stakeholders"],
+    curriculum: [
+      { module: "Financial Information", topics: ["Income statements and balance sheets", "Cash-flow statements", "Data preparation and assumptions"] },
+      { module: "Performance Analysis", topics: ["Financial ratios", "Trend and variance analysis", "Working capital and cash flow"] },
+      { module: "Planning and Reporting", topics: ["Budget models", "Scenario and sensitivity analysis", "Financial reporting and recommendations"] },
+    ],
+    projects: ["Financial statement analysis", "Budget-versus-actual model", "Cash-flow and scenario report"],
+    tools: ["Microsoft Excel", "Financial statements", "Spreadsheet modelling", "Power BI fundamentals"],
+    prerequisites: ["Basic spreadsheet skills", "Basic arithmetic and percentages"],
+  },
+  {
+    slug: "website-development-python",
+    title: "Website Development with Python",
+    category: "development",
+    level: "Beginner",
+    duration: "10 weeks",
+    delivery: "Both",
+    image: devImg,
+    summary: "Build Python-powered websites with Django and create API services with FastAPI, from data models and forms through testing and deployment.",
+    seoIntro: "Learn Python website development with Django and FastAPI. Build a complete Django website, expose API endpoints, and deploy a working web project.",
+    overview: "A practical Python web development course focused on creating working websites and web services with Django and FastAPI. Learners build server-rendered pages and forms with Django, connect applications to a relational database, add authentication, and create API endpoints with FastAPI. The capstone combines web and API components and covers testing, security fundamentals, and deployment.",
+    audience: "Beginners with basic computer skills and aspiring Python developers who want to create and deploy websites using Python frameworks.",
+    outcomes: ["Use Python fundamentals to build server-side web applications", "Create Django pages, forms, models, and database-backed features", "Build and validate REST API endpoints with FastAPI", "Test, secure, and deploy a Python web application"],
+    curriculum: [
+      { module: "Python and Web Foundations", topics: ["Python fundamentals for web development", "HTTP requests and responses", "HTML, CSS, and templates"] },
+      { module: "Django Website Development", topics: ["Projects, apps, and URL routing", "Models, migrations, and database queries", "Templates, forms, authentication, and admin"] },
+      { module: "FastAPI, Testing, and Deployment", topics: ["REST endpoints and request validation", "Connecting APIs to application data", "Testing, security basics, and deployment"] },
+    ],
+    projects: ["Django business website with forms and admin", "FastAPI data service", "Deployed Python website with API integration"],
+    tools: ["Python", "Django", "FastAPI", "HTML", "CSS", "SQL", "Git"],
+    prerequisites: ["Basic computer literacy", "No prior Python experience required", "A laptop for development exercises"],
+  },
+  {
+    slug: "ui-ux-design",
+    title: "UI/UX Design",
+    category: "development",
+    level: "Beginner",
+    duration: "8 weeks",
+    delivery: "Both",
+    image: resolveCourseImage("ui-ux-design", devImg),
+    summary: "Research user needs and design clear digital experiences through information architecture, wireframes, prototypes, and usability testing.",
+    seoIntro: "Learn user-centered design methods, from research and wireframes to interactive prototypes and usability evaluation.",
+    overview: "A design-focused course covering both user experience research and interface design. Learners define user needs, organize information, develop wireframes and prototypes, establish visual systems, and test designs with users before handoff.",
+    audience: "Aspiring UI/UX designers, product team members, and visual designers moving into digital product design.",
+    outcomes: ["Plan user research and synthesize findings into design requirements", "Create user flows, wireframes, and interactive prototypes", "Apply visual hierarchy and accessible interface patterns", "Evaluate designs through usability testing and iteration"],
+    curriculum: [
+      { module: "UX Research and Structure", topics: ["User goals and research planning", "Personas and journey maps", "Information architecture and user flows"] },
+      { module: "Interface Design", topics: ["Wireframing", "Visual hierarchy and design systems", "Responsive and accessible patterns"] },
+      { module: "Prototyping and Evaluation", topics: ["Interactive prototypes", "Usability testing", "Design iteration and developer handoff"] },
+    ],
+    projects: ["User research summary", "Mobile application prototype", "Usability test and redesign"],
+    tools: ["Figma", "Prototyping tools", "Accessibility guidelines", "Research templates"],
+    prerequisites: ["Basic computer literacy", "No previous design experience required"],
+  },
+  {
+    slug: "generative-ai",
+    title: "Generative AI",
+    category: "ai",
+    level: "Beginner",
+    duration: "6 weeks",
+    delivery: "Both",
+    image: aiImg,
+    summary: "Understand generative AI capabilities and limitations, compare text and image tools, and apply them responsibly to practical work.",
+    seoIntro: "Explore generative AI tools and applications across text, image, and research workflows, with practical guidance on evaluation and responsible use.",
+    overview: "A non-programming introduction to generative AI focused on model capabilities, tool selection, output evaluation, and responsible use. It complements prompt engineering by emphasizing tool literacy and use-case evaluation rather than prompt frameworks alone.",
+    audience: "Professionals, students, educators, and business owners who want a practical understanding of generative AI tools without a coding prerequisite.",
+    outcomes: ["Explain common generative AI concepts and limitations", "Compare text, image, and multimodal tools for practical use cases", "Evaluate AI-generated outputs for accuracy, bias, and suitability", "Apply privacy, attribution, and responsible-use practices"],
+    curriculum: [
+      { module: "Generative AI Concepts", topics: ["Generative models and training concepts", "Text, image, and multimodal systems", "Capabilities and limitations"] },
+      { module: "Tools and Use Cases", topics: ["Research and summarization workflows", "Image and content generation", "Tool selection and output evaluation"] },
+      { module: "Responsible Application", topics: ["Privacy and sensitive information", "Bias, accuracy, and verification", "Responsible-use case project"] },
+    ],
+    projects: ["Generative AI tool comparison", "Verified research workflow", "Responsible-use policy for a selected task"],
+    tools: ["Generative AI assistants", "Image generation tools", "Evaluation checklists"],
+    prerequisites: ["Basic computer literacy", "No programming or prior AI experience required"],
+  },
+  {
+    slug: "agentic-ai-engineering",
+    title: "Agentic AI",
+    category: "ai",
+    level: "Advanced",
+    duration: "8 weeks",
+    delivery: "Live Online",
+    image: aiImg,
+    summary: "Design and evaluate tool-using AI agents with controlled workflows, state management, human approval, and operational safeguards.",
+    seoIntro: "Build agentic AI workflows with tools, state, evaluation, human approval, and safeguards for reliable task execution.",
+    overview: "A technical course focused on designing and evaluating agentic workflows, distinct from general LLM application development. Learners build bounded agents that use tools, manage task state, request human approval where needed, and are tested for reliability, security, and cost.",
+    audience: "Developers and technical practitioners with Python and API experience who want to build controlled AI agent workflows.",
+    outcomes: ["Design bounded agent workflows with explicit goals and tool permissions", "Implement tool calling, state, and human approval steps", "Evaluate agent behavior using repeatable test cases", "Apply security, reliability, and cost controls to agent systems"],
+    curriculum: [
+      { module: "Agent Design", topics: ["Agents and workflow orchestration", "Task decomposition and state", "Tool selection and permission boundaries"] },
+      { module: "Implementation", topics: ["Tool calling and structured outputs", "Memory and state persistence", "Human-in-the-loop approval"] },
+      { module: "Evaluation and Operations", topics: ["Agent test cases and evaluation", "Prompt injection and tool security", "Tracing, cost, and failure recovery"] },
+    ],
+    projects: ["Bounded research agent", "Human-approved workflow agent", "Evaluated agent capstone"],
+    tools: ["Python", "LLM APIs", "Agent orchestration frameworks", "Git"],
+    prerequisites: ["Python programming experience", "Basic API and LLM application familiarity"],
+  },
 ];
+
+export const courses: Course[] = courseRecords.map((course) => ({
+  ...course,
+  image: resolveCourseImage(course.slug, course.image),
+}));
 
 export const featuredCourses = courses.filter((c) => c.featured);
 

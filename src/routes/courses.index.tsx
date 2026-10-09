@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { CourseCard } from "@/components/site/CourseCard";
 import { categories, courses, type CategoryId } from "@/data/courses";
 import { cn } from "@/lib/utils";
+import { toAbsoluteUrl } from "@/lib/site";
 
 type Search = { category?: CategoryId | "all" };
 
@@ -14,21 +15,50 @@ export const Route = createFileRoute("/courses/")({
     const valid = categories.some((cat) => cat.id === c);
     return valid ? { category: c as CategoryId } : {};
   },
-  head: () => ({
-    meta: [
-      { title: "Course Catalog | Corepoint Tech Academy" },
-      {
-        name: "description",
-        content:
-          "Browse instructor-led courses in AI, data science, software development, cybersecurity, cloud, databases and automation.",
-      },
-      { property: "og:title", content: "Course Catalog | Corepoint Tech Academy" },
-      {
-        property: "og:description",
-        content: "Hands-on technology training delivered live online and in person in Lagos.",
-      },
-    ],
-  }),
+  head: () => {
+    const title = "Course Catalog | Corepoint Tech Academy";
+    const description =
+      "Explore hands-on courses in software and systems engineering, data engineering, AI, analytics, cybersecurity, cloud, and design, delivered in Lagos and online.";
+    const canonicalUrl = toAbsoluteUrl("/courses");
+    const catalogImage =
+      courses.find((course) => course.featured)?.image ??
+      courses[0]?.image ??
+      "/assets/course-data.jpg";
+    const imageUrl = toAbsoluteUrl(catalogImage);
+
+    return {
+      meta: [
+        { title },
+        { name: "description", content: description },
+        { property: "og:type", content: "website" },
+        { property: "og:url", content: canonicalUrl },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { property: "og:image", content: imageUrl },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:title", content: title },
+        { name: "twitter:description", content: description },
+        { name: "twitter:image", content: imageUrl },
+      ],
+      links: [{ rel: "canonical", href: canonicalUrl }],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            name: title,
+            itemListElement: courses.map((course, index) => ({
+              "@type": "ListItem",
+              position: index + 1,
+              name: course.title,
+              url: toAbsoluteUrl(`/courses/${course.slug}`),
+            })),
+          }),
+        },
+      ],
+    };
+  },
   component: CoursesPage,
 });
 
