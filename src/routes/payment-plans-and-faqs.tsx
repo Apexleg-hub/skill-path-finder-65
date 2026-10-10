@@ -1,16 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import {
-  CalendarDays,
-  Check,
-  ChevronDown,
-  Clock,
-  CreditCard,
-  HelpCircle,
-  MessageCircle,
-  ShieldCheck,
-  Wallet,
-} from "lucide-react";
+import { Check, ChevronDown, HelpCircle, MessageCircle, ShieldCheck, Wallet } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/payment-plans-and-faqs")({
@@ -42,32 +32,26 @@ const paymentPlans = [
   {
     title: "Daily Plan",
     subtitle: "Pay per class",
-    description:
-      "Maximum flexibility for learners who prefer to pay before each class.",
-    icon: CalendarDays,
+    description: "Maximum flexibility for learners who prefer to pay before each class.",
     features: [
       "Payment before each class",
       "2-hour session",
       "No long-term commitment",
       "Learn at your own pace",
     ],
-    bestFor:
-      "Beginners who want maximum flexibility and prefer to pay as they learn.",
+    bestFor: "Beginners who want maximum flexibility and prefer to pay as they learn.",
   },
   {
     title: "Weekly Plan",
     subtitle: "Pay weekly",
-    description:
-      "A structured option for learners who can commit to regular weekly training.",
-    icon: Clock,
+    description: "A structured option for learners who can commit to regular weekly training.",
     features: [
       "3 classes per week",
       "2 hours per class",
       "Payment once every week",
       "Structured weekly learning",
     ],
-    bestFor:
-      "Learners who can commit to a consistent weekly training schedule.",
+    bestFor: "Learners who can commit to a consistent weekly training schedule.",
     popular: true,
   },
   {
@@ -75,30 +59,25 @@ const paymentPlans = [
     subtitle: "Pay monthly",
     description:
       "Spread your course fees across monthly instalments while maintaining a consistent schedule.",
-    icon: Wallet,
     features: [
       "Monthly payment",
       "Structured monthly learning",
       "Spread course fees over time",
       "Consistent training schedule",
     ],
-    bestFor:
-      "Learners who want flexibility while maintaining a longer-term commitment.",
+    bestFor: "Learners who want flexibility while maintaining a longer-term commitment.",
   },
   {
     title: "Full Payment",
     subtitle: "Pay once",
-    description:
-      "Pay the complete course fee upfront with no recurring payments.",
-    icon: CreditCard,
+    description: "Pay the complete course fee upfront with no recurring payments.",
     features: [
       "One-time payment",
       "No recurring payments",
       "Complete course payment",
       "Potential full-payment discount",
     ],
-    bestFor:
-      "Learners who are ready to commit to the complete programme.",
+    bestFor: "Learners who are ready to commit to the complete programme.",
   },
 ];
 
@@ -115,8 +94,7 @@ const faqs = [
   },
   {
     question: "Can I pay daily?",
-    answer:
-      "Yes. Students who choose the daily plan can make payment before each scheduled class.",
+    answer: "Yes. Students who choose the daily plan can make payment before each scheduled class.",
   },
   {
     question: "Can I change my payment plan?",
@@ -173,17 +151,13 @@ function PaymentPlansPage() {
           </div>
 
           <h1 className="mx-auto mt-6 max-w-4xl text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
-            Flexible Learning.{" "}
-            <span className="text-primary-foreground/80">
-              Flexible Payment.
-            </span>
+            Flexible Learning. <span className="text-primary-foreground/80">Flexible Payment.</span>
           </h1>
 
           <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-primary-foreground/80 sm:text-lg">
-            Choose a payment plan that works for you. Whether you prefer to
-            pay per class, weekly, monthly, or in full, Corepoint Tech provides
-            flexible options designed to make practical technology training
-            accessible.
+            Choose a payment plan that works for you. Whether you prefer to pay per class, weekly,
+            monthly, or in full, Corepoint Tech provides flexible options designed to make practical
+            technology training accessible.
           </p>
 
           <div className="mt-8">
@@ -206,70 +180,51 @@ function PaymentPlansPage() {
           </h2>
 
           <p className="mt-4 text-muted-foreground">
-            Our payment options are designed to give you flexibility without
-            compromising your learning experience.
+            Our payment options are designed to give you flexibility without compromising your
+            learning experience.
           </p>
         </div>
 
         <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-          {paymentPlans.map((plan) => {
-            const Icon = plan.icon;
-
-            return (
-              <div
-                key={plan.title}
-                className={`relative flex flex-col rounded-2xl border bg-card p-6 shadow-card transition-all duration-200 hover:-translate-y-1 hover:shadow-lg ${
-                  plan.popular
-                    ? "border-primary ring-1 ring-primary/20"
-                    : "border-border"
-                }`}
-              >
-                {plan.popular && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground">
-                    Most Popular
-                  </div>
-                )}
-
-                <div className="flex size-12 items-center justify-center rounded-xl bg-primary/10">
-                  <Icon className="size-6 text-primary" />
+          {paymentPlans.map((plan) => (
+            <div
+              key={plan.title}
+              className={`relative flex flex-col rounded-2xl border bg-card p-6 shadow-card transition-all duration-200 hover:-translate-y-1 hover:shadow-lg ${
+                plan.popular ? "border-primary ring-1 ring-primary/20" : "border-border"
+              }`}
+            >
+              {plan.popular && (
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground">
+                  Most Popular
                 </div>
+              )}
 
-                <h3 className="mt-5 text-xl font-bold">{plan.title}</h3>
+              <h3 className="text-xl font-bold">{plan.title}</h3>
 
-                <p className="mt-1 font-medium text-primary">
-                  {plan.subtitle}
+              <p className="mt-1 font-medium text-primary">{plan.subtitle}</p>
+
+              <p className="mt-3 text-sm leading-6 text-muted-foreground">{plan.description}</p>
+
+              <div className="my-6 h-px bg-border" />
+
+              <ul className="space-y-3">
+                {plan.features.map((feature) => (
+                  <li key={feature} className="flex items-start gap-2 text-sm">
+                    <Check className="mt-0.5 size-4 shrink-0 text-primary" />
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <div className="mt-auto pt-6">
+                <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                  Best for
                 </p>
 
-                <p className="mt-3 text-sm leading-6 text-muted-foreground">
-                  {plan.description}
-                </p>
-
-                <div className="my-6 h-px bg-border" />
-
-                <ul className="space-y-3">
-                  {plan.features.map((feature) => (
-                    <li
-                      key={feature}
-                      className="flex items-start gap-2 text-sm"
-                    >
-                      <Check className="mt-0.5 size-4 shrink-0 text-primary" />
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <div className="mt-auto pt-6">
-                  <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                    Best for
-                  </p>
-
-                  <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                    {plan.bestFor}
-                  </p>
-                </div>
+                <p className="mt-2 text-sm leading-6 text-muted-foreground">{plan.bestFor}</p>
               </div>
-            );
-          })}
+            </div>
+          ))}
         </div>
       </section>
 
@@ -286,8 +241,7 @@ function PaymentPlansPage() {
             </h2>
 
             <p className="mt-4 text-muted-foreground">
-              Choose how frequently you would like to make your training
-              payments.
+              Choose how frequently you would like to make your training payments.
             </p>
           </div>
 
@@ -300,30 +254,22 @@ function PaymentPlansPage() {
             <div className="divide-y divide-border">
               <div className="grid grid-cols-2 px-6 py-5 text-sm">
                 <span className="font-medium">Daily</span>
-                <span className="text-muted-foreground">
-                  Before each class
-                </span>
+                <span className="text-muted-foreground">Before each class</span>
               </div>
 
               <div className="grid grid-cols-2 px-6 py-5 text-sm">
                 <span className="font-medium">Weekly</span>
-                <span className="text-muted-foreground">
-                  Once every week
-                </span>
+                <span className="text-muted-foreground">Once every week</span>
               </div>
 
               <div className="grid grid-cols-2 px-6 py-5 text-sm">
                 <span className="font-medium">Monthly</span>
-                <span className="text-muted-foreground">
-                  Once every month
-                </span>
+                <span className="text-muted-foreground">Once every month</span>
               </div>
 
               <div className="grid grid-cols-2 px-6 py-5 text-sm">
                 <span className="font-medium">Full Payment</span>
-                <span className="text-muted-foreground">
-                  One-time payment
-                </span>
+                <span className="text-muted-foreground">One-time payment</span>
               </div>
             </div>
           </div>
@@ -347,8 +293,8 @@ function PaymentPlansPage() {
             </h2>
 
             <p className="mt-4 text-muted-foreground">
-              We believe students should understand their payment
-              arrangements before training begins.
+              We believe students should understand their payment arrangements before training
+              begins.
             </p>
           </div>
 
@@ -364,9 +310,7 @@ function PaymentPlansPage() {
               ].map((term) => (
                 <li key={term} className="flex items-start gap-3">
                   <Check className="mt-0.5 size-5 shrink-0 text-primary" />
-                  <span className="text-sm leading-6 text-muted-foreground">
-                    {term}
-                  </span>
+                  <span className="text-sm leading-6 text-muted-foreground">{term}</span>
                 </li>
               ))}
             </ul>
@@ -391,8 +335,8 @@ function PaymentPlansPage() {
             </h2>
 
             <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
-              Find answers to common questions about payments, classes,
-              scheduling, and applications.
+              Find answers to common questions about payments, classes, scheduling, and
+              applications.
             </p>
           </div>
 
@@ -422,9 +366,7 @@ function PaymentPlansPage() {
 
                   {isOpen && (
                     <div className="border-t border-border px-5 pb-5 pt-4">
-                      <p className="text-sm leading-7 text-muted-foreground">
-                        {faq.answer}
-                      </p>
+                      <p className="text-sm leading-7 text-muted-foreground">{faq.answer}</p>
                     </div>
                   )}
                 </div>
@@ -441,13 +383,11 @@ function PaymentPlansPage() {
             <MessageCircle className="size-6" />
           </div>
 
-          <h2 className="mt-5 text-3xl font-bold sm:text-4xl">
-            Ready to start learning?
-          </h2>
+          <h2 className="mt-5 text-3xl font-bold sm:text-4xl">Ready to start learning?</h2>
 
           <p className="mx-auto mt-4 max-w-2xl text-primary-foreground/80">
-            Choose your preferred payment option and take the next step toward
-            building practical technology skills.
+            Choose your preferred payment option and take the next step toward building practical
+            technology skills.
           </p>
 
           <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">

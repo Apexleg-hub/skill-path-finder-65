@@ -1083,14 +1083,14 @@ const courseRecords: Course[] = [
   ],
 },
   {
-    slug: "applied-machine-learning-with-python",
+    slug: "machine-learning-with-python",
     title: "Machine Learning with Python",
     category: "ai",
     level: "Intermediate",
     duration: "10 weeks",
     delivery: "Both",
     featured: true,
-    image: aiImg,
+    image: resolveCourseImage("machine-learning-with-python", aiImg),
 
     summary:
       "Learn how to build, evaluate and deploy machine learning models with Python using real-world datasets and practical business problems.",
@@ -4171,7 +4171,7 @@ const courseRecords: Course[] = [
     duration: "6 weeks",
     delivery: "Both",
     featured: true,
-    image: aiImg,
+    image:resolveCourseImage("prompt-engineering", aiImg), 
 
     summary:
       "Learn to use generative AI tools effectively prompting, AI-assisted content creation, workflow automation, and integrating AI into everyday work.",
@@ -4813,7 +4813,7 @@ const courseRecords: Course[] = [
     level: "Beginner",
     duration: "6 weeks",
     delivery: "Both",
-    image: aiImg,
+    image: resolveCourseImage("generative-ai", aiImg),
     summary: "Understand generative AI capabilities and limitations, compare text and image tools, and apply them responsibly to practical work.",
     seoIntro: "Explore generative AI tools and applications across text, image, and research workflows, with practical guidance on evaluation and responsible use.",
     overview: "A non-programming introduction to generative AI focused on model capabilities, tool selection, output evaluation, and responsible use. It complements prompt engineering by emphasizing tool literacy and use-case evaluation rather than prompt frameworks alone.",

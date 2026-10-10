@@ -10,6 +10,7 @@ npm run dev
 4. git push origin main
 4. git push
 
+# ++++++++++++
 
 You’re very close already. In this project, the correct way is: **don’t put the Windows path directly in `image`**. Since this is a TanStack/Vite app, import the image or resolve it through `import.meta.glob`.
 
@@ -41,6 +42,8 @@ That means the easiest method is:
 
 ```ts
 image: resolveCourseImage("full-stack-data-science", dataImg),
+image: resolveCourseImage("cloud-omputing", cloudImg),
+generative-ai
 ```
 
 So for your images in `src/assets/courses`:

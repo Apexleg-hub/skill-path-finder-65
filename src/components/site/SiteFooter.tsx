@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Mail, Phone, MapPin, Linkedin, Twitter, Instagram } from "lucide-react";
+import { Mail, Phone, MapPin, Linkedin, Twitter, Instagram, MessageCircle } from "lucide-react";
 import { categories } from "@/data/courses";
 import logo from "@/assets/corepoint-tech.jpg";
 
@@ -38,8 +38,8 @@ export function SiteFooter() {
             <li><Link to="/about" className="text-ink-foreground/80 hover:text-ink-foreground">About Us</Link></li>
             <li><Link to="/contact" className="text-ink-foreground/80 hover:text-ink-foreground">Contact</Link></li>
             <li><Link to="/register" className="text-ink-foreground/80 hover:text-ink-foreground">Register</Link></li>
-            <li><Link to="/register" className="text-ink-foreground/80 hover:text-ink-foreground">Payment Plan</Link></li>
-            <li><Link to="/register" className="text-ink-foreground/80 hover:text-ink-foreground">Blog</Link></li>
+            <li><Link to="/payment-plans-and-faqs" className="text-ink-foreground/80 hover:text-ink-foreground">Payment Plan</Link></li>
+            <li><Link to="/blog" className="text-ink-foreground/80 hover:text-ink-foreground">Blog</Link></li>
           </ul>
         </div>
 
@@ -68,8 +68,13 @@ export function SiteFooter() {
           </h3>
           <ul className="mt-4 space-y-3 text-sm text-ink-foreground/80">
             <li className="flex gap-2"><Phone className="size-4 shrink-0" /> +234 911 575 1406</li>
+            <li className="flex gap-2"><MessageCircle className="size-4 shrink-0" /> +234 911 575 1406</li>
             <li className="flex gap-2"><Mail className="size-4 shrink-0" /> info@corepointtech.com.ng</li>
-            <li className="flex gap-2"><MapPin className="size-4 shrink-0" /> Somolu, Lagos Nigeria</li>
+            <li className="flex gap-2"><MapPin className="size-4 shrink-0" /> Somolu, Lagos State, Nigeria</li>
+            <li className="flex gap-2">
+              <MapPin className="size-4 shrink-0" />
+              <span>20 Church Street, Atala Adesan Road, Mowe, Ogun State</span>
+            </li>
           </ul>
         </div>
       </div>
@@ -77,7 +82,7 @@ export function SiteFooter() {
       <div className="border-t border-ink-foreground/10">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-6 text-xs text-ink-foreground/60">
           <p>© {new Date().getFullYear()} Corepoint Tech Academy. All rights reserved.</p>
-          <p className="text-right">Owned and Managed by Equaline Limited</p>
+          <p className="text-right">Owned and Managed by Equalline Limited</p>
         </div>
       </div>
     </footer>

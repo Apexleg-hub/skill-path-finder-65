@@ -121,6 +121,10 @@ function ContactPage() {
                 <MapPin className="size-5 shrink-0 text-primary" />
                 <span>Somolu, Lagos, Nigeria</span>
               </li>
+              <li className="flex gap-3">
+                <MapPin className="size-5 shrink-0 text-primary" />
+                <span>20 Church street Atala Adesan Road, Mowe, Ogun Nigeria</span>
+              </li>
             </ul>
           </div>
           <div className="overflow-hidden rounded-2xl border border-border shadow-card">
