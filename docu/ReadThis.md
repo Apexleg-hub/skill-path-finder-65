@@ -12,6 +12,8 @@ npm run dev
 
 # ++++++++++++
 
+image: resolveCourseImage("ui-ux-design", dataImg),
+
 You’re very close already. In this project, the correct way is: **don’t put the Windows path directly in `image`**. Since this is a TanStack/Vite app, import the image or resolve it through `import.meta.glob`.
 
 Your file is here: [courses.ts](c:/Users/user/Desktop/skill-path-finder-65/src/data/courses.ts)
@@ -42,7 +44,7 @@ That means the easiest method is:
 
 ```ts
 image: resolveCourseImage("full-stack-data-science", dataImg),
-image: resolveCourseImage("cloud-omputing", cloudImg),
+image: resolveCourseImage("prompt-engineering", cloudImg),
 generative-ai
 ```
 

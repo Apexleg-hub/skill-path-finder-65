@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Building2, Laptop, Users, Target, Award, HeartHandshake } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CourseCard } from "@/components/site/CourseCard";
 import { categories, featuredCourses } from "@/data/courses";
@@ -27,22 +27,18 @@ export const Route = createFileRoute("/")({
 
 const valueProps = [
   {
-    icon: Users,
     title: " One-On-One ",
     body: "One-On-One classes with personalized attention, mentorship and feedback from instructors.",
   },
   {
-    icon: Target,
     title: "Real Projects",
     body: "Build projects that can become part of your professional portfolio.",
   },
   {
-    icon: Award,
     title: "Industry Instructors",
     body: "Learn from practitioners who work with the technologies they teach.",
   },
   {
-    icon: HeartHandshake,
     title: "Career Support",
     body: "CV reviews, portfolio guidance, interview preparation and career direction.",
   },
@@ -88,8 +84,7 @@ function Index() {
         <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {valueProps.map((v) => (
             <div key={v.title} className="rounded-2xl border border-border bg-card p-6 shadow-card">
-              <v.icon className="size-6 text-primary" />
-              <h3 className="mt-4 text-lg font-semibold">{v.title}</h3>
+              <h3 className="text-lg font-semibold">{v.title}</h3>
               <p className="mt-2 text-sm text-muted-foreground">{v.body}</p>
             </div>
           ))}
@@ -104,16 +99,14 @@ function Index() {
           </p>
           <div className="mt-8 grid gap-6 md:grid-cols-2">
             <div className="rounded-2xl border border-border bg-card p-7 shadow-card">
-              <Building2 className="size-7 text-primary" />
-              <h3 className="mt-4 text-xl font-semibold">Physical class</h3>
+              <h3 className="text-xl font-semibold">Physical class</h3>
               <p className="mt-2 text-sm text-muted-foreground">
                 In-person at our training centre, with weekend and weekday
                  options, and face-to-face mentoring.
               </p>
             </div>
             <div className="rounded-2xl border border-border bg-card p-7 shadow-card">
-              <Laptop className="size-7 text-primary" />
-              <h3 className="mt-4 text-xl font-semibold">Live online</h3>
+              <h3 className="text-xl font-semibold">Live online</h3>
               <p className="mt-2 text-sm text-muted-foreground">
                 Instructor-led virtual classes with recordings, you can learn from anywhere.
               </p>

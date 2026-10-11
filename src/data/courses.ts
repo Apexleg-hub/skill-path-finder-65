@@ -99,7 +99,7 @@ export const categories: Category[] = [
     name: "Data Science",
     shortName: "Data Science",
     description: "Analysis, visualisation and decision-ready reporting.",
-    image: resolveCourseImage("full-stack-data-science", dataImg),
+    image: dataImg,
     
   },
 
@@ -1345,7 +1345,7 @@ const courseRecords: Course[] = [
     duration: "8 weeks",
     delivery: "Live Online",
     featured: true,
-    image: aiImg,
+    image: resolveCourseImage("generative-ai", aiImg),
 
     summary:
       "Learn to design, build and deploy practical Generative AI applications using large language models, prompt engineering, RAG, AI agents and modern AI development tools.",
@@ -2702,7 +2702,7 @@ const courseRecords: Course[] = [
     duration: "10 weeks",
     delivery: "Both",
     featured: true,
-    image: securityImg,
+    image: resolveCourseImage("cybersecurity-fundamentals",securityImg),
 
     summary:
       "Build practical cybersecurity skills by learning how to identify threats, secure systems, analyse security events and respond to incidents.",
@@ -4304,14 +4304,14 @@ const courseRecords: Course[] = [
   },
 
   {
-    slug: "professional-certificate-ai-engineering",
+    slug: "ai-engineering",
     title: "AI Engineering",
     category: "ai",
     level: "Intermediate to Advanced",
     duration: "16 weeks",
     delivery: "Both",
     featured: true,
-    image: aiImg,
+    image: resolveCourseImage("ai-engineering", aiImg),
 
     summary:
       "An advanced, professional-level programme covering machine learning, deep learning, AI system design, and deployment for those ready to build and ship real AI applications.",
@@ -4567,7 +4567,7 @@ const courseRecords: Course[] = [
     level: "Advanced",
     duration: "12 weeks",
     delivery: "Both",
-    image: aiImg,
+    image: resolveCourseImage("ai-ml-engineering", aiImg),
 
     summary: "Engineer machine-learning systems from data preparation and model evaluation through reproducible serving and operational monitoring.",
     seoIntro: "Practice the engineering lifecycle for machine-learning systems, including reproducible experiments, model serving, evaluation, and monitoring.",
@@ -4835,7 +4835,8 @@ const courseRecords: Course[] = [
     level: "Advanced",
     duration: "8 weeks",
     delivery: "Live Online",
-    image: aiImg,
+    image: resolveCourseImage("agentic-ai", aiImg),
+    
     summary: "Design and evaluate tool-using AI agents with controlled workflows, state management, human approval, and operational safeguards.",
     seoIntro: "Build agentic AI workflows with tools, state, evaluation, human approval, and safeguards for reliable task execution.",
     overview: "A technical course focused on designing and evaluating agentic workflows, distinct from general LLM application development. Learners build bounded agents that use tools, manage task state, request human approval where needed, and are tested for reliability, security, and cost.",
