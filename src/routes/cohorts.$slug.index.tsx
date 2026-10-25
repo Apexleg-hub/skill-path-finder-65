@@ -130,16 +130,18 @@ function CohortDetailPage() {
             <h2 id="learn-heading" className="text-2xl font-bold sm:text-3xl">
               What You Will Learn
             </h2>
-            <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {c.skills.map((s) => (
-                <li key={s} className="flex items-start gap-3 rounded-2xl border border-border bg-card p-5 shadow-card">
-                  <span className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
-                    <Check className="size-4" />
-                  </span>
-                  <span className="font-medium">{s}</span>
-                </li>
-              ))}
-            </ul>
+            <div className="mt-6 rounded-2xl border border-border bg-card p-6 shadow-card sm:p-8">
+              <ul className="grid gap-x-8 gap-y-4 sm:grid-cols-2">
+                {c.skills.map((s) => (
+                  <li key={s} className="flex items-start gap-3">
+                    <span className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
+                      <Check className="size-4" />
+                    </span>
+                    <span className="font-medium">{s}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </section>
         )}
 
@@ -149,14 +151,18 @@ function CohortDetailPage() {
           <h2 id="benefits-heading" className="text-2xl font-bold sm:text-3xl">
             Programme Benefits
           </h2>
-          <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {BENEFITS.map((b) => (
-              <li key={b} className="flex items-start gap-3 rounded-2xl border border-border bg-card p-5 shadow-card">
-                <Check className="mt-0.5 size-5 shrink-0 text-primary" />
-                <span>{b}</span>
-              </li>
-            ))}
-          </ul>
+          <div className="mt-6 rounded-2xl border border-border bg-card p-6 shadow-card sm:p-8">
+            <ul className="grid gap-x-8 gap-y-4 sm:grid-cols-2">
+              {BENEFITS.map((b) => (
+                <li key={b} className="flex items-start gap-3">
+                  <span className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
+                    <Check className="size-4" />
+                  </span>
+                  <span>{b}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </section>
 
         <Tuition c={c} />
