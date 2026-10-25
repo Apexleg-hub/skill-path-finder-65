@@ -11,17 +11,25 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as DataScienceAiCourseRouteImport } from './routes/data-science-ai-course'
 import { Route as PaymentPlansAndFaqsRouteImport } from './routes/payment-plans-and-faqs'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminCohortsRouteImport } from './routes/admin.cohorts'
+import { Route as AdminLeadsRouteImport } from './routes/admin.leads'
 import { Route as AdminLoginRouteImport } from './routes/admin.login'
+import { Route as AdminPaymentsRouteImport } from './routes/admin.payments'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
+import { Route as CohortsIndexRouteImport } from './routes/cohorts.index'
 import { Route as CoursesIndexRouteImport } from './routes/courses.index'
 import { Route as CoursesSlugRouteImport } from './routes/courses.$slug'
 import { Route as AdminBlogNewRouteImport } from './routes/admin.blog.new'
+import { Route as CohortsSlugIndexRouteImport } from './routes/cohorts.$slug.index'
+import { Route as CohortsSlugRegisterRouteImport } from './routes/cohorts.$slug.register'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -31,6 +39,11 @@ const IndexRoute = IndexRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -58,10 +71,30 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminCohortsRoute = AdminCohortsRouteImport.update({
+  id: '/cohorts',
+  path: '/cohorts',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminLeadsRoute = AdminLeadsRouteImport.update({
+  id: '/leads',
+  path: '/leads',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminLoginRoute = AdminLoginRouteImport.update({
-  id: '/admin/login',
-  path: '/admin/login',
-  getParentRoute: () => rootRouteImport,
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPaymentsRoute = AdminPaymentsRouteImport.update({
+  id: '/payments',
+  path: '/payments',
+  getParentRoute: () => AdminRoute,
 } as any)
 const BlogIndexRoute = BlogIndexRouteImport.update({
   id: '/blog/',
@@ -71,6 +104,11 @@ const BlogIndexRoute = BlogIndexRouteImport.update({
 const BlogSlugRoute = BlogSlugRouteImport.update({
   id: '/blog/$slug',
   path: '/blog/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CohortsIndexRoute = CohortsIndexRouteImport.update({
+  id: '/cohorts/',
+  path: '/cohorts/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CoursesIndexRoute = CoursesIndexRouteImport.update({
@@ -84,25 +122,43 @@ const CoursesSlugRoute = CoursesSlugRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminBlogNewRoute = AdminBlogNewRouteImport.update({
-  id: '/admin/blog/new',
-  path: '/admin/blog/new',
+  id: '/blog/new',
+  path: '/blog/new',
+  getParentRoute: () => AdminRoute,
+} as any)
+const CohortsSlugIndexRoute = CohortsSlugIndexRouteImport.update({
+  id: '/cohorts/$slug/',
+  path: '/cohorts/$slug/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CohortsSlugRegisterRoute = CohortsSlugRegisterRouteImport.update({
+  id: '/cohorts/$slug/register',
+  path: '/cohorts/$slug/register',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/admin': typeof AdminRouteWithChildren
   '/contact': typeof ContactRoute
   '/data-science-ai-course': typeof DataScienceAiCourseRoute
   '/payment-plans-and-faqs': typeof PaymentPlansAndFaqsRoute
   '/register': typeof RegisterRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/admin/cohorts': typeof AdminCohortsRoute
+  '/admin/leads': typeof AdminLeadsRoute
   '/admin/login': typeof AdminLoginRoute
+  '/admin/payments': typeof AdminPaymentsRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/courses/$slug': typeof CoursesSlugRoute
+  '/admin/': typeof AdminIndexRoute
   '/blog/': typeof BlogIndexRoute
+  '/cohorts/': typeof CohortsIndexRoute
   '/courses/': typeof CoursesIndexRoute
   '/admin/blog/new': typeof AdminBlogNewRoute
+  '/cohorts/$slug/register': typeof CohortsSlugRegisterRoute
+  '/cohorts/$slug/': typeof CohortsSlugIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -112,45 +168,68 @@ export interface FileRoutesByTo {
   '/payment-plans-and-faqs': typeof PaymentPlansAndFaqsRoute
   '/register': typeof RegisterRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/admin/cohorts': typeof AdminCohortsRoute
+  '/admin/leads': typeof AdminLeadsRoute
   '/admin/login': typeof AdminLoginRoute
+  '/admin/payments': typeof AdminPaymentsRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/courses/$slug': typeof CoursesSlugRoute
+  '/admin': typeof AdminIndexRoute
   '/blog': typeof BlogIndexRoute
+  '/cohorts': typeof CohortsIndexRoute
   '/courses': typeof CoursesIndexRoute
   '/admin/blog/new': typeof AdminBlogNewRoute
+  '/cohorts/$slug/register': typeof CohortsSlugRegisterRoute
+  '/cohorts/$slug': typeof CohortsSlugIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/admin': typeof AdminRouteWithChildren
   '/contact': typeof ContactRoute
   '/data-science-ai-course': typeof DataScienceAiCourseRoute
   '/payment-plans-and-faqs': typeof PaymentPlansAndFaqsRoute
   '/register': typeof RegisterRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/admin/cohorts': typeof AdminCohortsRoute
+  '/admin/leads': typeof AdminLeadsRoute
   '/admin/login': typeof AdminLoginRoute
+  '/admin/payments': typeof AdminPaymentsRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/courses/$slug': typeof CoursesSlugRoute
+  '/admin/': typeof AdminIndexRoute
   '/blog/': typeof BlogIndexRoute
+  '/cohorts/': typeof CohortsIndexRoute
   '/courses/': typeof CoursesIndexRoute
   '/admin/blog/new': typeof AdminBlogNewRoute
+  '/cohorts/$slug/register': typeof CohortsSlugRegisterRoute
+  '/cohorts/$slug/': typeof CohortsSlugIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/about'
+    | '/admin'
     | '/contact'
     | '/data-science-ai-course'
     | '/payment-plans-and-faqs'
     | '/register'
     | '/sitemap.xml'
+    | '/admin/cohorts'
+    | '/admin/leads'
     | '/admin/login'
+    | '/admin/payments'
     | '/blog/$slug'
     | '/courses/$slug'
+    | '/admin/'
     | '/blog/'
+    | '/cohorts/'
     | '/courses/'
     | '/admin/blog/new'
+    | '/cohorts/$slug/register'
+    | '/cohorts/$slug/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -160,43 +239,60 @@ export interface FileRouteTypes {
     | '/payment-plans-and-faqs'
     | '/register'
     | '/sitemap.xml'
+    | '/admin/cohorts'
+    | '/admin/leads'
     | '/admin/login'
+    | '/admin/payments'
     | '/blog/$slug'
     | '/courses/$slug'
+    | '/admin'
     | '/blog'
+    | '/cohorts'
     | '/courses'
     | '/admin/blog/new'
+    | '/cohorts/$slug/register'
+    | '/cohorts/$slug'
   id:
     | '__root__'
     | '/'
     | '/about'
+    | '/admin'
     | '/contact'
     | '/data-science-ai-course'
     | '/payment-plans-and-faqs'
     | '/register'
     | '/sitemap.xml'
+    | '/admin/cohorts'
+    | '/admin/leads'
     | '/admin/login'
+    | '/admin/payments'
     | '/blog/$slug'
     | '/courses/$slug'
+    | '/admin/'
     | '/blog/'
+    | '/cohorts/'
     | '/courses/'
     | '/admin/blog/new'
+    | '/cohorts/$slug/register'
+    | '/cohorts/$slug/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  AdminRoute: typeof AdminRouteWithChildren
   ContactRoute: typeof ContactRoute
   DataScienceAiCourseRoute: typeof DataScienceAiCourseRoute
   PaymentPlansAndFaqsRoute: typeof PaymentPlansAndFaqsRoute
   RegisterRoute: typeof RegisterRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
-  AdminLoginRoute: typeof AdminLoginRoute
   BlogSlugRoute: typeof BlogSlugRoute
   CoursesSlugRoute: typeof CoursesSlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
+  CohortsIndexRoute: typeof CohortsIndexRoute
   CoursesIndexRoute: typeof CoursesIndexRoute
-  AdminBlogNewRoute: typeof AdminBlogNewRoute
+  CohortsSlugRegisterRoute: typeof CohortsSlugRegisterRoute
+  CohortsSlugIndexRoute: typeof CohortsSlugIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -213,6 +309,13 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -250,12 +353,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/cohorts': {
+      id: '/admin/cohorts'
+      path: '/cohorts'
+      fullPath: '/admin/cohorts'
+      preLoaderRoute: typeof AdminCohortsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/leads': {
+      id: '/admin/leads'
+      path: '/leads'
+      fullPath: '/admin/leads'
+      preLoaderRoute: typeof AdminLeadsRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/login': {
       id: '/admin/login'
-      path: '/admin/login'
+      path: '/login'
       fullPath: '/admin/login'
       preLoaderRoute: typeof AdminLoginRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/payments': {
+      id: '/admin/payments'
+      path: '/payments'
+      fullPath: '/admin/payments'
+      preLoaderRoute: typeof AdminPaymentsRouteImport
+      parentRoute: typeof AdminRoute
     }
     '/blog/': {
       id: '/blog/'
@@ -269,6 +400,13 @@ declare module '@tanstack/react-router' {
       path: '/blog/$slug'
       fullPath: '/blog/$slug'
       preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cohorts/': {
+      id: '/cohorts/'
+      path: '/cohorts'
+      fullPath: '/cohorts/'
+      preLoaderRoute: typeof CohortsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/courses/': {
@@ -287,28 +425,64 @@ declare module '@tanstack/react-router' {
     }
     '/admin/blog/new': {
       id: '/admin/blog/new'
-      path: '/admin/blog/new'
+      path: '/blog/new'
       fullPath: '/admin/blog/new'
       preLoaderRoute: typeof AdminBlogNewRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/cohorts/$slug/': {
+      id: '/cohorts/$slug/'
+      path: '/cohorts/$slug'
+      fullPath: '/cohorts/$slug/'
+      preLoaderRoute: typeof CohortsSlugIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cohorts/$slug/register': {
+      id: '/cohorts/$slug/register'
+      path: '/cohorts/$slug/register'
+      fullPath: '/cohorts/$slug/register'
+      preLoaderRoute: typeof CohortsSlugRegisterRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
 }
 
+interface AdminRouteChildren {
+  AdminCohortsRoute: typeof AdminCohortsRoute
+  AdminLeadsRoute: typeof AdminLeadsRoute
+  AdminLoginRoute: typeof AdminLoginRoute
+  AdminPaymentsRoute: typeof AdminPaymentsRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+  AdminBlogNewRoute: typeof AdminBlogNewRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminCohortsRoute: AdminCohortsRoute,
+  AdminLeadsRoute: AdminLeadsRoute,
+  AdminLoginRoute: AdminLoginRoute,
+  AdminPaymentsRoute: AdminPaymentsRoute,
+  AdminIndexRoute: AdminIndexRoute,
+  AdminBlogNewRoute: AdminBlogNewRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  AdminRoute: AdminRouteWithChildren,
   ContactRoute: ContactRoute,
   DataScienceAiCourseRoute: DataScienceAiCourseRoute,
   PaymentPlansAndFaqsRoute: PaymentPlansAndFaqsRoute,
   RegisterRoute: RegisterRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
-  AdminLoginRoute: AdminLoginRoute,
   BlogSlugRoute: BlogSlugRoute,
   CoursesSlugRoute: CoursesSlugRoute,
   BlogIndexRoute: BlogIndexRoute,
+  CohortsIndexRoute: CohortsIndexRoute,
   CoursesIndexRoute: CoursesIndexRoute,
-  AdminBlogNewRoute: AdminBlogNewRoute,
+  CohortsSlugRegisterRoute: CohortsSlugRegisterRoute,
+  CohortsSlugIndexRoute: CohortsSlugIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

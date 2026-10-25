@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button";
 import { CourseCard } from "@/components/site/CourseCard";
 import { categories, featuredCourses } from "@/data/courses";
 import heroImg from "@/assets/hero-training.jpg";
-import { Analytics } from "@vercel/analytics/next";
+import { UpcomingCohorts } from "@/components/site/UpcomingCohorts";
+import { CohortsBanner } from "@/components/site/CohortsBanner";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -78,6 +79,8 @@ function Index() {
           />
         </div>
       </section>
+
+      <CohortsBanner />
 
       <section className="mx-auto max-w-6xl px-4 py-16">
         <h2 className="text-3xl font-bold">Why train with us</h2>
@@ -161,6 +164,8 @@ function Index() {
           ))}
         </div>
       </section>
+
+      <UpcomingCohorts />
 
       <section className="mx-auto max-w-6xl px-4 pb-8">
         <div className="overflow-hidden rounded-3xl bg-hero-gradient px-6 py-14 text-center text-primary-foreground sm:px-12">

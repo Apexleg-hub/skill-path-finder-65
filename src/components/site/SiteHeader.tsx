@@ -10,6 +10,7 @@ import {
   Info,
   Newspaper,
   PhoneCall,
+  GraduationCap,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { categories } from "@/data/courses";
@@ -17,6 +18,7 @@ import logo from "@/assets/corepoint-tech.jpg";
 
 const navLinks = [
   { to: "/", label: "Home" },
+  { to: "/cohorts", label: "Cohorts", icon: GraduationCap },
   { to: "/blog", label: "Blog", icon: Newspaper },
   { to: "/about", label: "About" },
   { to: "/contact", label: "Contact" },
