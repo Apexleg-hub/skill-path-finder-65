@@ -2,7 +2,7 @@
 // Layout for every /admin page. The login page lives at /admin/login and is not guarded.
 import { useEffect, useState } from "react";
 import { createFileRoute, Link, Outlet, useLocation, useNavigate } from "@tanstack/react-router";
-import { GraduationCap, LayoutDashboard, Loader2, LogOut, Users, Wallet } from "lucide-react";
+import { GraduationCap, LayoutDashboard, Loader2, LogOut, Receipt, Users, Wallet } from "lucide-react";
 import { Button } from "@/components/ui/button";
 // Adjust this import to match your existing Supabase client file.
 import { supabase } from "@/integrations/supabase/client";
@@ -97,6 +97,15 @@ function AdminLayout() {
                 activeProps={{ className: "bg-secondary text-foreground" }}
               >
                 <GraduationCap className="size-4" /> Cohorts
+              </Link>
+            )}
+            {atLeast(access.role, "admin") && (
+              <Link
+                to="/admin/cohort-payments"
+                className="inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm font-semibold text-muted-foreground hover:text-foreground"
+                activeProps={{ className: "bg-secondary text-foreground" }}
+              >
+                <Receipt className="size-4" /> Cohort Payments
               </Link>
             )}
             <Link

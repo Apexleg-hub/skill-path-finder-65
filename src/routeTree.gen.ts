@@ -18,6 +18,7 @@ import { Route as PaymentPlansAndFaqsRouteImport } from './routes/payment-plans-
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminCohortPaymentsRouteImport } from './routes/admin.cohort-payments'
 import { Route as AdminCohortsRouteImport } from './routes/admin.cohorts'
 import { Route as AdminLeadsRouteImport } from './routes/admin.leads'
 import { Route as AdminLoginRouteImport } from './routes/admin.login'
@@ -74,6 +75,11 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
 const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminCohortPaymentsRoute = AdminCohortPaymentsRouteImport.update({
+  id: '/cohort-payments',
+  path: '/cohort-payments',
   getParentRoute: () => AdminRoute,
 } as any)
 const AdminCohortsRoute = AdminCohortsRouteImport.update({
@@ -146,6 +152,7 @@ export interface FileRoutesByFullPath {
   '/payment-plans-and-faqs': typeof PaymentPlansAndFaqsRoute
   '/register': typeof RegisterRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/admin/cohort-payments': typeof AdminCohortPaymentsRoute
   '/admin/cohorts': typeof AdminCohortsRoute
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/login': typeof AdminLoginRoute
@@ -168,6 +175,7 @@ export interface FileRoutesByTo {
   '/payment-plans-and-faqs': typeof PaymentPlansAndFaqsRoute
   '/register': typeof RegisterRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/admin/cohort-payments': typeof AdminCohortPaymentsRoute
   '/admin/cohorts': typeof AdminCohortsRoute
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/login': typeof AdminLoginRoute
@@ -192,6 +200,7 @@ export interface FileRoutesById {
   '/payment-plans-and-faqs': typeof PaymentPlansAndFaqsRoute
   '/register': typeof RegisterRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/admin/cohort-payments': typeof AdminCohortPaymentsRoute
   '/admin/cohorts': typeof AdminCohortsRoute
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/login': typeof AdminLoginRoute
@@ -217,6 +226,7 @@ export interface FileRouteTypes {
     | '/payment-plans-and-faqs'
     | '/register'
     | '/sitemap.xml'
+    | '/admin/cohort-payments'
     | '/admin/cohorts'
     | '/admin/leads'
     | '/admin/login'
@@ -239,6 +249,7 @@ export interface FileRouteTypes {
     | '/payment-plans-and-faqs'
     | '/register'
     | '/sitemap.xml'
+    | '/admin/cohort-payments'
     | '/admin/cohorts'
     | '/admin/leads'
     | '/admin/login'
@@ -262,6 +273,7 @@ export interface FileRouteTypes {
     | '/payment-plans-and-faqs'
     | '/register'
     | '/sitemap.xml'
+    | '/admin/cohort-payments'
     | '/admin/cohorts'
     | '/admin/leads'
     | '/admin/login'
@@ -360,6 +372,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/cohort-payments': {
+      id: '/admin/cohort-payments'
+      path: '/cohort-payments'
+      fullPath: '/admin/cohort-payments'
+      preLoaderRoute: typeof AdminCohortPaymentsRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/cohorts': {
       id: '/admin/cohorts'
       path: '/cohorts'
@@ -448,6 +467,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AdminRouteChildren {
+  AdminCohortPaymentsRoute: typeof AdminCohortPaymentsRoute
   AdminCohortsRoute: typeof AdminCohortsRoute
   AdminLeadsRoute: typeof AdminLeadsRoute
   AdminLoginRoute: typeof AdminLoginRoute
@@ -457,6 +477,7 @@ interface AdminRouteChildren {
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
+  AdminCohortPaymentsRoute: AdminCohortPaymentsRoute,
   AdminCohortsRoute: AdminCohortsRoute,
   AdminLeadsRoute: AdminLeadsRoute,
   AdminLoginRoute: AdminLoginRoute,

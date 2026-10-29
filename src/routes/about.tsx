@@ -1,6 +1,4 @@
-
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Award, HeartHandshake, Target, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import heroImg from "@/assets/hero-training.jpg";
 
@@ -31,25 +29,21 @@ export const Route = createFileRoute("/about")({
 
 const values = [
   {
-    icon: Users,
     title: "Personalized Learning",
     body:
       "We keep our learning experience practical and engaging, giving learners the guidance, feedback, and support they need to make real progress.",
   },
   {
-    icon: Target,
     title: "Project-Based Learning",
     body:
       "You learn by building. Our programmes focus on practical projects, real-world datasets, and hands-on technology applications.",
   },
   {
-    icon: Award,
     title: "Industry-Relevant Skills",
     body:
       "Our training focuses on modern tools, technologies, and practices that help learners prepare for today's rapidly changing digital economy.",
   },
   {
-    icon: HeartHandshake,
     title: "Career & Business Growth",
     body:
       "We help individuals turn technology skills into career opportunities, while helping businesses discover ways technology can improve growth and productivity.",
@@ -164,26 +158,18 @@ function AboutPage() {
           </p>
 
           <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {values.map((value) => {
-              const Icon = value.icon;
+            {values.map((value) => (
+              <div
+                key={value.title}
+                className="rounded-2xl border border-border bg-card p-6 shadow-card"
+              >
+                <h3 className="text-lg font-semibold">{value.title}</h3>
 
-              return (
-                <div
-                  key={value.title}
-                  className="rounded-2xl border border-border bg-card p-6 shadow-card"
-                >
-                  <Icon className="size-6 text-primary" />
-
-                  <h3 className="mt-4 text-lg font-semibold">
-                    {value.title}
-                  </h3>
-
-                  <p className="mt-2 text-sm text-muted-foreground">
-                    {value.body}
-                  </p>
-                </div>
-              );
-            })}
+                <p className="mt-2 text-sm text-muted-foreground">
+                  {value.body}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </section>

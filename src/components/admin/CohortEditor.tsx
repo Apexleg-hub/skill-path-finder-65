@@ -29,14 +29,14 @@ type Form = {
   start_date: string;
   end_date: string;
   registration_deadline: string;
+  payment_deadline: string;
+  seat_hold_hours: string;
   learning_format: "virtual" | "physical" | "hybrid";
   class_schedule: string;
   tuition_fee: string;
   early_bird_fee: string;
   early_bird_deadline: string;
   seat_capacity: string;
-  pay_full: boolean;
-  pay_instalment: boolean;
   faqs: Faq[];
   modules: ModuleDraft[];
 };
@@ -44,8 +44,9 @@ type Form = {
 const EMPTY: Form = {
   programme_name: "", cohort_number: "1", title: "", slug: "", description: "", about: "", category: "",
   skills: "", image_url: "", duration_weeks: "", start_date: "", end_date: "", registration_deadline: "",
+  payment_deadline: "", seat_hold_hours: "48",
   learning_format: "virtual", class_schedule: "", tuition_fee: "", early_bird_fee: "", early_bird_deadline: "",
-  seat_capacity: "", pay_full: true, pay_instalment: false, faqs: [], modules: [],
+  seat_capacity: "", faqs: [], modules: [],
 };
 
 const EMPTY_MODULE: ModuleDraft = {
@@ -106,11 +107,11 @@ export function CohortEditor({
           description: c.description ?? "", about: c.about ?? "", category: c.category ?? "",
           skills: c.skills.join("\n"), image_url: c.image_url ?? "",
           duration_weeks: c.duration_weeks?.toString() ?? "", start_date: c.start_date ?? "", end_date: c.end_date ?? "",
-          registration_deadline: c.registration_deadline ?? "", learning_format: c.learning_format,
+          registration_deadline: c.registration_deadline ?? "", payment_deadline: c.payment_deadline ?? "",
+          seat_hold_hours: String(c.seat_hold_hours ?? 48), learning_format: c.learning_format,
           class_schedule: c.class_schedule ?? "", tuition_fee: c.tuition_fee?.toString() ?? "",
           early_bird_fee: c.early_bird_fee?.toString() ?? "", early_bird_deadline: c.early_bird_deadline ?? "",
           seat_capacity: c.seat_capacity?.toString() ?? "",
-          pay_full: c.payment_options.includes("full"), pay_instalment: c.payment_options.includes("instalment"),
           faqs: c.faqs, modules,
         });
       })
@@ -156,6 +157,10 @@ export function CohortEditor({
       if (v.trim() !== "" && (!Number.isFinite(Number(v)) || Number(v) < 0)) return `${label} must be a positive number.`;
     }
     if (form.seat_capacity.trim() !== "" && Number(form.seat_capacity) < 1) return "Seat capacity must be at least 1, or left empty for no limit.";
+    const hold = Number(form.seat_hold_hours);
+    if (!Number.isInteger(hold) || hold < 1 || hold > 720) return "Seat hold must be a whole number of hours between 1 and 720.";
+    if (form.payment_deadline && form.registration_deadline && form.payment_deadline < form.registration_deadline)
+      return "The payment deadline cannot be before the registration deadline.";
     if (form.start_date && form.end_date && form.end_date < form.start_date) return "The end date cannot be before the start date.";
     if (form.early_bird_fee.trim() !== "" && form.tuition_fee.trim() !== "" && Number(form.early_bird_fee) > Number(form.tuition_fee))
       return "The early-bird fee cannot be higher than the standard tuition.";
@@ -191,13 +196,15 @@ export function CohortEditor({
         start_date: form.start_date || null,
         end_date: form.end_date || null,
         registration_deadline: form.registration_deadline || null,
+        payment_deadline: form.payment_deadline || null,
+        seat_hold_hours: Number(form.seat_hold_hours),
         learning_format: form.learning_format,
         class_schedule: form.class_schedule.trim() || null,
         tuition_fee: num(form.tuition_fee),
         early_bird_fee: num(form.early_bird_fee),
         early_bird_deadline: form.early_bird_deadline || null,
         seat_capacity: num(form.seat_capacity),
-        payment_options: [...(form.pay_full ? ["full"] : []), ...(form.pay_instalment ? ["instalment"] : [])],
+        payment_options: ["full"], // full payment only
         faqs: form.faqs.filter((f) => f.q.trim() && f.a.trim()).map((f) => ({ q: f.q.trim(), a: f.a.trim() })),
       };
       const id = await saveCohort(input, cohortId ?? undefined);
@@ -299,6 +306,7 @@ export function CohortEditor({
           <Field label="Start date"><input type="date" className={inputClass} value={form.start_date} onChange={(e) => set("start_date", e.target.value)} /></Field>
           <Field label="End date"><input type="date" className={inputClass} value={form.end_date} onChange={(e) => set("end_date", e.target.value)} /></Field>
           <Field label="Registration deadline"><input type="date" className={inputClass} value={form.registration_deadline} onChange={(e) => set("registration_deadline", e.target.value)} /></Field>
+          <Field label="Payment deadline" hint="Last day to pay. Leave empty to use the registration deadline."><input type="date" className={inputClass} value={form.payment_deadline} onChange={(e) => set("payment_deadline", e.target.value)} /></Field>
           <Field label="Duration (weeks)"><input className={inputClass} inputMode="numeric" value={form.duration_weeks} onChange={(e) => set("duration_weeks", e.target.value)} /></Field>
           <Field label="Learning format">
             <select className={inputClass} value={form.learning_format} onChange={(e) => set("learning_format", e.target.value as Form["learning_format"])}>
@@ -308,6 +316,7 @@ export function CohortEditor({
             </select>
           </Field>
           <Field label="Seat capacity" hint="Leave empty for no limit."><input className={inputClass} inputMode="numeric" value={form.seat_capacity} onChange={(e) => set("seat_capacity", e.target.value)} /></Field>
+          <Field label="Seat hold (hours)" hint="How long an unpaid registration keeps its seat."><input className={inputClass} inputMode="numeric" value={form.seat_hold_hours} onChange={(e) => set("seat_hold_hours", e.target.value)} /></Field>
         </div>
         <Field label="Class schedule"><input className={inputClass} value={form.class_schedule} onChange={(e) => set("class_schedule", e.target.value)} placeholder="Days and times" /></Field>
         <div className="grid gap-4 sm:grid-cols-3">
@@ -315,11 +324,7 @@ export function CohortEditor({
           <Field label="Early-bird fee (NGN)" hint="Optional."><input className={inputClass} inputMode="decimal" value={form.early_bird_fee} onChange={(e) => set("early_bird_fee", e.target.value)} /></Field>
           <Field label="Early-bird deadline"><input type="date" className={inputClass} value={form.early_bird_deadline} onChange={(e) => set("early_bird_deadline", e.target.value)} /></Field>
         </div>
-        <fieldset>
-          <legend className="mb-1 text-sm font-medium">Payment options offered</legend>
-          <label className="mr-6 inline-flex items-center gap-2 text-sm"><input type="checkbox" checked={form.pay_full} onChange={(e) => set("pay_full", e.target.checked)} /> Full payment</label>
-          <label className="inline-flex items-center gap-2 text-sm"><input type="checkbox" checked={form.pay_instalment} onChange={(e) => set("pay_instalment", e.target.checked)} /> Instalment payment</label>
-        </fieldset>
+        <p className="rounded-md bg-secondary/60 p-3 text-sm text-muted-foreground">Payment: full tuition is paid online with Paystack. Part payments and instalments are not offered.</p>
       </Section>
 
       <Section title="Curriculum">

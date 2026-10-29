@@ -22,6 +22,8 @@ export type AdminCohort = {
   start_date: string | null;
   end_date: string | null;
   registration_deadline: string | null;
+  payment_deadline: string | null;
+  seat_hold_hours: number;
   learning_format: "virtual" | "physical" | "hybrid";
   class_schedule: string | null;
   tuition_fee: number | null;

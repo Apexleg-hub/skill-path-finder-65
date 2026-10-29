@@ -148,6 +148,7 @@ export type CohortDetail = CohortWithMeta & {
   early_bird_fee: number | null;
   early_bird_deadline: string | null;
   payment_options: string[];
+  payment_deadline: string | null;
   faqs: CohortFaq[];
   earlyBirdActive: boolean;
 };
@@ -172,6 +173,7 @@ export async function fetchCohortDetail(slug: string): Promise<CohortDetailResul
     early_bird_fee: number | null;
     early_bird_deadline: string | null;
     payment_options: string[] | null;
+    payment_deadline: string | null;
     faqs: unknown;
   };
 

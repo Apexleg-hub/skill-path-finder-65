@@ -438,8 +438,8 @@ function Tuition({ c }: { c: CohortDetail }) {
             </ul>
           )}
           <p className="mt-3 text-sm text-muted-foreground">
-            Tuition is paid by bank transfer or deposit. Payment details are shown after you register, and your place
-            is confirmed once our team has verified your payment.
+            Tuition is paid in full online with Paystack when you register. Your place is confirmed as soon as the
+            payment is verified. Bank transfer is available as an alternative.
           </p>
         </div>
       </div>
