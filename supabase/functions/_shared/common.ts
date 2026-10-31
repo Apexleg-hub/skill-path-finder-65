@@ -4,7 +4,7 @@
 //   PAYSTACK_SECRET_KEY   your Paystack secret key (sk_test_... while testing)
 //   PAYSTACK_MODE         "test" or "live" (default "test")
 //   SITE_URL              default https://corepointtech.com.ng
-//   ALLOWED_ORIGINS       comma-separated list of sites allowed to call these functions
+//   ALLOWED_ORIGINS       comma-separated sites allowed to call these functions (supports *.vercel.app)
 // SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are provided to Edge Functions automatically.
 
 import { createClient, type SupabaseClient } from "https://esm.sh/@supabase/supabase-js@2";
@@ -24,10 +24,20 @@ const allowedOrigins = (
   "https://corepointtech.com.ng,https://www.corepointtech.com.ng,http://localhost:3000,http://localhost:5173"
 ).split(",").map((s) => s.trim());
 
+// An allowed entry is either an exact origin, or "*.example.com" to allow any https subdomain
+// (handy for Vercel preview links such as https://my-project-abc123.vercel.app).
+function originAllowed(origin: string): boolean {
+  return allowedOrigins.some((o) =>
+    o === origin || (o.startsWith("*.") && origin.startsWith("https://") && origin.endsWith(o.slice(1)))
+  );
+}
+
 export function corsHeaders(req: Request): Record<string, string> {
   const origin = req.headers.get("origin") ?? "";
   return {
-    "Access-Control-Allow-Origin": allowedOrigins.includes(origin) ? origin : allowedOrigins[0],
+    "Access-Control-Allow-Origin": originAllowed(origin)
+      ? origin
+      : (allowedOrigins.find((o) => !o.startsWith("*.")) ?? "null"),
     "Access-Control-Allow-Headers":
       req.headers.get("access-control-request-headers") ?? "authorization, x-client-info, apikey, content-type",
     "Access-Control-Allow-Methods": "POST, OPTIONS",

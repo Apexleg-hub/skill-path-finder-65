@@ -38,7 +38,9 @@ export type CategoryId =
   | "cloud"
   | "database"
   | "automation"
-  | "management";
+  | "management"
+  | "supply-chain"
+  | "hr-management";
 
 export type Level = "Beginner" | "Intermediate" | "Advanced";
 export type Delivery = "Physical" | "Live Online" | "Both";
@@ -151,6 +153,20 @@ export const categories: Category[] = [
     shortName: "Automation",
     description: "Scripting and no-code workflow automation for real work.",
     image: automationImg,
+  },
+  {
+    id: "supply-chain",
+    name: "Supply Chain & Procurement",
+    shortName: "Supply Chain",
+    description: "Procurement, logistics, inventory management and supply chain analytics.",
+    image: managementImg,
+  },
+  {
+    id: "hr-management",
+    name: "Human Resource Management",
+    shortName: "HR Management",
+    description: "Modern HR management, HR software, payroll administration and workforce analytics.",
+    image: managementImg,
   },
 ];
 
@@ -4850,6 +4866,598 @@ const courseRecords: Course[] = [
     projects: ["Bounded research agent", "Human-approved workflow agent", "Evaluated agent capstone"],
     tools: ["Python", "LLM APIs", "Agent orchestration frameworks", "Git"],
     prerequisites: ["Python programming experience", "Basic API and LLM application familiarity"],
+  },
+  {
+    slug: "professional-supply-chain-management-analytics-procurement",
+    title: "Professional Supply Chain Management, Analytics & Procurement",
+    category: "supply-chain",
+    level: "Beginner",
+    duration: "12 weeks",
+    delivery: "Both",
+    featured: true,
+    image: resolveCourseImage(
+      "professional-supply-chain-management-analytics-procurement",
+      managementImg
+    ),
+
+    summary:
+      "Develop practical skills in supply chain management, strategic procurement, logistics, inventory management, ERP systems and business intelligence using Excel and Power BI.",
+
+    seoIntro:
+      "Looking for a practical Supply Chain Management and Procurement course in Nigeria? Corepoint Tech Academy's 12-week Professional Supply Chain Management, Analytics & Procurement programme combines professional supply chain operations with modern business technology. Learn procurement, supplier management, inventory control, logistics, warehousing, demand planning, ERP systems, Advanced Excel and Power BI through practical projects designed to prepare you for opportunities across procurement, logistics, operations and supply chain analytics.",
+
+    overview:
+      "A comprehensive, project-based professional training programme designed to prepare learners for careers in supply chain management, procurement, logistics and operations. Students develop practical knowledge of procurement processes, supplier relationship management, inventory control, warehousing, transportation, demand forecasting and supply chain operations. The programme also introduces enterprise resource planning systems, Advanced Excel and Power BI for supply chain analytics, reporting and operational decision-making.",
+
+    audience:
+      "Graduates, aspiring supply chain professionals, procurement officers, logistics professionals, inventory controllers, operations staff, business owners and analysts who want to develop practical supply chain management and procurement skills.",
+
+    outcomes: [
+      "Understand the principles and structure of modern supply chain management",
+      "Manage procurement processes and purchasing activities",
+      "Prepare purchase requisitions, requests for quotations and purchase orders",
+      "Evaluate suppliers and manage supplier relationships",
+      "Apply strategic sourcing and supplier negotiation techniques",
+      "Manage inventory levels, stock records and replenishment processes",
+      "Understand warehouse operations and distribution management",
+      "Coordinate logistics and transportation activities",
+      "Apply demand forecasting and operations planning techniques",
+      "Understand supply chain risks and performance management",
+      "Use ERP systems for procurement and inventory operations",
+      "Use Advanced Excel for supply chain reporting and analysis",
+      "Build Power BI dashboards for procurement and inventory performance",
+      "Analyse supply chain costs, delivery performance and operational efficiency",
+      "Complete practical supply chain and procurement projects",
+    ],
+
+    curriculum: [
+      {
+        module: "Module 1: Introduction to Supply Chain Management",
+        topics: [
+          "Introduction to supply chain management",
+          "Supply chain concepts and principles",
+          "Supply chain structures and stakeholders",
+          "End-to-end supply chain processes",
+          "Supply chain management vs logistics management",
+          "Supply chain strategies",
+          "Supply chain challenges and opportunities",
+          "Supply chain management across industries",
+        ],
+      },
+      {
+        module: "Module 2: Procurement and Purchasing Management",
+        topics: [
+          "Introduction to procurement management",
+          "Procurement policies and procedures",
+          "Purchasing processes",
+          "Purchase requisitions and purchase orders",
+          "Request for quotation and tender processes",
+          "Strategic sourcing",
+          "Supplier identification and selection",
+          "Supplier evaluation and performance",
+          "Supplier relationship management",
+          "Negotiation techniques",
+          "Procurement documentation",
+        ],
+      },
+      {
+        module: "Module 3: Advanced Procurement and Contract Management",
+        topics: [
+          "Strategic procurement planning",
+          "Procurement budgeting",
+          "Cost analysis and cost control",
+          "Contract administration",
+          "Supplier negotiations",
+          "Vendor management",
+          "Procurement ethics and compliance",
+          "Procurement risk management",
+          "Contract performance monitoring",
+          "Procurement performance indicators",
+        ],
+      },
+      {
+        module: "Module 4: Inventory and Stock Management",
+        topics: [
+          "Inventory management fundamentals",
+          "Inventory classification",
+          "Stock control procedures",
+          "Economic Order Quantity",
+          "Reorder levels and safety stock",
+          "ABC inventory analysis",
+          "Inventory valuation methods",
+          "Stock reconciliation",
+          "Inventory turnover",
+          "Stockout and overstock management",
+          "Inventory performance measurement",
+        ],
+      },
+      {
+        module: "Module 5: Warehousing and Distribution Management",
+        topics: [
+          "Warehouse management fundamentals",
+          "Warehouse layout and organisation",
+          "Goods receiving and inspection",
+          "Storage and stock movement",
+          "Picking, packing and dispatch",
+          "Warehouse documentation",
+          "Distribution management",
+          "Warehouse safety",
+          "Warehouse performance indicators",
+        ],
+      },
+      {
+        module: "Module 6: Logistics and Transportation Management",
+        topics: [
+          "Introduction to logistics management",
+          "Transportation modes",
+          "Freight and shipment management",
+          "Route planning and optimisation",
+          "Delivery scheduling",
+          "Distribution networks",
+          "Logistics cost management",
+          "Import and export logistics fundamentals",
+          "Last-mile delivery",
+          "Logistics performance measurement",
+        ],
+      },
+      {
+        module: "Module 7: Demand Forecasting and Operations Planning",
+        topics: [
+          "Demand planning fundamentals",
+          "Historical sales analysis",
+          "Forecasting methods",
+          "Moving averages",
+          "Trend analysis",
+          "Seasonality",
+          "Production and operations planning",
+          "Material requirements planning",
+          "Capacity planning",
+          "Sales and operations planning",
+        ],
+      },
+      {
+        module: "Module 8: ERP Systems and Supply Chain Technology",
+        topics: [
+          "Introduction to ERP systems",
+          "ERP in procurement and supply chain management",
+          "Odoo ERP introduction",
+          "Purchase management in Odoo",
+          "Inventory management in Odoo",
+          "Warehouse operations in Odoo",
+          "Purchase orders and vendor records",
+          "Introduction to SAP S/4HANA",
+          "Materials management concepts",
+          "Digital supply chain operations",
+        ],
+      },
+      {
+        module: "Module 9: Advanced Excel for Supply Chain Management",
+        topics: [
+          "Excel for procurement and inventory management",
+          "Data cleaning and preparation",
+          "Advanced Excel formulas",
+          "XLOOKUP and SUMIFS",
+          "Inventory tracking spreadsheets",
+          "Supplier evaluation templates",
+          "Purchase order tracking",
+          "PivotTables and PivotCharts",
+          "Power Query fundamentals",
+          "Inventory and procurement dashboards",
+        ],
+      },
+      {
+        module: "Module 10: Supply Chain Analytics with Power BI",
+        topics: [
+          "Introduction to supply chain analytics",
+          "Supply chain datasets",
+          "Data preparation with Power Query",
+          "Data modelling fundamentals",
+          "Procurement expenditure analysis",
+          "Inventory performance analysis",
+          "Supplier performance analysis",
+          "Logistics cost analysis",
+          "Delivery performance KPIs",
+          "Supply chain dashboard development",
+          "Business intelligence and reporting",
+        ],
+      },
+      {
+        module: "Module 11: Supply Chain Risk and Performance Management",
+        topics: [
+          "Supply chain risk identification",
+          "Supplier and operational risks",
+          "Supply chain disruptions",
+          "Risk mitigation strategies",
+          "Supply chain performance indicators",
+          "Cost optimisation",
+          "Operational efficiency",
+          "Sustainable supply chain practices",
+          "Continuous improvement",
+        ],
+      },
+      {
+        module: "Module 12: Supply Chain Professional Capstone Project",
+        topics: [
+          "Supply chain business problem identification",
+          "Procurement and inventory data preparation",
+          "Supplier evaluation and selection",
+          "Inventory analysis",
+          "Demand forecasting exercise",
+          "Procurement performance analysis",
+          "Excel reporting",
+          "Power BI dashboard development",
+          "Operational recommendations",
+          "Final project documentation",
+          "Professional project presentation",
+        ],
+      },
+    ],
+
+    projects: [
+      "End-to-End Procurement and Supplier Evaluation Project",
+      "Inventory Management and Stock Control System",
+      "Warehouse and Distribution Operations Case Study",
+      "Demand Forecasting and Replenishment Analysis",
+      "Odoo Procurement and Inventory Management Exercise",
+      "Power BI Supply Chain Performance Dashboard",
+      "End-to-End Supply Chain Analytics Capstone",
+    ],
+
+    tools: [
+      "Microsoft Excel",
+      "Advanced Excel",
+      "Power Query",
+      "Microsoft Power BI",
+      "DAX",
+      "Odoo ERP",
+      "SAP S/4HANA (Introduction)",
+      "Microsoft PowerPoint",
+    ],
+
+    prerequisites: [
+      "Basic computer literacy",
+      "No previous supply chain experience required",
+      "Basic spreadsheet knowledge is helpful but not required",
+      "Interest in business operations, procurement or logistics",
+    ],
+
+    faqs: [
+      {
+        question: "Do I need previous supply chain experience?",
+        answer:
+          "No. The programme starts with supply chain fundamentals and gradually introduces procurement, logistics, inventory management, ERP systems and analytics.",
+      },
+      {
+        question: "Will I learn practical software?",
+        answer:
+          "Yes. Students work with Microsoft Excel, Power BI and Odoo ERP, with an introduction to SAP S/4HANA concepts.",
+      },
+      {
+        question: "What career opportunities does this programme support?",
+        answer:
+          "The programme develops practical skills relevant to entry-level roles such as Procurement Assistant, Inventory Controller, Logistics Coordinator and Supply Chain Analyst.",
+      },
+      {
+        question: "Will I complete practical projects?",
+        answer:
+          "Yes. Students complete procurement, inventory, supplier evaluation and supply chain analytics projects, including a final Power BI dashboard.",
+      },
+      {
+        question: "Is this programme available online?",
+        answer:
+          "Yes. The programme is available through live online and physical training options.",
+      },
+    ],
+  },
+  {
+    slug: "human-resource-management-and-analytics",
+    title: "Human Resource Management & Analytics",
+    category: "hr-management",
+    level: "Beginner",
+    duration: "12 weeks",
+    delivery: "Live Online",
+    featured: true,
+
+    image: resolveCourseImage(
+      "human-resource-management-and-analytics",
+      managementImg
+    ),
+
+    summary:
+      "Develop practical HR management skills using modern HR software, payroll systems, Advanced Excel, Power BI and AI-powered productivity tools. Learn to manage employees, recruitment, performance, HR operations and workforce analytics.",
+
+    seoTitle:
+      "Human Resource Management & Analytics Course | Corepoint Tech Academy",
+
+    seoDescription:
+      "Learn practical Human Resource Management, HRIS, HRMS, payroll administration, OrangeHRM, Odoo, Advanced Excel, Power BI and AI applications at Corepoint Tech Academy.",
+
+    seoIntro:
+      "Build a modern career in Human Resource Management with Corepoint Tech Academy. This practical programme combines HR fundamentals, recruitment, employee administration, payroll management, HR software, workforce analytics and AI productivity tools. Learn to manage real HR processes, work with digital HR platforms and transform employee data into meaningful business insights.",
+
+    overview:
+      "The Human Resource Management & Analytics programme is designed to equip learners with the practical knowledge and digital skills required to manage modern human resource operations. Students learn essential HR functions, recruitment and selection, employee administration, payroll processing, performance management, HR information systems and workforce analytics. Through hands-on exercises with OrangeHRM, Odoo, Microsoft Excel and Power BI, learners develop the ability to manage employee information, streamline HR workflows, analyse workforce data and prepare professional HR reports. The programme also introduces practical applications of artificial intelligence in HR documentation, recruitment support and administrative productivity.",
+
+    audience:
+      "This programme is suitable for HR graduates, aspiring HR professionals, HR officers, administrative officers, business owners, office managers, entrepreneurs, graduates and career changers who want to develop practical human resource management and analytics skills.",
+
+    outcomes: [
+      "Understand the principles and functions of modern human resource management",
+      "Understand HRIS, HRMS and Human Capital Management systems",
+      "Develop job descriptions and recruitment strategies",
+      "Manage recruitment, candidate screening and employee onboarding processes",
+      "Maintain employee records and personnel databases",
+      "Manage attendance, leave and employee administration",
+      "Understand payroll structures, salary calculations and deductions",
+      "Perform practical HR operations using OrangeHRM",
+      "Understand HR workflows and employee management using Odoo",
+      "Use Advanced Excel for payroll calculations and HR reporting",
+      "Analyse employee performance, retention and workforce trends",
+      "Build interactive HR dashboards using Microsoft Power BI",
+      "Apply AI tools to HR documentation and administrative workflows",
+      "Prepare professional HR reports and management presentations",
+      "Complete practical HR management and workforce analytics projects"
+    ],
+
+    curriculum: [
+      {
+        module: "Module 1: Introduction to Human Resource Management",
+        topics: [
+          "Introduction to Human Resource Management",
+          "Evolution and importance of HR management",
+          "Roles and responsibilities of HR professionals",
+          "Core functions of the HR department",
+          "Human resource planning",
+          "Organisational structure and workforce planning",
+          "Employee lifecycle management",
+          "HR policies and procedures",
+          "Introduction to Nigerian workplace practices"
+        ]
+      },
+
+      {
+        module: "Module 2: Recruitment, Selection and Onboarding",
+        topics: [
+          "Introduction to talent acquisition",
+          "Workforce requirements and job analysis",
+          "Writing professional job descriptions",
+          "Job advertisements and recruitment channels",
+          "CV screening and candidate shortlisting",
+          "Interview planning and evaluation",
+          "Candidate assessment and selection",
+          "Employment documentation",
+          "Employee onboarding and orientation"
+        ]
+      },
+
+      {
+        module: "Module 3: Employee Administration and Relations",
+        topics: [
+          "Employee records and documentation",
+          "Personnel file management",
+          "Attendance and time management",
+          "Leave administration",
+          "Employee communication",
+          "Employee engagement",
+          "Workplace conflict management",
+          "Disciplinary procedures",
+          "Employee grievance management",
+          "Confidentiality and HR data protection"
+        ]
+      },
+
+      {
+        module: "Module 4: HRIS, HRMS and Human Capital Management",
+        topics: [
+          "Introduction to HRIS",
+          "Understanding HRMS and HCM",
+          "Traditional HR administration versus digital HR",
+          "Core features of HR management platforms",
+          "Employee database management",
+          "Recruitment and onboarding workflows",
+          "Attendance and leave management systems",
+          "Performance management systems",
+          "Benefits of HR digital transformation"
+        ]
+      },
+
+      {
+        module: "Module 5: Payroll Administration and Compensation",
+        topics: [
+          "Introduction to payroll administration",
+          "Understanding salary structures",
+          "Basic salary and allowances",
+          "Gross pay and net pay calculations",
+          "Payroll deductions and statutory considerations",
+          "Overtime and employee benefits",
+          "Payroll documentation",
+          "Payroll processing and reconciliation",
+          "Payroll reporting and record keeping",
+          "Introduction to Nigerian payroll compliance"
+        ]
+      },
+
+      {
+        module: "Module 6: Practical HR Management with OrangeHRM",
+        topics: [
+          "Introduction to OrangeHRM",
+          "Understanding the OrangeHRM interface",
+          "Setting up an HR environment",
+          "Creating and managing employee profiles",
+          "Employee information management",
+          "Recruitment and candidate management",
+          "Leave and attendance administration",
+          "Performance management",
+          "Generating HR reports",
+          "Practical HR administration exercises"
+        ]
+      },
+
+      {
+        module: "Module 7: ERP-Based HR Management with Odoo",
+        topics: [
+          "Introduction to ERP systems",
+          "Understanding Odoo and its business applications",
+          "Introduction to the Odoo HR module",
+          "Employee information management",
+          "Recruitment workflows",
+          "Employee contracts and departments",
+          "Time-off management",
+          "Attendance management",
+          "Understanding HR integration with other business functions",
+          "Practical Odoo HR exercises"
+        ]
+      },
+
+      {
+        module: "Module 8: Advanced Excel for Human Resources",
+        topics: [
+          "HR data management using Excel",
+          "Employee databases and structured tables",
+          "Data cleaning and validation",
+          "Essential Excel formulas for HR",
+          "IF, COUNTIF and SUMIF",
+          "XLOOKUP and lookup functions",
+          "Payroll calculations using Excel",
+          "Employee attendance tracking",
+          "PivotTables and PivotCharts",
+          "Conditional formatting",
+          "HR reporting and automated summaries"
+        ]
+      },
+
+      {
+        module: "Module 9: Introduction to HR Analytics",
+        topics: [
+          "Introduction to people analytics",
+          "The role of data in HR decision-making",
+          "Collecting and preparing workforce data",
+          "Understanding HR metrics and KPIs",
+          "Employee turnover and attrition analysis",
+          "Employee retention analysis",
+          "Recruitment performance metrics",
+          "Absenteeism and attendance analysis",
+          "Employee productivity measurement",
+          "Workforce planning and reporting"
+        ]
+      },
+
+      {
+        module: "Module 10: Power BI for HR Analytics",
+        topics: [
+          "Introduction to Power BI",
+          "Importing employee and HR datasets",
+          "Data cleaning using Power Query",
+          "HR data modelling",
+          "Introduction to DAX",
+          "Calculating HR performance indicators",
+          "Employee turnover analysis",
+          "Recruitment and hiring analytics",
+          "Workforce demographics analysis",
+          "Designing interactive HR dashboards",
+          "Presenting workforce insights to management"
+        ]
+      },
+
+      {
+        module: "Module 11: AI and HR Workflow Automation",
+        topics: [
+          "Introduction to AI in Human Resource Management",
+          "AI applications in recruitment and talent acquisition",
+          "Using AI to draft job descriptions",
+          "AI-assisted HR documentation",
+          "Employee communication and policy drafting",
+          "AI for HR reporting and data interpretation",
+          "Automating repetitive HR administrative tasks",
+          "Responsible AI use and human oversight",
+          "Data privacy, bias and ethical considerations"
+        ]
+      },
+
+      {
+        module: "Module 12: HR Management and Analytics Capstone",
+        topics: [
+          "Designing an employee management workflow",
+          "Building a structured employee database",
+          "Creating an employee onboarding process",
+          "Developing an HR administration system",
+          "Preparing a payroll workbook",
+          "Analysing workforce performance data",
+          "Building an interactive Power BI HR dashboard",
+          "Presenting HR insights and recommendations",
+          "Final project presentation"
+        ]
+      }
+    ],
+
+    projects: [
+      "Employee Database and Personnel Records Management",
+      "Recruitment and Employee Onboarding Workflow",
+      "Payroll Processing and Salary Calculation Workbook",
+      "Employee Attendance and Leave Tracking System",
+      "Practical HR Administration Using OrangeHRM",
+      "Employee Management Exercises Using Odoo",
+      "Employee Turnover and Retention Analysis",
+      "Recruitment Performance Analytics Report",
+      "Interactive HR Workforce Analytics Dashboard",
+      "End-to-End HR Management and Analytics Capstone Project"
+    ],
+
+    tools: [
+      "Microsoft Excel",
+      "Advanced Excel",
+      "Microsoft Power BI",
+      "Power Query",
+      "DAX",
+      "OrangeHRM",
+      "Odoo ERP",
+      "AI Productivity Tools"
+    ],
+
+    prerequisites: [
+      "Basic computer literacy",
+      "Interest in human resource management or business administration",
+      "Basic Excel knowledge is helpful but not compulsory",
+      "No previous HR software experience is required"
+    ],
+
+    faqs: [
+      {
+        question: "Who should enrol in this HR Management course?",
+        answer:
+          "The course is suitable for HR graduates, aspiring HR professionals, HR officers, administrative professionals, business owners and anyone interested in building a career in modern human resource management."
+      },
+      {
+        question: "Will I learn HR software during the programme?",
+        answer:
+          "Yes. You will gain practical exposure to OrangeHRM and Odoo, including employee administration, recruitment, attendance, leave management and HR workflows."
+      },
+      {
+        question: "Will I learn payroll management?",
+        answer:
+          "Yes. The programme covers salary structures, payroll calculations, allowances, deductions, payroll documentation and practical payroll processing using Excel."
+      },
+      {
+        question: "Will I learn HR analytics and Power BI?",
+        answer:
+          "Yes. You will learn how to analyse workforce data, calculate HR metrics and develop interactive dashboards using Microsoft Power BI."
+      },
+      {
+        question: "Do I need previous HR experience?",
+        answer:
+          "No. The programme starts with HR fundamentals and gradually introduces practical HR administration, software and analytics."
+      },
+      {
+        question: "Is the programme available online?",
+        answer:
+          "Yes. Corepoint Tech Academy delivers this programme through live online classes with practical exercises and projects."
+      },
+      {
+        question: "Will I complete practical projects?",
+        answer:
+          "Yes. You will complete practical exercises involving employee records, recruitment, payroll, HR software and workforce analytics, including a final capstone project."
+      }
+    ]
   },
 ];
 
