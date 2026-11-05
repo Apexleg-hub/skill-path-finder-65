@@ -2,9 +2,24 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Check, ChevronDown, HelpCircle, MessageCircle, ShieldCheck, Wallet } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { toAbsoluteUrl } from "@/lib/site";
+import { pageStructuredDataScript } from "@/lib/structured-data";
 
 export const Route = createFileRoute("/payment-plans-and-faqs")({
   head: () => ({
+    links: [{ rel: "canonical", href: toAbsoluteUrl("/payment-plans-and-faqs") }],
+    scripts: [
+      pageStructuredDataScript({
+        name: "Payment Plans & FAQs | Corepoint Tech Academy",
+        url: toAbsoluteUrl("/payment-plans-and-faqs"),
+        description:
+          "Explore Corepoint Tech Academy's flexible payment options and answers to frequently asked questions.",
+        breadcrumbs: [
+          { name: "Home", url: toAbsoluteUrl("/") },
+          { name: "Payment Plans & FAQs", url: toAbsoluteUrl("/payment-plans-and-faqs") },
+        ],
+      }),
+    ],
     meta: [
       {
         title: "Payment Plans & FAQs | Corepoint Tech Academy",

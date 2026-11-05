@@ -14,6 +14,8 @@ import {
   type CohortStatus,
   type CohortWithMeta,
 } from "@/lib/cohorts";
+import { toAbsoluteUrl } from "@/lib/site";
+import { pageStructuredDataScript } from "@/lib/structured-data";
 
 type CohortSearch = {
   q?: string;
@@ -39,6 +41,18 @@ export const Route = createFileRoute("/cohorts/")({
     start: clean(s.start, START_VALUES),
   }),
   head: () => ({
+    scripts: [
+      pageStructuredDataScript({
+        name: "Training Cohorts | Corepoint Tech Academy",
+        url: toAbsoluteUrl("/cohorts"),
+        description:
+          "Join structured, instructor-led cohort training programmes from Corepoint Tech Academy. Build practical skills, complete real projects and advance your career.",
+        breadcrumbs: [
+          { name: "Home", url: toAbsoluteUrl("/") },
+          { name: "Cohorts", url: toAbsoluteUrl("/cohorts") },
+        ],
+      }),
+    ],
     meta: [
       { title: "Training Cohorts | Corepoint Tech Academy" },
       {
@@ -53,7 +67,7 @@ export const Route = createFileRoute("/cohorts/")({
       },
       { property: "og:type", content: "website" },
     ],
-    links: [{ rel: "canonical", href: "https://corepointtech.com.ng/cohorts" }],
+    links: [{ rel: "canonical", href: toAbsoluteUrl("/cohorts") }],
   }),
   component: CohortsPage,
 });

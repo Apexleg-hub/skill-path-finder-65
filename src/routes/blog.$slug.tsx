@@ -1,19 +1,76 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import {
   ArrowLeft,
   BookOpen,
   CalendarDays,
-  Loader2,
   MessageCircle,
   User,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { supabase } from "@/lib/supabase"; // adjust this import to match your existing Supabase client path
+import { supabase } from "@/lib/supabase";
+import { toAbsoluteUrl } from "@/lib/site";
+import { articleSchema, pageStructuredDataScript } from "@/lib/structured-data";
 
 export const Route = createFileRoute("/blog/$slug")({
+  loader: async ({ params }) => {
+    const { data, error } = await supabase
+      .from("blog_posts")
+      .select("slug, title, excerpt, author, content, created_at, read_time, image_url")
+      .eq("slug", params.slug)
+      .eq("published", true)
+      .maybeSingle();
+
+    return error || !data ? null : (data as BlogPost);
+  },
+  head: ({ loaderData, params }) => {
+    if (!loaderData) {
+      return {
+        meta: [{ title: "Article not found | Corepoint Tech Academy" }, { name: "robots", content: "noindex" }],
+      };
+    }
+
+    const post = loaderData;
+    const url = toAbsoluteUrl(`/blog/${params.slug}`);
+    const description = post.excerpt || post.title;
+    const image = post.image_url ? toAbsoluteUrl(post.image_url) : undefined;
+    const structuredData = pageStructuredDataScript({
+      name: post.title,
+      url,
+      description,
+      ...(image ? { image } : {}),
+      breadcrumbs: [
+        { name: "Home", url: toAbsoluteUrl("/") },
+        { name: "Blog", url: toAbsoluteUrl("/blog") },
+        { name: post.title, url },
+      ],
+      entities: [
+        articleSchema({
+          title: post.title,
+          description,
+          url,
+          ...(image ? { image } : {}),
+          author: post.author,
+          ...(post.author.trim() === "Corepoint Tech Team" ? { authorType: "Organization" as const } : {}),
+        }),
+      ],
+    });
+
+    return {
+      meta: [
+        { title: `${post.title} | Corepoint Tech Academy` },
+        { name: "description", content: description },
+        { property: "og:type", content: "article" },
+        { property: "og:url", content: url },
+        { property: "og:title", content: post.title },
+        { property: "og:description", content: description },
+        ...(image ? [{ property: "og:image", content: image }] : []),
+      ],
+      links: [{ rel: "canonical", href: url }],
+      scripts: [structuredData],
+    };
+  },
   component: BlogPostPage,
 });
 
@@ -81,54 +138,9 @@ function normalizeParagraphs(text: string) {
 }
 
 function BlogPostPage() {
-  const { slug } = Route.useParams();
+  const post = Route.useLoaderData();
 
-  const [post, setPost] = useState<BlogPost | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [notFound, setNotFound] = useState(false);
-
-  useEffect(() => {
-    let isMounted = true;
-
-    async function loadPost() {
-      setLoading(true);
-      setNotFound(false);
-
-      const { data, error } = await supabase
-        .from("blog_posts")
-        .select("slug, title, excerpt, author, content, created_at, read_time, image_url")
-        .eq("slug", slug)
-        .eq("published", true)
-        .single();
-
-      if (!isMounted) return;
-
-      if (error || !data) {
-        setNotFound(true);
-      } else {
-        setPost(data);
-      }
-
-      setLoading(false);
-    }
-
-    loadPost();
-
-    return () => {
-      isMounted = false;
-    };
-  }, [slug]);
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center gap-2 py-24 text-muted-foreground">
-        <Loader2 className="size-5 animate-spin" />
-        Loading article...
-      </div>
-    );
-  }
-
-  if (notFound || !post) {
+  if (!post) {
     return (
       <div className="mx-auto max-w-2xl px-4 py-24 text-center">
         <BookOpen className="mx-auto size-12 text-muted-foreground/40" />

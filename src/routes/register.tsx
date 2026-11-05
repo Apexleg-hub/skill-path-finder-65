@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { RegistrationForm } from "@/components/site/RegistrationForm";
 import { getCourse } from "@/data/courses";
-
+import { toAbsoluteUrl } from "@/lib/site";
+import { pageStructuredDataScript } from "@/lib/structured-data";
 
 type RegisterSearch = { course?: string };
 
@@ -9,6 +10,19 @@ export const Route = createFileRoute("/register")({
   validateSearch: (search: Record<string, unknown>): RegisterSearch =>
     typeof search["course"] === "string" ? { course: search["course"] } : {},
   head: () => ({
+    links: [{ rel: "canonical", href: toAbsoluteUrl("/register") }],
+    scripts: [
+      pageStructuredDataScript({
+        name: "Register | Corepoint Tech Academy",
+        url: toAbsoluteUrl("/register"),
+        description:
+          "Register your interest in a Corepoint Tech Academy course and choose how you would like to learn.",
+        breadcrumbs: [
+          { name: "Home", url: toAbsoluteUrl("/") },
+          { name: "Register", url: toAbsoluteUrl("/register") },
+        ],
+      }),
+    ],
     meta: [
       { title: "Register Your Interest | Corepoint Tech Academy" },
       {

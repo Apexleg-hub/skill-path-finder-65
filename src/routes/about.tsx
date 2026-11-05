@@ -1,9 +1,25 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import heroImg from "@/assets/hero-training.jpg";
+import { toAbsoluteUrl } from "@/lib/site";
+import { pageStructuredDataScript } from "@/lib/structured-data";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
+    links: [{ rel: "canonical", href: toAbsoluteUrl("/about") }],
+    scripts: [
+      pageStructuredDataScript({
+        name: "About Corepoint Tech Academy",
+        url: toAbsoluteUrl("/about"),
+        description:
+          "Learn about Corepoint Tech, a technology education and innovation platform helping individuals and businesses across Nigeria and Africa build practical skills in AI, data, software development, cybersecurity, management training and emerging technologies.",
+        image: toAbsoluteUrl(heroImg),
+        breadcrumbs: [
+          { name: "Home", url: toAbsoluteUrl("/") },
+          { name: "About", url: toAbsoluteUrl("/about") },
+        ],
+      }),
+    ],
     meta: [
       {
         title: "About Corepoint Tech | Technology & AI Training in Nigeria",

@@ -7,6 +7,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { supabase } from "@/integrations/supabase/client";
+import { toAbsoluteUrl } from "@/lib/site";
+import { pageStructuredDataScript } from "@/lib/structured-data";
 
 const west = 3.3657;
 const south = 6.5193;
@@ -15,6 +17,19 @@ const north = 6.5293;
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
+    links: [{ rel: "canonical", href: toAbsoluteUrl("/contact") }],
+    scripts: [
+      pageStructuredDataScript({
+        name: "Contact Corepoint Tech Academy",
+        url: toAbsoluteUrl("/contact"),
+        description:
+          "Call, email or message Corepoint Tech Academy about course dates, fees and corporate training in Lagos or online.",
+        breadcrumbs: [
+          { name: "Home", url: toAbsoluteUrl("/") },
+          { name: "Contact", url: toAbsoluteUrl("/contact") },
+        ],
+      }),
+    ],
     meta: [
       { title: "Contact Us | Corepoint Tech Academy" },
       {

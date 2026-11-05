@@ -9,6 +9,12 @@ import { supabase } from "@/integrations/supabase/client";
 import { getAdminAccess } from "@/lib/admin-access";
 
 export const Route = createFileRoute("/admin/login")({
+  validateSearch: (search: Record<string, unknown>) => ({
+    redirect:
+      typeof search.redirect === "string" && search.redirect.startsWith("/admin/")
+        ? search.redirect
+        : "/admin",
+  }),
   head: () => ({
     meta: [
       { title: "Admin sign in | Corepoint Tech Academy" },
@@ -26,6 +32,7 @@ const inputClass =
 
 function AdminLogin() {
   const navigate = useNavigate();
+  const { redirect: redirectTo } = Route.useSearch();
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [failures, setFailures] = useState(0);
@@ -74,7 +81,7 @@ function AdminLogin() {
       return;
     }
 
-    navigate({ to: "/admin", replace: true });
+    navigate({ to: redirectTo, replace: true });
   }
 
   return (

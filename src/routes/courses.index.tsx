@@ -6,6 +6,7 @@ import { CourseCard } from "@/components/site/CourseCard";
 import { categories, courses, type CategoryId } from "@/data/courses";
 import { cn } from "@/lib/utils";
 import { toAbsoluteUrl } from "@/lib/site";
+import { pageStructuredDataScript } from "@/lib/structured-data";
 
 type Search = { category?: CategoryId | "all" };
 
@@ -25,6 +26,29 @@ export const Route = createFileRoute("/courses/")({
       courses[0]?.image ??
       "/assets/course-data.jpg";
     const imageUrl = toAbsoluteUrl(catalogImage);
+    const structuredData = pageStructuredDataScript({
+      name: title,
+      url: canonicalUrl,
+      description,
+      image: imageUrl,
+      breadcrumbs: [
+        { name: "Home", url: toAbsoluteUrl("/") },
+        { name: "Courses", url: canonicalUrl },
+      ],
+      entities: [
+        {
+          "@type": "ItemList",
+          "@id": `${canonicalUrl}#course-list`,
+          name: title,
+          itemListElement: courses.map((course, index) => ({
+            "@type": "ListItem",
+            position: index + 1,
+            name: course.title,
+            url: toAbsoluteUrl(`/courses/${course.slug}`),
+          })),
+        },
+      ],
+    });
 
     return {
       meta: [
@@ -41,22 +65,7 @@ export const Route = createFileRoute("/courses/")({
         { name: "twitter:image", content: imageUrl },
       ],
       links: [{ rel: "canonical", href: canonicalUrl }],
-      scripts: [
-        {
-          type: "application/ld+json",
-          children: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "ItemList",
-            name: title,
-            itemListElement: courses.map((course, index) => ({
-              "@type": "ListItem",
-              position: index + 1,
-              name: course.title,
-              url: toAbsoluteUrl(`/courses/${course.slug}`),
-            })),
-          }),
-        },
-      ],
+      scripts: [structuredData],
     };
   },
   component: CoursesPage,
@@ -67,15 +76,19 @@ function CoursesPage() {
   const navigate = useNavigate({ from: "/courses/" });
   const [query, setQuery] = useState("");
   const active = category ?? "all";
+  const searchTerm = query.trim().toLowerCase();
 
   const filtered = useMemo(
     () =>
       courses.filter(
         (c) =>
           (active === "all" || c.category === active) &&
-          c.title.toLowerCase().includes(query.trim().toLowerCase()),
+          [c.title, c.summary, ...(c.tools ?? [])]
+            .join(" ")
+            .toLowerCase()
+            .includes(searchTerm),
       ),
-    [active, query],
+    [active, searchTerm],
   );
 
   const tabs = [{ id: "all", label: "All" }, ...categories.map((c) => ({ id: c.id, label: c.shortName }))];

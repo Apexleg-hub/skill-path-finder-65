@@ -6,9 +6,22 @@ import { categories, featuredCourses } from "@/data/courses";
 import heroImg from "@/assets/hero-training.jpg";
 import { UpcomingCohorts } from "@/components/site/UpcomingCohorts";
 import { CohortsBanner } from "@/components/site/CohortsBanner";
+import { toAbsoluteUrl } from "@/lib/site";
+import { pageStructuredDataScript } from "@/lib/structured-data";
 
 export const Route = createFileRoute("/")({
   head: () => ({
+    links: [{ rel: "canonical", href: toAbsoluteUrl("/") }],
+    scripts: [
+      pageStructuredDataScript({
+        name: "Corepoint Tech Academy",
+        url: toAbsoluteUrl("/"),
+        description:
+          "Instructor-led training in AI, data science, software development, cybersecurity, cloud, databases and automation. Live online or in person in Lagos.",
+        image: toAbsoluteUrl(heroImg),
+        includeWebsite: true,
+      }),
+    ],
     meta: [
       { title: "Corepoint Tech Academy" },
       {

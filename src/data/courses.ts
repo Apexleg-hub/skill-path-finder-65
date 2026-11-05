@@ -9,14 +9,11 @@ import automationImg from "@/assets/course-automation.jpg";
 import managementImg from "@/assets/project-management.png";
 import danImg from "@/assets/Applied-Machine- Learning-with- Python.png";
 
-const courseImageAssets = import.meta.glob<string>(
-  "../assets/courses/*.{avif,jpg,jpeg,png,webp}",
-  {
+const courseImageAssets = import.meta.glob<string>("../assets/courses/*.{avif,jpg,jpeg,png,webp}", {
   eager: true,
   query: "?url",
   import: "default",
-  },
-);
+});
 
 const courseImageExtensions = ["webp", "png", "jpg", "jpeg", "avif"] as const;
 
@@ -38,9 +35,7 @@ export type CategoryId =
   | "cloud"
   | "database"
   | "automation"
-  | "management"
-  | "supply-chain"
-  | "hr-management";
+  | "management";
 
 export type Level = "Beginner" | "Intermediate" | "Advanced";
 export type Delivery = "Physical" | "Live Online" | "Both";
@@ -72,6 +67,7 @@ export interface Course {
   // here — adding them so TypeScript stops silently allowing (or flagging)
   // excess properties on those objects.
   tools?: string[];
+  toolsNote?: string;
   projects?: string[];
   // New: SEO-focused fields. All optional, so existing courses keep working
   // without changes. Fill these in gradually, course by course.
@@ -79,6 +75,13 @@ export interface Course {
   seoTitle?: string;
   seoDescription?: string;
   faqs?: { question: string; answer: string }[];
+  faqSchema?: boolean;
+  seoHeading?: string;
+  imageAlt?: string;
+  certificate?: string;
+  schemaDuration?: string;
+  careerOpportunities?: string;
+  relatedCourseSlugs?: string[];
 }
 
 export const categories: Category[] = [
@@ -89,7 +92,7 @@ export const categories: Category[] = [
     description: "Machine learning, generative AI and applied model building.",
     image: aiImg,
   },
-   {
+  {
     id: "ai",
     name: "Machine Learning",
     shortName: "Apply Machine Learning",
@@ -102,7 +105,6 @@ export const categories: Category[] = [
     shortName: "Data Science",
     description: "Analysis, visualisation and decision-ready reporting.",
     image: dataImg,
-    
   },
 
   {
@@ -155,822 +157,810 @@ export const categories: Category[] = [
     image: automationImg,
   },
   {
-    id: "supply-chain",
+    id: "management",
     name: "Supply Chain & Procurement",
-    shortName: "Supply Chain",
+    shortName: "Management",
     description: "Procurement, logistics, inventory management and supply chain analytics.",
     image: managementImg,
   },
   {
-    id: "hr-management",
+    id: "management",
     name: "Human Resource Management",
-    shortName: "HR Management",
-    description: "Modern HR management, HR software, payroll administration and workforce analytics.",
+    shortName: "Management",
+    description:
+      "Modern HR management, HR software, payroll administration and workforce analytics.",
     image: managementImg,
   },
 ];
 
 export const categoryName = (id: CategoryId) =>
-  categories.find((c) => c.id === id)?.name ?? id;
+  (id === "management" ? "Management" : categories.find((c) => c.id === id)?.name) ?? id;
 
 const courseRecords: Course[] = [
   {
-  slug: "full-stack-data-science",
-  title: "Full-Stack Data Science",
-  category: "data-science",
-  level: "Beginner to Advanced",
-  duration: "10 weeks",
-  delivery: "Both",
-  featured: true,
-  image: dataImg,
+    slug: "full-stack-data-science",
+    title: "Full-Stack Data Science",
+    category: "data-science",
+    level: "Beginner to Advanced",
+    duration: "10 weeks",
+    delivery: "Both",
+    featured: true,
+    image: dataImg,
 
-  summary:
-    "Master the complete data workflow with Excel, SQL, Python, SPSS, Power BI and Tableau. From raw data to analysis, visualisation and business insight.",
+    summary:
+      "Master the complete data workflow with Excel, SQL, Python, SPSS, Power BI and Tableau. From raw data to analysis, visualisation and business insight.",
 
-  seoIntro:
-    "Looking for a Data Science course in Lagos that actually takes you from beginner to job-ready? The Full-Stack Data Science programme at Corepoint Tech Academy is a 10-week, project-based course covering the entire modern data workflow Excel, SQL, Python, SPSS, Power BI and Tableau. so you learn to work with data the way real analysts and data scientists do, not just watch tutorials. Whether you're a graduate starting out, a data analyst looking to add Python and machine learning to your toolkit, or a career changer in Nigeria aiming for a data science role, this course is built to get you from raw data to real, portfolio-ready insight.",
+    seoIntro:
+      "Looking for a Data Science course in Lagos that actually takes you from beginner to job-ready? The Full-Stack Data Science programme at Corepoint Tech Academy is a 10-week, project-based course covering the entire modern data workflow Excel, SQL, Python, SPSS, Power BI and Tableau. so you learn to work with data the way real analysts and data scientists do, not just watch tutorials. Whether you're a graduate starting out, a data analyst looking to add Python and machine learning to your toolkit, or a career changer in Nigeria aiming for a data science role, this course is built to get you from raw data to real, portfolio-ready insight.",
 
-  overview:
-    "A comprehensive, project-based Data Science programme designed to take learners from foundational data analysis to advanced data science workflows. Students work with industry-relevant tools including Microsoft Excel, SQL, Python, SPSS, Power BI and Tableau while developing practical skills in data cleaning, statistical analysis, exploratory data analysis, data visualisation, business intelligence and predictive analytics. Throughout the programme, learners work with real-world datasets and complete portfolio projects that demonstrate their ability to transform raw data into actionable insights.",
+    overview:
+      "A comprehensive, project-based Data Science programme designed to take learners from foundational data analysis to advanced data science workflows. Students work with industry-relevant tools including Microsoft Excel, SQL, Python, SPSS, Power BI and Tableau while developing practical skills in data cleaning, statistical analysis, exploratory data analysis, data visualisation, business intelligence and predictive analytics. Throughout the programme, learners work with real-world datasets and complete portfolio projects that demonstrate their ability to transform raw data into actionable insights.",
 
-  audience:
-    "Aspiring data scientists, data analysts, business intelligence professionals, graduates, researchers, business professionals and career changers who want comprehensive practical skills across the modern data analytics and data science ecosystem.",
+    audience:
+      "Aspiring data scientists, data analysts, business intelligence professionals, graduates, researchers, business professionals and career changers who want comprehensive practical skills across the modern data analytics and data science ecosystem.",
 
-  outcomes: [
-    "Understand the complete data science and analytics lifecycle",
-    "Collect, clean, transform and prepare real-world datasets",
-    "Use Microsoft Excel for advanced data analysis and reporting",
-    "Write SQL queries to extract and analyse data from relational databases",
-    "Use Python for data cleaning, exploratory analysis and statistical computing",
-    "Perform statistical analysis using SPSS",
-    "Create interactive dashboards and reports with Power BI",
-    "Build professional data visualisations using Tableau",
-    "Perform exploratory data analysis and identify meaningful patterns",
-    "Apply descriptive and inferential statistical techniques",
-    "Perform correlation and regression analysis",
-    "Communicate analytical findings through effective data storytelling",
-    "Select the appropriate tool for different data analysis and business problems",
-    "Combine multiple tools into an end-to-end data workflow",
-    "Develop portfolio-ready data analytics and data science projects",
-    "Present data-driven recommendations to technical and non-technical stakeholders",
-  ],
+    outcomes: [
+      "Understand the complete data science and analytics lifecycle",
+      "Collect, clean, transform and prepare real-world datasets",
+      "Use Microsoft Excel for advanced data analysis and reporting",
+      "Write SQL queries to extract and analyse data from relational databases",
+      "Use Python for data cleaning, exploratory analysis and statistical computing",
+      "Perform statistical analysis using SPSS",
+      "Create interactive dashboards and reports with Power BI",
+      "Build professional data visualisations using Tableau",
+      "Perform exploratory data analysis and identify meaningful patterns",
+      "Apply descriptive and inferential statistical techniques",
+      "Perform correlation and regression analysis",
+      "Communicate analytical findings through effective data storytelling",
+      "Select the appropriate tool for different data analysis and business problems",
+      "Combine multiple tools into an end-to-end data workflow",
+      "Develop portfolio-ready data analytics and data science projects",
+      "Present data-driven recommendations to technical and non-technical stakeholders",
+    ],
 
-  faqs: [
-    {
-      question: "Do I need a data or programming background to join this course?",
-      answer:
-        "No. The course starts with foundational data analysis using Excel before introducing SQL and Python, so no prior programming or data experience is required.",
-    },
-    {
-      question: "Is this course focused on Data Analysis or Data Science?",
-      answer:
-        "Both. It's designed as a full-stack progression: you start with data analysis fundamentals (Excel, SQL, statistics) and build up to data science skills (Python, predictive analytics), so you finish with both skill sets.",
-    },
-    {
-      question: "Will I get hands-on practice, or is it mostly theory?",
-      answer:
-        "The course is project-based throughout. You'll work with real-world datasets and build portfolio projects using each tool covered Excel, SQL, Python, SPSS, Power BI, and Tableau.",
-    },
-    {
-      question: "Is this course available online, or only in Lagos?",
-      answer:
-        "This course is available both physically in Lagos and live online, so you can join from anywhere in Nigeria.",
-    },
-  ],
+    faqs: [
+      {
+        question: "Do I need a data or programming background to join this course?",
+        answer:
+          "No. The course starts with foundational data analysis using Excel before introducing SQL and Python, so no prior programming or data experience is required.",
+      },
+      {
+        question: "Is this course focused on Data Analysis or Data Science?",
+        answer:
+          "Both. It's designed as a full-stack progression: you start with data analysis fundamentals (Excel, SQL, statistics) and build up to data science skills (Python, predictive analytics), so you finish with both skill sets.",
+      },
+      {
+        question: "Will I get hands-on practice, or is it mostly theory?",
+        answer:
+          "The course is project-based throughout. You'll work with real-world datasets and build portfolio projects using each tool covered Excel, SQL, Python, SPSS, Power BI, and Tableau.",
+      },
+      {
+        question: "Is this course available online, or only in Lagos?",
+        answer:
+          "This course is available both physically in Lagos and live online, so you can join from anywhere in Nigeria.",
+      },
+    ],
 
-  curriculum: [
-    {
-      module: "Module 1: Introduction to Data Science & Analytics",
-      topics: [
-        "Introduction to data science",
-        "Data science vs data analytics",
-        "Business intelligence fundamentals",
-        "The data analytics lifecycle",
-        "The data science lifecycle",
-        "Types of data",
-        "Structured and unstructured data",
-        "Data collection and preparation",
-        "Data quality",
-        "Exploratory data analysis",
-        "Data-driven decision making",
-        "Choosing the right data tool",
-      ],
-    },
+    curriculum: [
+      {
+        module: "Module 1: Introduction to Data Science & Analytics",
+        topics: [
+          "Introduction to data science",
+          "Data science vs data analytics",
+          "Business intelligence fundamentals",
+          "The data analytics lifecycle",
+          "The data science lifecycle",
+          "Types of data",
+          "Structured and unstructured data",
+          "Data collection and preparation",
+          "Data quality",
+          "Exploratory data analysis",
+          "Data-driven decision making",
+          "Choosing the right data tool",
+        ],
+      },
 
-    {
-      module: "Module 2: Advanced Excel for Data Analysis",
-      topics: [
-        "Advanced Excel functions",
-        "XLOOKUP and lookup techniques",
-        "INDEX and MATCH",
-        "Logical and conditional functions",
-        "Text and date functions",
-        "Dynamic arrays",
-        "Data cleaning",
-        "Excel Tables",
-        "Data validation",
-        "PivotTables",
-        "PivotCharts",
-        "Slicers and interactive reporting",
-        "Power Query",
-        "Data modelling in Excel",
-        "Advanced Excel dashboards",
-      ],
-    },
+      {
+        module: "Module 2: Advanced Excel for Data Analysis",
+        topics: [
+          "Advanced Excel functions",
+          "XLOOKUP and lookup techniques",
+          "INDEX and MATCH",
+          "Logical and conditional functions",
+          "Text and date functions",
+          "Dynamic arrays",
+          "Data cleaning",
+          "Excel Tables",
+          "Data validation",
+          "PivotTables",
+          "PivotCharts",
+          "Slicers and interactive reporting",
+          "Power Query",
+          "Data modelling in Excel",
+          "Advanced Excel dashboards",
+        ],
+      },
 
-    {
-      module: "Module 3: SQL for Data Analysis",
-      topics: [
-        "Relational databases",
-        "Database concepts",
-        "SELECT statements",
-        "Filtering and sorting",
-        "Aggregate functions",
-        "GROUP BY and HAVING",
-        "INNER and OUTER joins",
-        "Subqueries",
-        "Common Table Expressions",
-        "Window functions",
-        "CASE statements",
-        "Date and time analysis",
-        "Data cleaning with SQL",
-        "Business analysis using SQL",
-      ],
-    },
+      {
+        module: "Module 3: SQL for Data Analysis",
+        topics: [
+          "Relational databases",
+          "Database concepts",
+          "SELECT statements",
+          "Filtering and sorting",
+          "Aggregate functions",
+          "GROUP BY and HAVING",
+          "INNER and OUTER joins",
+          "Subqueries",
+          "Common Table Expressions",
+          "Window functions",
+          "CASE statements",
+          "Date and time analysis",
+          "Data cleaning with SQL",
+          "Business analysis using SQL",
+        ],
+      },
 
-    {
-      module: "Module 4: Python for Data Science",
-      topics: [
-        "Python fundamentals for data science",
-        "Jupyter Notebook",
-        "NumPy",
-        "Pandas",
-        "Importing datasets",
-        "Data cleaning",
-        "Missing values",
-        "Duplicate records",
-        "Data transformation",
-        "Grouping and aggregation",
-        "Merging datasets",
-        "Exploratory Data Analysis",
-        "Working with APIs",
-        "Automating data analysis workflows",
-      ],
-    },
+      {
+        module: "Module 4: Python for Data Science",
+        topics: [
+          "Python fundamentals for data science",
+          "Jupyter Notebook",
+          "NumPy",
+          "Pandas",
+          "Importing datasets",
+          "Data cleaning",
+          "Missing values",
+          "Duplicate records",
+          "Data transformation",
+          "Grouping and aggregation",
+          "Merging datasets",
+          "Exploratory Data Analysis",
+          "Working with APIs",
+          "Automating data analysis workflows",
+        ],
+      },
 
-    {
-      module: "Module 5: Statistics & SPSS",
-      topics: [
-        "Introduction to statistics",
-        "Descriptive statistics",
-        "Measures of central tendency",
-        "Measures of dispersion",
-        "Probability fundamentals",
-        "Sampling techniques",
-        "Hypothesis testing",
-        "Confidence intervals",
-        "t-tests",
-        "Chi-square tests",
-        "ANOVA",
-        "Correlation analysis",
-        "Regression analysis",
-        "SPSS interface",
-        "Data preparation in SPSS",
-        "Statistical analysis in SPSS",
-        "Interpreting SPSS output",
-      ],
-    },
+      {
+        module: "Module 5: Statistics & SPSS",
+        topics: [
+          "Introduction to statistics",
+          "Descriptive statistics",
+          "Measures of central tendency",
+          "Measures of dispersion",
+          "Probability fundamentals",
+          "Sampling techniques",
+          "Hypothesis testing",
+          "Confidence intervals",
+          "t-tests",
+          "Chi-square tests",
+          "ANOVA",
+          "Correlation analysis",
+          "Regression analysis",
+          "SPSS interface",
+          "Data preparation in SPSS",
+          "Statistical analysis in SPSS",
+          "Interpreting SPSS output",
+        ],
+      },
 
-    {
-      module: "Module 6: Data Visualisation with Python",
-      topics: [
-        "Principles of data visualisation",
-        "Choosing the right visualisation",
-        "Matplotlib",
-        "Seaborn",
-        "Bar charts",
-        "Line charts",
-        "Scatter plots",
-        "Histograms",
-        "Box plots",
-        "Heatmaps",
-        "Distribution analysis",
-        "Statistical visualisation",
-        "Data storytelling",
-      ],
-    },
+      {
+        module: "Module 6: Data Visualisation with Python",
+        topics: [
+          "Principles of data visualisation",
+          "Choosing the right visualisation",
+          "Matplotlib",
+          "Seaborn",
+          "Bar charts",
+          "Line charts",
+          "Scatter plots",
+          "Histograms",
+          "Box plots",
+          "Heatmaps",
+          "Distribution analysis",
+          "Statistical visualisation",
+          "Data storytelling",
+        ],
+      },
 
-    {
-      module: "Module 7: Power BI for Business Intelligence",
-      topics: [
-        "Introduction to Power BI",
-        "Power BI Desktop",
-        "Connecting to data sources",
-        "Power Query",
-        "Data transformation",
-        "Data modelling",
-        "Relationships",
-        "Star schema",
-        "Date tables",
-        "DAX fundamentals",
-        "Calculated columns",
-        "Measures",
-        "Filter context",
-        "Time intelligence",
-        "Interactive dashboards",
-        "Power BI Service",
-        "Publishing and sharing reports",
-      ],
-    },
+      {
+        module: "Module 7: Power BI for Business Intelligence",
+        topics: [
+          "Introduction to Power BI",
+          "Power BI Desktop",
+          "Connecting to data sources",
+          "Power Query",
+          "Data transformation",
+          "Data modelling",
+          "Relationships",
+          "Star schema",
+          "Date tables",
+          "DAX fundamentals",
+          "Calculated columns",
+          "Measures",
+          "Filter context",
+          "Time intelligence",
+          "Interactive dashboards",
+          "Power BI Service",
+          "Publishing and sharing reports",
+        ],
+      },
 
-    {
-      module: "Module 8: Tableau for Data Visualisation",
-      topics: [
-        "Introduction to Tableau",
-        "Connecting to datasets",
-        "Tableau data preparation",
-        "Dimensions and measures",
-        "Calculated fields",
-        "Filters and parameters",
-        "Charts and visualisations",
-        "Dashboards",
-        "Interactive dashboards",
-        "Geographical visualisation",
-        "Advanced visual analytics",
-        "Storytelling with Tableau",
-        "Publishing and sharing dashboards",
-      ],
-    },
+      {
+        module: "Module 8: Tableau for Data Visualisation",
+        topics: [
+          "Introduction to Tableau",
+          "Connecting to datasets",
+          "Tableau data preparation",
+          "Dimensions and measures",
+          "Calculated fields",
+          "Filters and parameters",
+          "Charts and visualisations",
+          "Dashboards",
+          "Interactive dashboards",
+          "Geographical visualisation",
+          "Advanced visual analytics",
+          "Storytelling with Tableau",
+          "Publishing and sharing dashboards",
+        ],
+      },
 
-    {
-      module: "Module 9: Predictive Analytics & Data Science",
-      topics: [
-        "Introduction to predictive analytics",
-        "Regression fundamentals",
-        "Linear regression",
-        "Logistic regression",
-        "Feature engineering",
-        "Model preparation",
-        "Training and testing data",
-        "Model evaluation",
-        "Classification fundamentals",
-        "Clustering fundamentals",
-        "Introduction to machine learning",
-        "Business applications of predictive analytics",
-      ],
-    },
+      {
+        module: "Module 9: Predictive Analytics & Data Science",
+        topics: [
+          "Introduction to predictive analytics",
+          "Regression fundamentals",
+          "Linear regression",
+          "Logistic regression",
+          "Feature engineering",
+          "Model preparation",
+          "Training and testing data",
+          "Model evaluation",
+          "Classification fundamentals",
+          "Clustering fundamentals",
+          "Introduction to machine learning",
+          "Business applications of predictive analytics",
+        ],
+      },
 
-    {
-      module: "Module 10: Data Integration & End-to-End Analytics",
-      topics: [
-        "Building an end-to-end data workflow",
-        "Combining Excel and SQL",
-        "Connecting SQL databases to Power BI",
-        "Connecting Python to databases",
-        "Preparing data with Python",
-        "Statistical analysis with SPSS",
-        "Dashboard development with Power BI",
-        "Visualisation with Tableau",
-        "Data consistency across tools",
-        "Automating recurring analysis",
-        "Building reproducible workflows",
-        "Data governance fundamentals",
-      ],
-    },
+      {
+        module: "Module 10: Data Integration & End-to-End Analytics",
+        topics: [
+          "Building an end-to-end data workflow",
+          "Combining Excel and SQL",
+          "Connecting SQL databases to Power BI",
+          "Connecting Python to databases",
+          "Preparing data with Python",
+          "Statistical analysis with SPSS",
+          "Dashboard development with Power BI",
+          "Visualisation with Tableau",
+          "Data consistency across tools",
+          "Automating recurring analysis",
+          "Building reproducible workflows",
+          "Data governance fundamentals",
+        ],
+      },
 
-    {
-      module: "Module 11: Data Storytelling & Business Communication",
-      topics: [
-        "Turning analysis into insights",
-        "Identifying key business questions",
-        "Choosing meaningful KPIs",
-        "Building executive dashboards",
-        "Data storytelling principles",
-        "Presenting analytical findings",
-        "Communicating statistical results",
-        "Writing data-driven reports",
-        "Presenting insights to stakeholders",
-        "Making evidence-based recommendations",
-      ],
-    },
+      {
+        module: "Module 11: Data Storytelling & Business Communication",
+        topics: [
+          "Turning analysis into insights",
+          "Identifying key business questions",
+          "Choosing meaningful KPIs",
+          "Building executive dashboards",
+          "Data storytelling principles",
+          "Presenting analytical findings",
+          "Communicating statistical results",
+          "Writing data-driven reports",
+          "Presenting insights to stakeholders",
+          "Making evidence-based recommendations",
+        ],
+      },
 
-    {
-      module: "Module 12: Full-Stack Data Science Capstone",
-      topics: [
-        "Business problem definition",
-        "Data collection",
-        "Data extraction using SQL",
-        "Data cleaning using Excel or Python",
-        "Statistical analysis using SPSS or Python",
-        "Exploratory data analysis",
-        "Data visualisation",
-        "Power BI dashboard development",
-        "Tableau dashboard development",
-        "Predictive analysis",
-        "Business insight generation",
-        "Executive reporting",
-        "Final project presentation",
-        "Portfolio documentation",
-      ],
-    },
-  ],
+      {
+        module: "Module 12: Full-Stack Data Science Capstone",
+        topics: [
+          "Business problem definition",
+          "Data collection",
+          "Data extraction using SQL",
+          "Data cleaning using Excel or Python",
+          "Statistical analysis using SPSS or Python",
+          "Exploratory data analysis",
+          "Data visualisation",
+          "Power BI dashboard development",
+          "Tableau dashboard development",
+          "Predictive analysis",
+          "Business insight generation",
+          "Executive reporting",
+          "Final project presentation",
+          "Portfolio documentation",
+        ],
+      },
+    ],
 
-  projects: [
-    "Retail Sales & Customer Analytics",
-    "Financial Performance & Business Intelligence Dashboard",
-    "Customer Behaviour & Segmentation Analysis",
-    "Employee Performance & Workforce Analytics",
-    "Marketing Campaign Performance Analysis",
-    "Healthcare Data Statistical Analysis",
-    "Sales Forecasting & Predictive Analytics",
-    "Power BI Executive Business Dashboard",
-    "Tableau Interactive Analytics Dashboard",
-    "End-to-End Full-Stack Data Science Capstone",
-  ],
+    projects: [
+      "Retail Sales & Customer Analytics",
+      "Financial Performance & Business Intelligence Dashboard",
+      "Customer Behaviour & Segmentation Analysis",
+      "Employee Performance & Workforce Analytics",
+      "Marketing Campaign Performance Analysis",
+      "Healthcare Data Statistical Analysis",
+      "Sales Forecasting & Predictive Analytics",
+      "Power BI Executive Business Dashboard",
+      "Tableau Interactive Analytics Dashboard",
+      "End-to-End Full-Stack Data Science Capstone",
+    ],
 
-  tools: [
-    "Microsoft Excel",
-    "Power Query",
-    "SQL",
-    "PostgreSQL",
-    "Microsoft SQL Server",
-    "Python",
-    "Pandas",
-    "NumPy",
-    "Matplotlib",
-    "Seaborn",
-    "SPSS",
-    "Power BI",
-    "DAX",
-    "Tableau",
-    "Jupyter Notebook",
-    "Git & GitHub",
-  ],
+    tools: [
+      "Microsoft Excel",
+      "PostgreSQL",
+      "Microsoft SQL Server",
+      "Python",
+      "SPSS",
+      "Power BI",
+      "Tableau",
+    ],
 
-  prerequisites: [
-    "Basic computer literacy",
-    "No previous data science experience required",
-    "Basic mathematics is recommended",
-    "Basic spreadsheet knowledge is helpful but not required",
-  ],
- },
+    prerequisites: [
+      "Basic computer literacy",
+      "No previous data science experience required",
+      "Basic mathematics is recommended",
+      "Basic spreadsheet knowledge is helpful but not required",
+    ],
+  },
   {
-  slug: "r-programming-for-data-science",
-  title: "R Programming for Data Science",
-  category: "data-science",
-  level: "Beginner to Intermediate",
-  duration: "6 weeks",
-  delivery: "Both",
-  image: resolveCourseImage("r-programming-for-data-science", dataImg),
+    slug: "r-programming-for-data-science",
+    title: "R Programming for Data Science",
+    category: "data-science",
+    level: "Beginner to Intermediate",
+    duration: "6 weeks",
+    delivery: "Both",
+    image: resolveCourseImage("r-programming-for-data-science", dataImg),
 
-  summary:
-    "Learn R for data analysis, statistical modelling, visualisation and data-driven decision-making using real-world datasets.",
-
+    summary:
+      "Learn R for data analysis, statistical modelling, visualisation and data-driven decision-making using real-world datasets.",
 
     seoIntro:
       "Searching for an R Programming course in Lagos? This 6-week programme at Corepoint Tech Academy teaches R for statistical analysis, data visualisation, and data-driven decision-making using real datasets. It's built for students, researchers, and analysts in Nigeria who need R specifically whether for academic research, statistical reporting, or roles that require R over Python.",
-  overview:
-    "A practical, project-based R programming programme designed for learners who want to develop professional skills in data analysis and statistical computing. Students learn how to work with datasets in R, clean and transform data, perform exploratory and statistical analysis, create professional visualisations with ggplot2 and build reproducible analytical workflows. The programme combines R programming with practical statistics and real-world data science projects.",
+    overview:
+      "A practical, project-based R programming programme designed for learners who want to develop professional skills in data analysis and statistical computing. Students learn how to work with datasets in R, clean and transform data, perform exploratory and statistical analysis, create professional visualisations with ggplot2 and build reproducible analytical workflows. The programme combines R programming with practical statistics and real-world data science projects.",
 
-  audience:
-    "Aspiring data scientists, data analysts, researchers, statisticians, graduates, business professionals and professionals who want to develop practical data analysis skills using R.",
+    audience:
+      "Aspiring data scientists, data analysts, researchers, statisticians, graduates, business professionals and professionals who want to develop practical data analysis skills using R.",
 
-  outcomes: [
-    "Understand the fundamentals of R programming for data science",
-    "Work confidently with vectors, lists, data frames and other R data structures",
-    "Import and export data from common file formats",
-    "Clean and transform real-world datasets using R",
-    "Perform exploratory data analysis",
-    "Apply descriptive and inferential statistical techniques",
-    "Create professional data visualisations using ggplot2",
-    "Analyse relationships between variables",
-    "Build and interpret statistical models",
-    "Perform regression analysis using R",
-    "Work with categorical and numerical data",
-    "Create reproducible data analysis workflows",
-    "Build professional reports using R Markdown",
-    "Communicate analytical findings effectively",
-    "Complete a portfolio-ready data science project using R",
-  ],
+    outcomes: [
+      "Understand the fundamentals of R programming for data science",
+      "Work confidently with vectors, lists, data frames and other R data structures",
+      "Import and export data from common file formats",
+      "Clean and transform real-world datasets using R",
+      "Perform exploratory data analysis",
+      "Apply descriptive and inferential statistical techniques",
+      "Create professional data visualisations using ggplot2",
+      "Analyse relationships between variables",
+      "Build and interpret statistical models",
+      "Perform regression analysis using R",
+      "Work with categorical and numerical data",
+      "Create reproducible data analysis workflows",
+      "Build professional reports using R Markdown",
+      "Communicate analytical findings effectively",
+      "Complete a portfolio-ready data science project using R",
+    ],
 
-  curriculum: [
-    {
-      module: "Module 1: Introduction to R & RStudio",
-      topics: [
-        "Introduction to R programming",
-        "R for data science",
-        "Installing R and RStudio",
-        "RStudio interface",
-        "Variables and objects",
-        "Data types",
-        "Vectors",
-        "Lists",
-        "Matrices",
-        "Data frames",
-        "Factors",
-        "Basic R operators",
-      ],
-    },
+    curriculum: [
+      {
+        module: "Module 1: Introduction to R & RStudio",
+        topics: [
+          "Introduction to R programming",
+          "R for data science",
+          "Installing R and RStudio",
+          "RStudio interface",
+          "Variables and objects",
+          "Data types",
+          "Vectors",
+          "Lists",
+          "Matrices",
+          "Data frames",
+          "Factors",
+          "Basic R operators",
+        ],
+      },
 
-    {
-      module: "Module 2: R Programming Fundamentals",
-      topics: [
-        "Conditional statements",
-        "Loops",
-        "Functions",
-        "Custom functions",
-        "Vectorised operations",
-        "Working with strings",
-        "Date and time data",
-        "Handling missing values",
-        "Error handling",
-        "Writing reusable R code",
-      ],
-    },
+      {
+        module: "Module 2: R Programming Fundamentals",
+        topics: [
+          "Conditional statements",
+          "Loops",
+          "Functions",
+          "Custom functions",
+          "Vectorised operations",
+          "Working with strings",
+          "Date and time data",
+          "Handling missing values",
+          "Error handling",
+          "Writing reusable R code",
+        ],
+      },
 
-    {
-      module: "Module 3: Data Import, Cleaning & Transformation",
-      topics: [
-        "Importing CSV files",
-        "Importing Excel data",
-        "Working with databases",
-        "Data inspection",
-        "Handling missing data",
-        "Removing duplicates",
-        "Data type conversion",
-        "Filtering data",
-        "Sorting and arranging data",
-        "Creating calculated columns",
-        "Joining datasets",
-        "Data transformation with dplyr",
-      ],
-    },
+      {
+        module: "Module 3: Data Import, Cleaning & Transformation",
+        topics: [
+          "Importing CSV files",
+          "Importing Excel data",
+          "Working with databases",
+          "Data inspection",
+          "Handling missing data",
+          "Removing duplicates",
+          "Data type conversion",
+          "Filtering data",
+          "Sorting and arranging data",
+          "Creating calculated columns",
+          "Joining datasets",
+          "Data transformation with dplyr",
+        ],
+      },
 
-    {
-      module: "Module 4: Exploratory Data Analysis",
-      topics: [
-        "Introduction to exploratory data analysis",
-        "Understanding dataset structure",
-        "Descriptive statistics",
-        "Measures of central tendency",
-        "Measures of dispersion",
-        "Grouping and aggregation",
-        "Distribution analysis",
-        "Outlier detection",
-        "Correlation analysis",
-        "Identifying trends and patterns",
-        "EDA workflow with R",
-      ],
-    },
+      {
+        module: "Module 4: Exploratory Data Analysis",
+        topics: [
+          "Introduction to exploratory data analysis",
+          "Understanding dataset structure",
+          "Descriptive statistics",
+          "Measures of central tendency",
+          "Measures of dispersion",
+          "Grouping and aggregation",
+          "Distribution analysis",
+          "Outlier detection",
+          "Correlation analysis",
+          "Identifying trends and patterns",
+          "EDA workflow with R",
+        ],
+      },
 
-    {
-      module: "Module 5: Data Visualisation with ggplot2",
-      topics: [
-        "Introduction to data visualisation",
-        "Grammar of graphics",
-        "Building charts with ggplot2",
-        "Bar charts",
-        "Line charts",
-        "Scatter plots",
-        "Histograms",
-        "Box plots",
-        "Faceting",
-        "Customising visualisations",
-        "Themes and annotations",
-        "Statistical visualisation",
-        "Data storytelling",
-      ],
-    },
+      {
+        module: "Module 5: Data Visualisation with ggplot2",
+        topics: [
+          "Introduction to data visualisation",
+          "Grammar of graphics",
+          "Building charts with ggplot2",
+          "Bar charts",
+          "Line charts",
+          "Scatter plots",
+          "Histograms",
+          "Box plots",
+          "Faceting",
+          "Customising visualisations",
+          "Themes and annotations",
+          "Statistical visualisation",
+          "Data storytelling",
+        ],
+      },
 
-    {
-      module: "Module 6: Statistics & Statistical Modelling",
-      topics: [
-        "Probability fundamentals",
-        "Sampling concepts",
-        "Confidence intervals",
-        "Hypothesis testing",
-        "t-tests",
-        "Chi-square tests",
-        "ANOVA",
-        "Correlation",
-        "Simple linear regression",
-        "Multiple linear regression",
-        "Model interpretation",
-        "Model diagnostics",
-      ],
-    },
+      {
+        module: "Module 6: Statistics & Statistical Modelling",
+        topics: [
+          "Probability fundamentals",
+          "Sampling concepts",
+          "Confidence intervals",
+          "Hypothesis testing",
+          "t-tests",
+          "Chi-square tests",
+          "ANOVA",
+          "Correlation",
+          "Simple linear regression",
+          "Multiple linear regression",
+          "Model interpretation",
+          "Model diagnostics",
+        ],
+      },
 
-    {
-      module: "Module 7: Advanced Data Science with R",
-      topics: [
-        "Introduction to the tidyverse",
-        "Advanced data manipulation",
-        "Advanced visualisation",
-        "Working with larger datasets",
-        "Functional programming concepts",
-        "Working with APIs",
-        "Database connectivity",
-        "Introduction to machine learning with R",
-        "Classification fundamentals",
-        "Clustering fundamentals",
-      ],
-    },
+      {
+        module: "Module 7: Advanced Data Science with R",
+        topics: [
+          "Introduction to the tidyverse",
+          "Advanced data manipulation",
+          "Advanced visualisation",
+          "Working with larger datasets",
+          "Functional programming concepts",
+          "Working with APIs",
+          "Database connectivity",
+          "Introduction to machine learning with R",
+          "Classification fundamentals",
+          "Clustering fundamentals",
+        ],
+      },
 
-    {
-      module: "Module 8: Reproducible Analysis & Reporting",
-      topics: [
-        "Reproducible data science",
-        "R Markdown",
-        "Creating analytical reports",
-        "Embedding code and visualisations",
-        "Generating tables",
-        "Report formatting",
-        "Documenting analysis",
-        "Version control with Git",
-        "Publishing analytical work",
-        "Building a professional data science portfolio",
-      ],
-    },
+      {
+        module: "Module 8: Reproducible Analysis & Reporting",
+        topics: [
+          "Reproducible data science",
+          "R Markdown",
+          "Creating analytical reports",
+          "Embedding code and visualisations",
+          "Generating tables",
+          "Report formatting",
+          "Documenting analysis",
+          "Version control with Git",
+          "Publishing analytical work",
+          "Building a professional data science portfolio",
+        ],
+      },
 
-    {
-      module: "Module 9: R Data Science Capstone Project",
-      topics: [
-        "Define a real-world business problem",
-        "Acquire and import data",
-        "Clean and transform the dataset",
-        "Perform exploratory data analysis",
-        "Develop statistical analysis",
-        "Build visualisations",
-        "Develop a statistical model",
-        "Interpret results",
-        "Create an R Markdown report",
-        "Present business insights",
-        "Document the project",
-        "Publish the completed project",
-      ],
-    },
-  ],
+      {
+        module: "Module 9: R Data Science Capstone Project",
+        topics: [
+          "Define a real-world business problem",
+          "Acquire and import data",
+          "Clean and transform the dataset",
+          "Perform exploratory data analysis",
+          "Develop statistical analysis",
+          "Build visualisations",
+          "Develop a statistical model",
+          "Interpret results",
+          "Create an R Markdown report",
+          "Present business insights",
+          "Document the project",
+          "Publish the completed project",
+        ],
+      },
+    ],
 
-  projects: [
-    "Sales & Customer Behaviour Analysis",
-    "Employee Performance & Workforce Analytics",
-    "Customer Satisfaction Statistical Analysis",
-    "Healthcare Data Analysis",
-    "Financial & Economic Data Analysis",
-    "End-to-End R Data Science Capstone Project",
-  ],
+    projects: [
+      "Sales & Customer Behaviour Analysis",
+      "Employee Performance & Workforce Analytics",
+      "Customer Satisfaction Statistical Analysis",
+      "Healthcare Data Analysis",
+      "Financial & Economic Data Analysis",
+      "End-to-End R Data Science Capstone Project",
+    ],
 
-  tools: [
-    "R",
-    "RStudio",
-    "Tidyverse",
-    "dplyr",
-    "ggplot2",
-    "tidyr",
-    "readr",
-    "readxl",
-    "lubridate",
-    "Stats",
-    "R Markdown",
-    "Git & GitHub",
-  ],
+    tools: [
+      "R",
+      "RStudio",
+      "Tidyverse",
+      "dplyr",
+      "ggplot2",
+      "tidyr",
+      "readr",
+      "readxl",
+      "lubridate",
+      "Stats",
+      "R Markdown",
+      "Git & GitHub",
+    ],
 
-  prerequisites: [
-    "Basic computer literacy",
-    "No previous R programming experience required",
-    "Basic mathematics is recommended",
-    "Basic understanding of statistics is helpful but not required",
-  ],
+    prerequisites: [
+      "Basic computer literacy",
+      "No previous R programming experience required",
+      "Basic mathematics is recommended",
+      "Basic understanding of statistics is helpful but not required",
+    ],
 
-  faqs: [
-    {
-      question: "Why choose R instead of Python for data science?",
-      answer:
-        "R is widely used in academic research, statistics, and specific industries like health and social sciences. If your work or programme specifically requires R, this course focuses entirely on it rather than splitting time with another language.",
-    },
-    {
-      question: "Do I need a statistics background to join?",
-      answer:
-        "A basic understanding of statistics is helpful but not required. The course introduces statistical concepts alongside the R skills needed to apply them.",
-    },
-    {
-      question: "Is this course available online?",
-      answer:
-        "Yes, it's available both physically in Lagos and live online.",
-    },
-  ],
-},
+    faqs: [
+      {
+        question: "Why choose R instead of Python for data science?",
+        answer:
+          "R is widely used in academic research, statistics, and specific industries like health and social sciences. If your work or programme specifically requires R, this course focuses entirely on it rather than splitting time with another language.",
+      },
+      {
+        question: "Do I need a statistics background to join?",
+        answer:
+          "A basic understanding of statistics is helpful but not required. The course introduces statistical concepts alongside the R skills needed to apply them.",
+      },
+      {
+        question: "Is this course available online?",
+        answer: "Yes, it's available both physically in Lagos and live online.",
+      },
+    ],
+  },
   {
-  slug: "statistical-analysis-and-data-science-with-python",
-  title: "Statistical Analysis & Data Science with Python",
-  category: "data-science",
-  level: "Intermediate",
-  duration: "6 weeks",
-  delivery: "Both",
-  image: dataImg,
+    slug: "statistical-analysis-and-data-science-with-python",
+    title: "Statistical Analysis & Data Science with Python",
+    category: "data-science",
+    level: "Intermediate",
+    duration: "6 weeks",
+    delivery: "Both",
+    image: dataImg,
 
-  summary:
-    "Use Python and statistics to analyse real-world data, discover meaningful patterns and support data-driven decisions.",
-
+    summary:
+      "Use Python and statistics to analyse real-world data, discover meaningful patterns and support data-driven decisions.",
 
     seoIntro:
       "Looking for a Python for Data Science course in Lagos with a strong statistics foundation? This 6-week intermediate programme at Corepoint Tech Academy teaches you to use Python and statistical methods together to analyse real data, uncover patterns, and support decisions with evidence, not just run code, but understand what the numbers mean.",
-  overview:
-    "A practical, project-based programme designed to strengthen the statistical and analytical skills required for modern data science. Students learn how to work with real-world datasets using Python, perform exploratory data analysis, apply descriptive and inferential statistics, test hypotheses, analyse relationships between variables and communicate findings effectively. The course provides a strong foundation for advanced analytics and machine learning.",
+    overview:
+      "A practical, project-based programme designed to strengthen the statistical and analytical skills required for modern data science. Students learn how to work with real-world datasets using Python, perform exploratory data analysis, apply descriptive and inferential statistics, test hypotheses, analyse relationships between variables and communicate findings effectively. The course provides a strong foundation for advanced analytics and machine learning.",
 
-  audience:
-    "Data analysts, aspiring data scientists, researchers, business professionals, graduates and Python users who want to strengthen their statistical analysis and data science skills.",
+    audience:
+      "Data analysts, aspiring data scientists, researchers, business professionals, graduates and Python users who want to strengthen their statistical analysis and data science skills.",
 
-  outcomes: [
-    "Understand the data science workflow from data collection to insight generation",
-    "Use Python to load, clean and analyse real-world datasets",
-    "Perform exploratory data analysis using Pandas and NumPy",
-    "Apply descriptive statistics to understand datasets",
-    "Understand probability and common probability distributions",
-    "Perform statistical hypothesis tests",
-    "Interpret p-values, confidence intervals and statistical significance",
-    "Analyse relationships between variables using correlation and regression",
-    "Identify patterns, trends, outliers and anomalies in datasets",
-    "Create effective statistical visualisations with Python",
-    "Communicate statistical findings to technical and non-technical audiences",
-    "Apply statistical techniques to real-world business problems",
-    "Build reproducible data analysis workflows using Python and Jupyter",
-    "Develop a portfolio-ready statistical data science project",
-  ],
+    outcomes: [
+      "Understand the data science workflow from data collection to insight generation",
+      "Use Python to load, clean and analyse real-world datasets",
+      "Perform exploratory data analysis using Pandas and NumPy",
+      "Apply descriptive statistics to understand datasets",
+      "Understand probability and common probability distributions",
+      "Perform statistical hypothesis tests",
+      "Interpret p-values, confidence intervals and statistical significance",
+      "Analyse relationships between variables using correlation and regression",
+      "Identify patterns, trends, outliers and anomalies in datasets",
+      "Create effective statistical visualisations with Python",
+      "Communicate statistical findings to technical and non-technical audiences",
+      "Apply statistical techniques to real-world business problems",
+      "Build reproducible data analysis workflows using Python and Jupyter",
+      "Develop a portfolio-ready statistical data science project",
+    ],
 
-  curriculum: [
-    {
-      module: "Module 1: Introduction to Data Science & Python",
-      topics: [
-        "Introduction to data science",
-        "Data science vs data analytics",
-        "The data science lifecycle",
-        "Types of data",
-        "Structured and unstructured data",
-        "Python environment setup",
-        "Jupyter Notebook",
-        "Python fundamentals for data science",
-        "NumPy fundamentals",
-        "Pandas fundamentals",
-      ],
-    },
+    curriculum: [
+      {
+        module: "Module 1: Introduction to Data Science & Python",
+        topics: [
+          "Introduction to data science",
+          "Data science vs data analytics",
+          "The data science lifecycle",
+          "Types of data",
+          "Structured and unstructured data",
+          "Python environment setup",
+          "Jupyter Notebook",
+          "Python fundamentals for data science",
+          "NumPy fundamentals",
+          "Pandas fundamentals",
+        ],
+      },
 
-    {
-      module: "Module 2: Data Cleaning & Exploratory Data Analysis",
-      topics: [
-        "Understanding real-world datasets",
-        "Importing CSV and Excel data",
-        "Data inspection",
-        "Handling missing values",
-        "Removing duplicates",
-        "Data type conversion",
-        "Outlier detection",
-        "Data transformation",
-        "Grouping and aggregation",
-        "Exploratory Data Analysis",
-        "Identifying trends and patterns",
-      ],
-    },
+      {
+        module: "Module 2: Data Cleaning & Exploratory Data Analysis",
+        topics: [
+          "Understanding real-world datasets",
+          "Importing CSV and Excel data",
+          "Data inspection",
+          "Handling missing values",
+          "Removing duplicates",
+          "Data type conversion",
+          "Outlier detection",
+          "Data transformation",
+          "Grouping and aggregation",
+          "Exploratory Data Analysis",
+          "Identifying trends and patterns",
+        ],
+      },
 
-    {
-      module: "Module 3: Descriptive Statistics & Probability",
-      topics: [
-        "Measures of central tendency",
-        "Mean, median and mode",
-        "Range and variance",
-        "Standard deviation",
-        "Percentiles and quartiles",
-        "Probability fundamentals",
-        "Conditional probability",
-        "Independent and dependent events",
-        "Normal distribution",
-        "Binomial distribution",
-        "Poisson distribution",
-        "Understanding distributions in real-world data",
-      ],
-    },
+      {
+        module: "Module 3: Descriptive Statistics & Probability",
+        topics: [
+          "Measures of central tendency",
+          "Mean, median and mode",
+          "Range and variance",
+          "Standard deviation",
+          "Percentiles and quartiles",
+          "Probability fundamentals",
+          "Conditional probability",
+          "Independent and dependent events",
+          "Normal distribution",
+          "Binomial distribution",
+          "Poisson distribution",
+          "Understanding distributions in real-world data",
+        ],
+      },
 
-    {
-      module: "Module 4: Statistical Inference & Hypothesis Testing",
-      topics: [
-        "Population and sample",
-        "Sampling techniques",
-        "Sampling distributions",
-        "Central Limit Theorem",
-        "Confidence intervals",
-        "Null and alternative hypotheses",
-        "Type I and Type II errors",
-        "p-values",
-        "Statistical significance",
-        "One-sample hypothesis tests",
-        "Two-sample hypothesis tests",
-        "Chi-square tests",
-        "Practical hypothesis testing with Python",
-      ],
-    },
+      {
+        module: "Module 4: Statistical Inference & Hypothesis Testing",
+        topics: [
+          "Population and sample",
+          "Sampling techniques",
+          "Sampling distributions",
+          "Central Limit Theorem",
+          "Confidence intervals",
+          "Null and alternative hypotheses",
+          "Type I and Type II errors",
+          "p-values",
+          "Statistical significance",
+          "One-sample hypothesis tests",
+          "Two-sample hypothesis tests",
+          "Chi-square tests",
+          "Practical hypothesis testing with Python",
+        ],
+      },
 
-    {
-      module: "Module 5: Correlation, Regression & Statistical Modelling",
-      topics: [
-        "Understanding relationships between variables",
-        "Correlation analysis",
-        "Pearson correlation",
-        "Spearman correlation",
-        "Correlation vs causation",
-        "Simple linear regression",
-        "Multiple linear regression",
-        "Regression assumptions",
-        "Model interpretation",
-        "Residual analysis",
-        "Regression evaluation",
-        "Predictive analysis with Python",
-      ],
-    },
+      {
+        module: "Module 5: Correlation, Regression & Statistical Modelling",
+        topics: [
+          "Understanding relationships between variables",
+          "Correlation analysis",
+          "Pearson correlation",
+          "Spearman correlation",
+          "Correlation vs causation",
+          "Simple linear regression",
+          "Multiple linear regression",
+          "Regression assumptions",
+          "Model interpretation",
+          "Residual analysis",
+          "Regression evaluation",
+          "Predictive analysis with Python",
+        ],
+      },
 
-    {
-      module: "Module 6: Data Visualisation & Statistical Reporting",
-      topics: [
-        "Principles of effective data visualisation",
-        "Choosing the right chart",
-        "Matplotlib",
-        "Seaborn",
-        "Distribution plots",
-        "Box plots",
-        "Scatter plots",
-        "Correlation heatmaps",
-        "Statistical visualisation",
-        "Interactive visualisation fundamentals",
-        "Data storytelling",
-        "Communicating statistical findings",
-      ],
-    },
+      {
+        module: "Module 6: Data Visualisation & Statistical Reporting",
+        topics: [
+          "Principles of effective data visualisation",
+          "Choosing the right chart",
+          "Matplotlib",
+          "Seaborn",
+          "Distribution plots",
+          "Box plots",
+          "Scatter plots",
+          "Correlation heatmaps",
+          "Statistical visualisation",
+          "Interactive visualisation fundamentals",
+          "Data storytelling",
+          "Communicating statistical findings",
+        ],
+      },
 
-    {
-      module: "Module 7: Applied Data Science Capstone Project",
-      topics: [
-        "Define a real-world business problem",
-        "Identify and acquire relevant data",
-        "Clean and prepare the dataset",
-        "Perform exploratory data analysis",
-        "Apply descriptive statistics",
-        "Develop statistical hypotheses",
-        "Perform hypothesis testing",
-        "Analyse relationships between variables",
-        "Build a statistical model",
-        "Create visualisations",
-        "Interpret and communicate findings",
-        "Prepare a professional data science report",
-        "Present the final project",
-      ],
-    },
-  ],
+      {
+        module: "Module 7: Applied Data Science Capstone Project",
+        topics: [
+          "Define a real-world business problem",
+          "Identify and acquire relevant data",
+          "Clean and prepare the dataset",
+          "Perform exploratory data analysis",
+          "Apply descriptive statistics",
+          "Develop statistical hypotheses",
+          "Perform hypothesis testing",
+          "Analyse relationships between variables",
+          "Build a statistical model",
+          "Create visualisations",
+          "Interpret and communicate findings",
+          "Prepare a professional data science report",
+          "Present the final project",
+        ],
+      },
+    ],
 
-  projects: [
-    "Customer Behaviour & Sales Analysis",
-    "Employee Performance & Workforce Analysis",
-    "Customer Satisfaction Statistical Analysis",
-    "Sales Forecasting & Trend Analysis",
-    "A/B Testing & Business Decision Analysis",
-    "End-to-End Statistical Data Science Capstone",
-  ],
+    projects: [
+      "Customer Behaviour & Sales Analysis",
+      "Employee Performance & Workforce Analysis",
+      "Customer Satisfaction Statistical Analysis",
+      "Sales Forecasting & Trend Analysis",
+      "A/B Testing & Business Decision Analysis",
+      "End-to-End Statistical Data Science Capstone",
+    ],
 
-  tools: [
-    "Python",
-    "Pandas",
-    "NumPy",
-    "Matplotlib",
-    "Seaborn",
-    "SciPy",
-    "Statsmodels",
-    "Jupyter Notebook",
-    "Git & GitHub",
-  ],
+    tools: [
+      "Python",
+      "Pandas",
+      "NumPy",
+      "Matplotlib",
+      "Seaborn",
+      "SciPy",
+      "Statsmodels",
+      "Jupyter Notebook",
+      "Git & GitHub",
+    ],
 
     prerequisites: [
-    "Basic Python knowledge is recommended",
-    "Basic understanding of spreadsheets is helpful",
-    "Basic mathematics is recommended",
-    "No previous statistics experience required",
-  ],
-  
-  faqs: [
-    {
-      question: "Is this course only about Python, or does it cover statistics too?",
-      answer:
-        "Both. The course pairs Python programming with statistical analysis techniques, so you learn to apply the right statistical method and implement it correctly in code.",
-    },
-    {
-      question: "Do I need prior Python experience?",
-      answer:
-        "Since this is an intermediate-level course, some basic Python familiarity is expected. If you're completely new to Python, consider starting with a foundational Python or data analysis course first.",
-    },
-    {
-      question: "Is this course available live online?",
-      answer:
-        "Yes, it's available both physically in Lagos and live online.",
-    },
-  ],
-},
+      "Basic Python knowledge is recommended",
+      "Basic understanding of spreadsheets is helpful",
+      "Basic mathematics is recommended",
+      "No previous statistics experience required",
+    ],
+
+    faqs: [
+      {
+        question: "Is this course only about Python, or does it cover statistics too?",
+        answer:
+          "Both. The course pairs Python programming with statistical analysis techniques, so you learn to apply the right statistical method and implement it correctly in code.",
+      },
+      {
+        question: "Do I need prior Python experience?",
+        answer:
+          "Since this is an intermediate-level course, some basic Python familiarity is expected. If you're completely new to Python, consider starting with a foundational Python or data analysis course first.",
+      },
+      {
+        question: "Is this course available live online?",
+        answer: "Yes, it's available both physically in Lagos and live online.",
+      },
+    ],
+  },
   {
     slug: "project-management",
     title: "Project Management",
@@ -983,7 +973,6 @@ const courseRecords: Course[] = [
 
     summary:
       "Learn how to plan, organise, execute and close projects using practical project management methods, tools and documentation.",
-
 
     seoIntro:
       "Looking for a Project Management course in Lagos that's practical rather than purely theoretical? This 6-week programme at Corepoint Tech Academy teaches you to plan, organise, execute, and close projects using real methods, templates, and documentation. The kind of practical skill set that applies across tech, business, and operations roles in Nigeria.",
@@ -1079,25 +1068,24 @@ const courseRecords: Course[] = [
       "No prior project management experience required",
       "Experience working with teams is helpful but not required",
     ],
-  
-  faqs: [
-    {
-      question: "Is this course only for people working in tech?",
-      answer:
-        "No. Project management skills apply across industries this course is useful for anyone responsible for planning and delivering work, whether in tech, business operations, construction, or other fields.",
-    },
-    {
-      question: "Will I learn a specific project management methodology?",
-      answer:
-        "The course covers practical project management methods and tools used in real workplaces, including planning, documentation, and tracking techniques you can apply immediately.",
-    },
-    {
-      question: "Is this course available online?",
-      answer:
-        "Yes, it's available both physically in Lagos and live online.",
-    },
-  ],
-},
+
+    faqs: [
+      {
+        question: "Is this course only for people working in tech?",
+        answer:
+          "No. Project management skills apply across industries this course is useful for anyone responsible for planning and delivering work, whether in tech, business operations, construction, or other fields.",
+      },
+      {
+        question: "Will I learn a specific project management methodology?",
+        answer:
+          "The course covers practical project management methods and tools used in real workplaces, including planning, documentation, and tracking techniques you can apply immediately.",
+      },
+      {
+        question: "Is this course available online?",
+        answer: "Yes, it's available both physically in Lagos and live online.",
+      },
+    ],
+  },
   {
     slug: "machine-learning-with-python",
     title: "Machine Learning with Python",
@@ -1110,7 +1098,6 @@ const courseRecords: Course[] = [
 
     summary:
       "Learn how to build, evaluate and deploy machine learning models with Python using real-world datasets and practical business problems.",
-
 
     seoIntro:
       "Searching for a Machine Learning course in Lagos that goes beyond theory? This 10-week intermediate programme at Corepoint Tech Academy teaches you to build, evaluate, and deploy machine learning models with Python using real datasets and real business problems not just toy examples. It's built for developers, data analysts, and career changers ready to move into applied ML work.",
@@ -1329,30 +1316,29 @@ const courseRecords: Course[] = [
       "Comfort working with spreadsheets or SQL",
       "Basic statistics is recommended",
     ],
-  
-  faqs: [
-    {
-      question: "Do I need prior Python experience for this course?",
-      answer:
-        "Yes, since this is an intermediate-level course, basic Python programming experience is expected before you start.",
-    },
-    {
-      question: "Will I deploy models, or just train them?",
-      answer:
-        "Both. The course covers building and evaluating models, and also how to deploy them so they can actually be used in an application, not just tested in a notebook.",
-    },
-    {
-      question: "How is this different from your Data Science courses?",
-      answer:
-        "This course focuses specifically on machine learning, model building, evaluation, and deployment rather than the broader data workflow of collection, cleaning, and visualisation covered in our Data Science programmes.",
-    },
-    {
-      question: "Is this course available online?",
-      answer:
-        "Yes, it's available both physically in Lagos and live online.",
-    },
-  ],
-},
+
+    faqs: [
+      {
+        question: "Do I need prior Python experience for this course?",
+        answer:
+          "Yes, since this is an intermediate-level course, basic Python programming experience is expected before you start.",
+      },
+      {
+        question: "Will I deploy models, or just train them?",
+        answer:
+          "Both. The course covers building and evaluating models, and also how to deploy them so they can actually be used in an application, not just tested in a notebook.",
+      },
+      {
+        question: "How is this different from your Data Science courses?",
+        answer:
+          "This course focuses specifically on machine learning, model building, evaluation, and deployment rather than the broader data workflow of collection, cleaning, and visualisation covered in our Data Science programmes.",
+      },
+      {
+        question: "Is this course available online?",
+        answer: "Yes, it's available both physically in Lagos and live online.",
+      },
+    ],
+  },
   {
     slug: "generative-ai-and-llm-applications",
     title: "Generative AI & LLM Applications",
@@ -1365,7 +1351,6 @@ const courseRecords: Course[] = [
 
     summary:
       "Learn to design, build and deploy practical Generative AI applications using large language models, prompt engineering, RAG, AI agents and modern AI development tools.",
-
 
     seoIntro:
       "Looking for a Generative AI and LLM course in Lagos focused on actually building applications? This 8-week, live-online programme at Corepoint Tech Academy teaches you to design, build, and deploy real Generative AI applications using large language models, prompt engineering, retrieval-augmented generation (RAG), and AI agents. It's built for developers and technical professionals ready to build with AI, not just use it.",
@@ -1549,266 +1534,256 @@ const courseRecords: Course[] = [
       "Basic Python knowledge is recommended",
       "Basic understanding of APIs is helpful but not required",
     ],
-  
-  faqs: [
-    {
-      question: "How is this different from your Generative AI & Prompt Engineering course?",
-      answer:
-        "That course teaches you to use generative AI tools effectively without needing to code. This course is for developers who want to build applications on top of LLMs, RAG systems, AI agents, and deployed AI products.",
-    },
-    {
-      question: "Do I need programming experience for this course?",
-      answer:
-        "Yes. Since this is an intermediate-level, application-building course, prior programming experience is expected.",
-    },
-    {
-      question: "Is this course available in person, or only online?",
-      answer:
-        "This course is delivered live online only.",
-    },
-  ],
-},
+
+    faqs: [
+      {
+        question: "How is this different from your Generative AI & Prompt Engineering course?",
+        answer:
+          "That course teaches you to use generative AI tools effectively without needing to code. This course is for developers who want to build applications on top of LLMs, RAG systems, AI agents, and deployed AI products.",
+      },
+      {
+        question: "Do I need programming experience for this course?",
+        answer:
+          "Yes. Since this is an intermediate-level, application-building course, prior programming experience is expected.",
+      },
+      {
+        question: "Is this course available in person, or only online?",
+        answer: "This course is delivered live online only.",
+      },
+    ],
+  },
   {
-  slug: "data-analysis-full-stack",
-  title: "Full Stack Data Analysis ",
-  category: "data-analysis",
-  level: "Beginner to Intermediate",
-  duration: "8-9 weeks",
-  delivery: "Both",
-  featured: true,
-  image: dataImg,
+    slug: "data-analysis-full-stack",
+    title: "Full Stack Data Analysis ",
+    category: "data-analysis",
+    level: "Beginner to Intermediate",
+    duration: "8-9 weeks",
+    delivery: "Both",
+    featured: true,
+    image: dataImg,
 
-  summary:
-    "Master Advanced Excel, SQL and Power BI to clean, analyse, transform and communicate real-world business data.",
-
+    summary:
+      "Master Advanced Excel, SQL and Power BI to clean, analyse, transform and communicate real-world business data.",
 
     seoIntro:
       "Looking for a Data Analysis course in Lagos covering Excel, SQL, and Power BI together? This 8-9 week programme at Corepoint Tech Academy takes you through the full data analysis workflow, cleaning and analysing data in Excel, querying it with SQL, and presenting it through Power BI dashboards, so you graduate able to handle a real analyst's workload, not just one tool in isolation.",
-  overview:
-    "A practical, career-focused data analysis programme designed to take learners from spreadsheet-based analysis to professional business intelligence. Students learn Advanced Excel, SQL and Power BI through real-world datasets, practical exercises and portfolio projects.",
+    overview:
+      "A practical, career-focused data analysis programme designed to take learners from spreadsheet-based analysis to professional business intelligence. Students learn Advanced Excel, SQL and Power BI through real-world datasets, practical exercises and portfolio projects.",
 
-  audience:
-    "Beginners, graduates, career switchers and professionals who want to develop practical data analysis and business intelligence skills.",
+    audience:
+      "Beginners, graduates, career switchers and professionals who want to develop practical data analysis and business intelligence skills.",
 
-  outcomes: [
-    "Use Advanced Excel to clean, analyse and automate business data",
-    "Build advanced Excel formulas, PivotTables and interactive dashboards",
-    "Write SQL queries to retrieve, filter, join and aggregate data",
-    "Work with relational databases and perform advanced SQL analysis",
-    "Clean and transform data using Power Query",
-    "Build interactive Power BI dashboards and reports",
-    "Create calculated columns and measures using DAX",
-    "Apply data modelling principles in Power BI",
-    "Communicate data-driven insights to non-technical stakeholders",
-    "Build professional portfolio projects using real-world datasets",
-  ],
+    outcomes: [
+      "Use Advanced Excel to clean, analyse and automate business data",
+      "Build advanced Excel formulas, PivotTables and interactive dashboards",
+      "Write SQL queries to retrieve, filter, join and aggregate data",
+      "Work with relational databases and perform advanced SQL analysis",
+      "Clean and transform data using Power Query",
+      "Build interactive Power BI dashboards and reports",
+      "Create calculated columns and measures using DAX",
+      "Apply data modelling principles in Power BI",
+      "Communicate data-driven insights to non-technical stakeholders",
+      "Build professional portfolio projects using real-world datasets",
+    ],
 
-  curriculum: [
-    {
-      module: "Module 1: Advanced Excel Fundamentals",
-      topics: [
-        "Excel interface and professional workbook structure",
-        "Data types and data preparation",
-        "Advanced formulas and functions",
-        "Relative, absolute and mixed cell references",
-        "IF, IFS and nested logical functions",
-        "SUMIFS, COUNTIFS and AVERAGEIFS",
-        "XLOOKUP and advanced lookup techniques",
-        "INDEX and MATCH",
-        "Text and date functions",
-        "Error handling with IFERROR",
-      ],
-    },
+    curriculum: [
+      {
+        module: "Module 1: Advanced Excel Fundamentals",
+        topics: [
+          "Excel interface and professional workbook structure",
+          "Data types and data preparation",
+          "Advanced formulas and functions",
+          "Relative, absolute and mixed cell references",
+          "IF, IFS and nested logical functions",
+          "SUMIFS, COUNTIFS and AVERAGEIFS",
+          "XLOOKUP and advanced lookup techniques",
+          "INDEX and MATCH",
+          "Text and date functions",
+          "Error handling with IFERROR",
+        ],
+      },
 
-    {
-      module: "Module 2: Advanced Excel Data Analysis",
-      topics: [
-        "Excel Tables and structured references",
-        "Sorting and advanced filtering",
-        "Conditional formatting",
-        "Data validation",
-        "PivotTables",
-        "PivotCharts",
-        "Slicers and timelines",
-        "What-If Analysis",
-        "Goal Seek",
-        "Scenario Manager",
-        "Basic statistical analysis",
-      ],
-    },
+      {
+        module: "Module 2: Advanced Excel Data Analysis",
+        topics: [
+          "Excel Tables and structured references",
+          "Sorting and advanced filtering",
+          "Conditional formatting",
+          "Data validation",
+          "PivotTables",
+          "PivotCharts",
+          "Slicers and timelines",
+          "What-If Analysis",
+          "Goal Seek",
+          "Scenario Manager",
+          "Basic statistical analysis",
+        ],
+      },
 
-    {
-      module: "Module 3: Excel Data Cleaning & Automation",
-      topics: [
-        "Data cleaning techniques",
-        "Removing duplicates",
-        "Handling missing and inconsistent data",
-        "Text-to-Columns",
-        "Flash Fill",
-        "Power Query fundamentals",
-        "Importing data from multiple sources",
-        "Transforming and combining datasets",
-        "Automating recurring data preparation tasks",
-        "Building automated Excel reports",
-      ],
-    },
+      {
+        module: "Module 3: Excel Data Cleaning & Automation",
+        topics: [
+          "Data cleaning techniques",
+          "Removing duplicates",
+          "Handling missing and inconsistent data",
+          "Text-to-Columns",
+          "Flash Fill",
+          "Power Query fundamentals",
+          "Importing data from multiple sources",
+          "Transforming and combining datasets",
+          "Automating recurring data preparation tasks",
+          "Building automated Excel reports",
+        ],
+      },
 
-    {
-      module: "Module 4: Excel Dashboards & Reporting",
-      topics: [
-        "Principles of effective dashboard design",
-        "KPI development",
-        "Interactive dashboard design",
-        "Charts and visualisation techniques",
-        "Dynamic charts",
-        "Slicers and interactive controls",
-        "Management reporting",
-        "Building an executive dashboard",
-        "Excel sales and performance dashboard project",
-      ],
-    },
+      {
+        module: "Module 4: Excel Dashboards & Reporting",
+        topics: [
+          "Principles of effective dashboard design",
+          "KPI development",
+          "Interactive dashboard design",
+          "Charts and visualisation techniques",
+          "Dynamic charts",
+          "Slicers and interactive controls",
+          "Management reporting",
+          "Building an executive dashboard",
+          "Excel sales and performance dashboard project",
+        ],
+      },
 
-    {
-      module: "Module 5: SQL Fundamentals",
-      topics: [
-        "Introduction to relational databases",
-        "Tables, rows, columns and keys",
-        "SELECT statements",
-        "WHERE filtering",
-        "ORDER BY",
-        "DISTINCT",
-        "LIMIT and TOP",
-        "Aliases",
-        "Arithmetic and comparison operators",
-        "NULL values",
-      ],
-    },
+      {
+        module: "Module 5: SQL Fundamentals",
+        topics: [
+          "Introduction to relational databases",
+          "Tables, rows, columns and keys",
+          "SELECT statements",
+          "WHERE filtering",
+          "ORDER BY",
+          "DISTINCT",
+          "LIMIT and TOP",
+          "Aliases",
+          "Arithmetic and comparison operators",
+          "NULL values",
+        ],
+      },
 
-    {
-      module: "Module 6: SQL Data Analysis",
-      topics: [
-        "Aggregate functions",
-        "COUNT, SUM, AVG, MIN and MAX",
-        "GROUP BY",
-        "HAVING",
-        "CASE statements",
-        "Date and time functions",
-        "String functions",
-        "Subqueries",
-        "Common Table Expressions (CTEs)",
-        "Writing business-focused SQL queries",
-      ],
-    },
+      {
+        module: "Module 6: SQL Data Analysis",
+        topics: [
+          "Aggregate functions",
+          "COUNT, SUM, AVG, MIN and MAX",
+          "GROUP BY",
+          "HAVING",
+          "CASE statements",
+          "Date and time functions",
+          "String functions",
+          "Subqueries",
+          "Common Table Expressions (CTEs)",
+          "Writing business-focused SQL queries",
+        ],
+      },
 
-    {
-      module: "Module 7: Advanced SQL & Database Analysis",
-      topics: [
-        "INNER JOIN",
-        "LEFT JOIN",
-        "RIGHT JOIN",
-        "FULL OUTER JOIN",
-        "Self joins",
-        "Multiple-table analysis",
-        "Window functions",
-        "ROW_NUMBER",
-        "RANK and DENSE_RANK",
-        "PARTITION BY",
-        "Running totals and moving averages",
-        "SQL performance and query optimisation fundamentals",
-      ],
-    },
+      {
+        module: "Module 7: Advanced SQL & Database Analysis",
+        topics: [
+          "INNER JOIN",
+          "LEFT JOIN",
+          "RIGHT JOIN",
+          "FULL OUTER JOIN",
+          "Self joins",
+          "Multiple-table analysis",
+          "Window functions",
+          "ROW_NUMBER",
+          "RANK and DENSE_RANK",
+          "PARTITION BY",
+          "Running totals and moving averages",
+          "SQL performance and query optimisation fundamentals",
+        ],
+      },
 
-    {
-      module: "Module 8: Power BI Fundamentals",
-      topics: [
-        "Introduction to Power BI",
-        "Power BI Desktop interface",
-        "Importing data from Excel and databases",
-        "Data types and data profiling",
-        "Power Query",
-        "Data cleaning and transformation",
-        "Merging and appending queries",
-        "Creating relationships",
-        "Data modelling fundamentals",
-        "Star schema concepts",
-      ],
-    },
+      {
+        module: "Module 8: Power BI Fundamentals",
+        topics: [
+          "Introduction to Power BI",
+          "Power BI Desktop interface",
+          "Importing data from Excel and databases",
+          "Data types and data profiling",
+          "Power Query",
+          "Data cleaning and transformation",
+          "Merging and appending queries",
+          "Creating relationships",
+          "Data modelling fundamentals",
+          "Star schema concepts",
+        ],
+      },
 
-    {
-      module: "Module 9: Power BI, DAX & Dashboards",
-      topics: [
-        "Introduction to DAX",
-        "Calculated columns",
-        "Measures",
-        "CALCULATE",
-        "SUM, COUNT and DISTINCTCOUNT",
-        "FILTER",
-        "Time intelligence fundamentals",
-        "KPI calculations",
-        "Interactive reports",
-        "Drill-through and tooltips",
-        "Slicers and filters",
-        "Professional dashboard design",
-        "Power BI business intelligence project",
-      ],
-    },
+      {
+        module: "Module 9: Power BI, DAX & Dashboards",
+        topics: [
+          "Introduction to DAX",
+          "Calculated columns",
+          "Measures",
+          "CALCULATE",
+          "SUM, COUNT and DISTINCTCOUNT",
+          "FILTER",
+          "Time intelligence fundamentals",
+          "KPI calculations",
+          "Interactive reports",
+          "Drill-through and tooltips",
+          "Slicers and filters",
+          "Professional dashboard design",
+          "Power BI business intelligence project",
+        ],
+      },
 
-    {
-      module: "Module 10: Data Analysis Capstone Project",
-      topics: [
-        "Business problem definition",
-        "Data collection and preparation",
-        "Advanced Excel analysis",
-        "SQL data extraction and analysis",
-        "Power BI data modelling",
-        "Interactive dashboard development",
-        "KPI and performance analysis",
-        "Generating business insights",
-        "Executive report preparation",
-        "Portfolio presentation",
-      ],
-    },
-  ],
+      {
+        module: "Module 10: Data Analysis Capstone Project",
+        topics: [
+          "Business problem definition",
+          "Data collection and preparation",
+          "Advanced Excel analysis",
+          "SQL data extraction and analysis",
+          "Power BI data modelling",
+          "Interactive dashboard development",
+          "KPI and performance analysis",
+          "Generating business insights",
+          "Executive report preparation",
+          "Portfolio presentation",
+        ],
+      },
+    ],
 
-  projects: [
-    "Advanced Excel Sales & Performance Dashboard",
-    "SQL Customer & Sales Analysis",
-    "Power BI Business Intelligence Dashboard",
-    "End-to-End Data Analysis Capstone Project",
-  ],
+    projects: [
+      "Advanced Excel Sales & Performance Dashboard",
+      "SQL Customer & Sales Analysis",
+      "Power BI Business Intelligence Dashboard",
+      "End-to-End Data Analysis Capstone Project",
+    ],
 
-  tools: [
-    "Microsoft Excel",
-    "Power Query",
-    "SQL",
-    "Microsoft SQL Server",
-    "Power BI",
-    "DAX",
-  ],
+    tools: ["Microsoft Excel", "Power Query", "SQL", "Microsoft SQL Server", "Power BI", "DAX"],
 
-  prerequisites: [
-    "Basic computer skills",
-    "Basic understanding of Microsoft Excel is helpful but not required",
-  ],
+    prerequisites: [
+      "Basic computer skills",
+      "Basic understanding of Microsoft Excel is helpful but not required",
+    ],
 
-  faqs: [
-    {
-      question: "How is this different from your Full-Stack Data Science course?",
-      answer:
-        "This course focuses specifically on data analysis Excel, SQL, and Power BI. Our Full-Stack Data Science programme goes further, adding Python, SPSS, and Tableau for a broader data science skill set.",
-    },
-    {
-      question: "Do I need prior experience with Excel or SQL?",
-      answer:
-        "No prior experience is required. The course builds from data analysis fundamentals through to more advanced Excel, SQL, and Power BI skills.",
-    },
-    {
-      question: "Is this course available online?",
-      answer:
-        "Yes, it's available both physically in Lagos and live online.",
-    },
-  ],
-},
+    faqs: [
+      {
+        question: "How is this different from your Full-Stack Data Science course?",
+        answer:
+          "This course focuses specifically on data analysis Excel, SQL, and Power BI. Our Full-Stack Data Science programme goes further, adding Python, SPSS, and Tableau for a broader data science skill set.",
+      },
+      {
+        question: "Do I need prior experience with Excel or SQL?",
+        answer:
+          "No prior experience is required. The course builds from data analysis fundamentals through to more advanced Excel, SQL, and Power BI skills.",
+      },
+      {
+        question: "Is this course available online?",
+        answer: "Yes, it's available both physically in Lagos and live online.",
+      },
+    ],
+  },
   {
     slug: "advanced-excel-for-data-analysis",
     title: "Advanced Excel for Data Analysis",
@@ -1820,7 +1795,6 @@ const courseRecords: Course[] = [
 
     summary:
       "Master advanced Excel techniques for data cleaning, analysis, dashboard development, reporting and business decision-making.",
-
 
     seoIntro:
       "Searching for an Advanced Excel course in Lagos for data analysis and dashboards? This 5-week programme at Corepoint Tech Academy teaches advanced Excel techniques for cleaning data, building dashboards, and creating reports that support real business decisions ideal for professionals who already know basic Excel and want to go further, fast.",
@@ -2006,25 +1980,24 @@ const courseRecords: Course[] = [
       "Basic formulas and spreadsheet operations",
       "Basic understanding of tables and charts",
     ],
-  
-  faqs: [
-    {
-      question: "Is this course for Excel beginners?",
-      answer:
-        "This course is aimed at intermediate learners who already know basic Excel. If you're completely new to Excel, our Full Stack Data Analysis course starts from the fundamentals.",
-    },
-    {
-      question: "Will I build dashboards during the course?",
-      answer:
-        "Yes, dashboard development is a core part of this course, alongside data cleaning, analysis techniques, and reporting for business decision-making.",
-    },
-    {
-      question: "Is this course available online?",
-      answer:
-        "Yes, it's available both physically in Lagos and live online.",
-    },
-  ],
-},
+
+    faqs: [
+      {
+        question: "Is this course for Excel beginners?",
+        answer:
+          "This course is aimed at intermediate learners who already know basic Excel. If you're completely new to Excel, our Full Stack Data Analysis course starts from the fundamentals.",
+      },
+      {
+        question: "Will I build dashboards during the course?",
+        answer:
+          "Yes, dashboard development is a core part of this course, alongside data cleaning, analysis techniques, and reporting for business decision-making.",
+      },
+      {
+        question: "Is this course available online?",
+        answer: "Yes, it's available both physically in Lagos and live online.",
+      },
+    ],
+  },
   {
     slug: "business-intelligence",
     title: "Power BI for Business Intelligence",
@@ -2167,25 +2140,24 @@ const courseRecords: Course[] = [
       "Basic Excel knowledge is recommended",
       "No prior Power BI experience required",
     ],
-  
-  faqs: [
-    {
-      question: "Do I need a data analysis background before this course?",
-      answer:
-        "No, this course is suitable for beginners to intermediate learners. Basic familiarity with spreadsheets is helpful but not required.",
-    },
-    {
-      question: "Will I learn DAX and data modelling in Power BI?",
-      answer:
-        "Yes, the course covers building interactive dashboards, KPI tracking, and the data modelling skills needed to make Power BI reports genuinely useful for business decisions.",
-    },
-    {
-      question: "Is this course available online?",
-      answer:
-        "Yes, it's available both physically in Lagos and live online.",
-    },
-  ],
-},
+
+    faqs: [
+      {
+        question: "Do I need a data analysis background before this course?",
+        answer:
+          "No, this course is suitable for beginners to intermediate learners. Basic familiarity with spreadsheets is helpful but not required.",
+      },
+      {
+        question: "Will I learn DAX and data modelling in Power BI?",
+        answer:
+          "Yes, the course covers building interactive dashboards, KPI tracking, and the data modelling skills needed to make Power BI reports genuinely useful for business decisions.",
+      },
+      {
+        question: "Is this course available online?",
+        answer: "Yes, it's available both physically in Lagos and live online.",
+      },
+    ],
+  },
   {
     slug: "full-stack-web-development",
     title: "Full-Stack Web Development",
@@ -2198,7 +2170,6 @@ const courseRecords: Course[] = [
 
     summary:
       "Learn to design, build, test and deploy modern full-stack web applications using HTML, CSS, JavaScript, TypeScript, React, APIs and databases.",
-
 
     seoIntro:
       "Searching for a Full-Stack Web Development course in Lagos that covers modern tools? This 12-16 week programme at Corepoint Tech Academy takes you from HTML, CSS, and JavaScript through TypeScript, React, APIs, and databases building real, deployed web applications along the way. It's built for beginners and career changers who want to become job-ready web developers in Nigeria's tech industry.",
@@ -2479,25 +2450,24 @@ const courseRecords: Course[] = [
       "No previous programming experience required",
       "A personal laptop is recommended for practical exercises",
     ],
-  
-  faqs: [
-    {
-      question: "Do I need any coding experience to start this course?",
-      answer:
-        "No prior coding experience is required. The course starts from HTML, CSS, and JavaScript fundamentals before progressing to more advanced tools like React and TypeScript.",
-    },
-    {
-      question: "Will I build and deploy real projects?",
-      answer:
-        "Yes, the course is project-based throughout, and you'll deploy full-stack applications rather than just building isolated exercises.",
-    },
-    {
-      question: "Is this course available online?",
-      answer:
-        "Yes, it's available both physically in Lagos and live online.",
-    },
-  ],
-},
+
+    faqs: [
+      {
+        question: "Do I need any coding experience to start this course?",
+        answer:
+          "No prior coding experience is required. The course starts from HTML, CSS, and JavaScript fundamentals before progressing to more advanced tools like React and TypeScript.",
+      },
+      {
+        question: "Will I build and deploy real projects?",
+        answer:
+          "Yes, the course is project-based throughout, and you'll deploy full-stack applications rather than just building isolated exercises.",
+      },
+      {
+        question: "Is this course available online?",
+        answer: "Yes, it's available both physically in Lagos and live online.",
+      },
+    ],
+  },
   {
     slug: "mobile-app-development-react-native",
     title: "Mobile App Development with React Native",
@@ -2509,7 +2479,6 @@ const courseRecords: Course[] = [
 
     summary:
       "Build modern, production-ready Android and iOS applications with React Native from a single codebase.",
-
 
     seoIntro:
       "Looking for a React Native course in Lagos to build real mobile apps? This 10-week, live-online programme at Corepoint Tech Academy teaches you to build production-ready Android and iOS applications from a single codebase ideal for web developers looking to move into mobile, or anyone wanting to build a mobile app for their own business idea.",
@@ -2691,25 +2660,24 @@ const courseRecords: Course[] = [
       "Basic understanding of HTML and CSS is recommended",
       "A laptop capable of running the development environment",
     ],
-  
-  faqs: [
-    {
-      question: "Do I need prior JavaScript or React experience?",
-      answer:
-        "Since this is an intermediate-level course, some prior JavaScript experience is expected. Familiarity with React is helpful but not strictly required.",
-    },
-    {
-      question: "Will I be able to build apps for both Android and iOS?",
-      answer:
-        "Yes, React Native lets you build for both platforms from a single codebase, and this course covers building genuinely production-ready apps, not just prototypes.",
-    },
-    {
-      question: "Is this course delivered online?",
-      answer:
-        "Yes, this course is delivered live online.",
-    },
-  ],
-},
+
+    faqs: [
+      {
+        question: "Do I need prior JavaScript or React experience?",
+        answer:
+          "Since this is an intermediate-level course, some prior JavaScript experience is expected. Familiarity with React is helpful but not strictly required.",
+      },
+      {
+        question: "Will I be able to build apps for both Android and iOS?",
+        answer:
+          "Yes, React Native lets you build for both platforms from a single codebase, and this course covers building genuinely production-ready apps, not just prototypes.",
+      },
+      {
+        question: "Is this course delivered online?",
+        answer: "Yes, this course is delivered live online.",
+      },
+    ],
+  },
   {
     slug: "cybersecurity-fundamentals",
     title: "Cybersecurity Fundamentals",
@@ -2718,11 +2686,10 @@ const courseRecords: Course[] = [
     duration: "10 weeks",
     delivery: "Both",
     featured: true,
-    image: resolveCourseImage("cybersecurity-fundamentals",securityImg),
+    image: resolveCourseImage("cybersecurity-fundamentals", securityImg),
 
     summary:
       "Build practical cybersecurity skills by learning how to identify threats, secure systems, analyse security events and respond to incidents.",
-
 
     seoIntro:
       "Searching for a Cybersecurity course in Lagos for beginners? This 10-week programme at Corepoint Tech Academy builds practical cybersecurity skills from the ground up identifying threats, securing systems, analysing security events, and responding to incidents. With cyberattacks and fraud a growing concern for Nigerian banks, fintechs, and businesses, this course is built to make you genuinely useful in a security role, not just certificate-holding.",
@@ -2931,30 +2898,29 @@ const courseRecords: Course[] = [
       "Basic networking knowledge is helpful but not required",
       "No previous cybersecurity experience required",
     ],
-  
-  faqs: [
-    {
-      question: "Do I need an IT background to start this course?",
-      answer:
-        "No prior cybersecurity experience is required, though basic computer literacy is expected. The course is designed to build your skills from the fundamentals up.",
-    },
-    {
-      question: "Is this course more theory or hands-on practice?",
-      answer:
-        "The course emphasises practical, hands-on skills identifying real threats, analysing security events, and practising incident response, not just memorising concepts.",
-    },
-    {
-      question: "How is this different from your Ethical Hacking course?",
-      answer:
-        "This course covers foundational cybersecurity defence, monitoring, and response. Our Ethical Hacking & Penetration Testing course is a more advanced, offensive-security-focused programme for those ready to go further.",
-    },
-    {
-      question: "Is this course available online?",
-      answer:
-        "Yes, it's available both physically in Lagos and live online.",
-    },
-  ],
-},
+
+    faqs: [
+      {
+        question: "Do I need an IT background to start this course?",
+        answer:
+          "No prior cybersecurity experience is required, though basic computer literacy is expected. The course is designed to build your skills from the fundamentals up.",
+      },
+      {
+        question: "Is this course more theory or hands-on practice?",
+        answer:
+          "The course emphasises practical, hands-on skills identifying real threats, analysing security events, and practising incident response, not just memorising concepts.",
+      },
+      {
+        question: "How is this different from your Ethical Hacking course?",
+        answer:
+          "This course covers foundational cybersecurity defence, monitoring, and response. Our Ethical Hacking & Penetration Testing course is a more advanced, offensive-security-focused programme for those ready to go further.",
+      },
+      {
+        question: "Is this course available online?",
+        answer: "Yes, it's available both physically in Lagos and live online.",
+      },
+    ],
+  },
   {
     slug: "ethical-hacking-and-penetration-testing",
     title: "Ethical Hacking & Penetration Testing",
@@ -2966,7 +2932,6 @@ const courseRecords: Course[] = [
 
     summary:
       "Develop practical offensive security skills by learning how to assess, exploit and secure systems through authorised penetration testing in controlled lab environments.",
-
 
     seoIntro:
       "Looking for an Ethical Hacking course in Lagos with real, hands-on penetration testing practice? This 10-week, live-online, advanced-level programme at Corepoint Tech Academy teaches you to assess, exploit, and secure systems through authorised penetration testing in controlled lab environments built for those ready to move into offensive security work.",
@@ -3186,25 +3151,24 @@ const courseRecords: Course[] = [
       "Basic cybersecurity knowledge",
       "Familiarity with TCP/IP and common network protocols",
     ],
-  
-  faqs: [
-    {
-      question: "Is this course suitable for beginners?",
-      answer:
-        "No, this is an advanced-level course. We recommend completing our Cybersecurity Fundamentals course first if you're new to security.",
-    },
-    {
-      question: "Will I practice on real systems, or only in labs?",
-      answer:
-        "All hands-on exercises are conducted in controlled, authorised lab environments this is what makes the practice both effective and ethical.",
-    },
-    {
-      question: "Is this course delivered online?",
-      answer:
-        "Yes, this course is delivered live online.",
-    },
-  ],
-},
+
+    faqs: [
+      {
+        question: "Is this course suitable for beginners?",
+        answer:
+          "No, this is an advanced-level course. We recommend completing our Cybersecurity Fundamentals course first if you're new to security.",
+      },
+      {
+        question: "Will I practice on real systems, or only in labs?",
+        answer:
+          "All hands-on exercises are conducted in controlled, authorised lab environments this is what makes the practice both effective and ethical.",
+      },
+      {
+        question: "Is this course delivered online?",
+        answer: "Yes, this course is delivered live online.",
+      },
+    ],
+  },
   {
     slug: "aws-cloud-practitioner-to-solutions-architect",
     title: "AWS Cloud Practitioner to Solutions Architect",
@@ -3216,7 +3180,6 @@ const courseRecords: Course[] = [
 
     summary:
       "Build practical AWS cloud skills, design secure and highly available architectures, and prepare for the AWS Certified Solutions Architect – Associate certification.",
-
 
     seoIntro:
       "Searching for an AWS course in Lagos that prepares you for certification? This 10-week programme at Corepoint Tech Academy builds practical AWS cloud skills and prepares you for the AWS Certified Solutions Architect – Associate exam, covering how to design secure, highly available cloud architectures not just pass a test, but actually work with AWS professionally.",
@@ -3441,25 +3404,24 @@ const courseRecords: Course[] = [
       "Basic networking knowledge is recommended",
       "No previous AWS experience required",
     ],
-  
-  faqs: [
-    {
-      question: "Do I need prior cloud experience to join?",
-      answer:
-        "No prior AWS or cloud experience is required. The course is designed to take you from cloud practitioner fundamentals up to solutions architect-level skills.",
-    },
-    {
-      question: "Does this course prepare me for an actual AWS certification exam?",
-      answer:
-        "Yes, the course is structured around the AWS Certified Solutions Architect – Associate certification, alongside practical, hands-on architecture design skills.",
-    },
-    {
-      question: "Is this course available online?",
-      answer:
-        "Yes, it's available both physically in Lagos and live online.",
-    },
-  ],
-},
+
+    faqs: [
+      {
+        question: "Do I need prior cloud experience to join?",
+        answer:
+          "No prior AWS or cloud experience is required. The course is designed to take you from cloud practitioner fundamentals up to solutions architect-level skills.",
+      },
+      {
+        question: "Does this course prepare me for an actual AWS certification exam?",
+        answer:
+          "Yes, the course is structured around the AWS Certified Solutions Architect – Associate certification, alongside practical, hands-on architecture design skills.",
+      },
+      {
+        question: "Is this course available online?",
+        answer: "Yes, it's available both physically in Lagos and live online.",
+      },
+    ],
+  },
   {
     slug: "devops-with-docker-and-kubernetes",
     title: "DevOps with Docker & Kubernetes",
@@ -3737,7 +3699,6 @@ const courseRecords: Course[] = [
     summary:
       "Develop strong SQL skills, design reliable relational databases, optimise queries and learn essential database administration practices using PostgreSQL and SQL Server.",
 
-
     seoIntro:
       "Looking to learn SQL in Lagos, including how to actually administer a database, not just query one? This 8-week programme at Corepoint Tech Academy covers SQL fundamentals, relational database design, query optimisation, and essential database administration practices using PostgreSQL and SQL Server a strong foundation for data analyst, backend developer, or database administrator roles.",
     overview:
@@ -3944,39 +3905,31 @@ const courseRecords: Course[] = [
       "End-to-End Database Design & Administration Capstone",
     ],
 
-    tools: [
-      "SQL",
-      "PostgreSQL",
-      "Microsoft SQL Server",
-      "SQL Server Management Studio",
-      "pgAdmin",
-      "Git & GitHub",
-    ],
+    tools: ["PostgreSQL", "Microsoft SQL Server", "SQL Server Management Studio", "Git & GitHub"],
 
     prerequisites: [
       "Basic computer literacy",
       "No prior SQL experience required",
       "Basic understanding of spreadsheets is helpful but not required",
     ],
-  
-  faqs: [
-    {
-      question: "Is this course only about writing SQL queries?",
-      answer:
-        "No. Alongside SQL querying, this course covers database design and essential administration practices, so you understand how to build and maintain databases, not just query existing ones.",
-    },
-    {
-      question: "Do I need prior database experience?",
-      answer:
-        "No prior experience is required. The course starts from SQL fundamentals before progressing to design and administration topics.",
-    },
-    {
-      question: "Is this course available online?",
-      answer:
-        "Yes, it's available both physically in Lagos and live online.",
-    },
-  ],
-},
+
+    faqs: [
+      {
+        question: "Is this course only about writing SQL queries?",
+        answer:
+          "No. Alongside SQL querying, this course covers database design and essential administration practices, so you understand how to build and maintain databases, not just query existing ones.",
+      },
+      {
+        question: "Do I need prior database experience?",
+        answer:
+          "No prior experience is required. The course starts from SQL fundamentals before progressing to design and administration topics.",
+      },
+      {
+        question: "Is this course available online?",
+        answer: "Yes, it's available both physically in Lagos and live online.",
+      },
+    ],
+  },
   {
     slug: "workflow-automation-no-code",
     title: "AI Automation & No-Code",
@@ -3988,7 +3941,6 @@ const courseRecords: Course[] = [
 
     summary:
       "Automate repetitive business processes, reports, emails and data workflows using Python, n8n, Zapier, Make and other automation tools.",
-
 
     seoIntro:
       "Searching for a workflow automation course in Lagos using no-code tools? This 6-week, live-online programme at Corepoint Tech Academy teaches you to automate repetitive business processes, reports, emails, and data workflows using Python, n8n, Zapier, Make, and other automation tools practical skills for freelancers, business owners, and operations professionals looking to save hours of manual work every week.",
@@ -4159,25 +4111,24 @@ const courseRecords: Course[] = [
       "No programming experience required",
       "Basic understanding of spreadsheets is helpful but not required",
     ],
-  
-  faqs: [
-    {
-      question: "Do I need to know how to code for this course?",
-      answer:
-        "Most of the course focuses on no-code and low-code automation tools like n8n, Zapier, and Make, so heavy coding knowledge isn't required, though basic Python is introduced for more advanced automations.",
-    },
-    {
-      question: "What kind of tasks can I automate after this course?",
-      answer:
-        "Common examples include automated reports, email workflows, data syncing between apps, customer follow-ups, and repetitive data entry tasks.",
-    },
-    {
-      question: "Is this course delivered online?",
-      answer:
-        "Yes, this course is delivered live online.",
-    },
-  ],
-},
+
+    faqs: [
+      {
+        question: "Do I need to know how to code for this course?",
+        answer:
+          "Most of the course focuses on no-code and low-code automation tools like n8n, Zapier, and Make, so heavy coding knowledge isn't required, though basic Python is introduced for more advanced automations.",
+      },
+      {
+        question: "What kind of tasks can I automate after this course?",
+        answer:
+          "Common examples include automated reports, email workflows, data syncing between apps, customer follow-ups, and repetitive data entry tasks.",
+      },
+      {
+        question: "Is this course delivered online?",
+        answer: "Yes, this course is delivered live online.",
+      },
+    ],
+  },
 
   {
     slug: "prompt-engineering",
@@ -4187,7 +4138,7 @@ const courseRecords: Course[] = [
     duration: "6 weeks",
     delivery: "Both",
     featured: true,
-    image:resolveCourseImage("prompt-engineering", aiImg), 
+    image: resolveCourseImage("prompt-engineering", aiImg),
 
     summary:
       "Learn to use generative AI tools effectively prompting, AI-assisted content creation, workflow automation, and integrating AI into everyday work.",
@@ -4313,8 +4264,7 @@ const courseRecords: Course[] = [
       },
       {
         question: "Is this course available online?",
-        answer:
-          "Yes, it's available both physically in Lagos and live online.",
+        answer: "Yes, it's available both physically in Lagos and live online.",
       },
     ],
   },
@@ -4471,17 +4421,51 @@ const courseRecords: Course[] = [
     duration: "10 weeks",
     delivery: "Both",
     image: devImg,
-    summary: "Build accessible, performant frontend applications with modern JavaScript, TypeScript, React, testing, and production workflows.",
-    seoIntro: "Develop the engineering skills to build reliable frontend applications, from component architecture and accessibility to testing and performance.",
-    overview: "An applied frontend engineering programme for learners who know basic web development and want to build maintainable production interfaces. Learners deepen their JavaScript and TypeScript skills, work with React architecture, connect applications to APIs, and practice accessibility, testing, performance, and deployment workflows.",
-    audience: "Junior developers, self-taught programmers, and web developers who want to specialize in building maintainable frontend applications.",
-    outcomes: ["Build component-based interfaces with React and TypeScript", "Design reusable frontend architecture and state flows", "Implement accessible and responsive user experiences", "Test, profile, and deploy production frontend applications"],
-    curriculum: [
-      { module: "Modern Frontend Foundations", topics: ["JavaScript and TypeScript", "Semantic HTML and CSS architecture", "Responsive layout systems"] },
-      { module: "React Application Engineering", topics: ["Component composition", "Routing, forms, and data fetching", "State management and API integration"] },
-      { module: "Quality and Production", topics: ["Accessibility and usability testing", "Unit and integration testing", "Performance, deployment, and monitoring"] },
+    summary:
+      "Build accessible, performant frontend applications with modern JavaScript, TypeScript, React, testing, and production workflows.",
+    seoIntro:
+      "Develop the engineering skills to build reliable frontend applications, from component architecture and accessibility to testing and performance.",
+    overview:
+      "An applied frontend engineering programme for learners who know basic web development and want to build maintainable production interfaces. Learners deepen their JavaScript and TypeScript skills, work with React architecture, connect applications to APIs, and practice accessibility, testing, performance, and deployment workflows.",
+    audience:
+      "Junior developers, self-taught programmers, and web developers who want to specialize in building maintainable frontend applications.",
+    outcomes: [
+      "Build component-based interfaces with React and TypeScript",
+      "Design reusable frontend architecture and state flows",
+      "Implement accessible and responsive user experiences",
+      "Test, profile, and deploy production frontend applications",
     ],
-    projects: ["Accessible component library", "API-driven dashboard", "Tested and deployed frontend application"],
+    curriculum: [
+      {
+        module: "Modern Frontend Foundations",
+        topics: [
+          "JavaScript and TypeScript",
+          "Semantic HTML and CSS architecture",
+          "Responsive layout systems",
+        ],
+      },
+      {
+        module: "React Application Engineering",
+        topics: [
+          "Component composition",
+          "Routing, forms, and data fetching",
+          "State management and API integration",
+        ],
+      },
+      {
+        module: "Quality and Production",
+        topics: [
+          "Accessibility and usability testing",
+          "Unit and integration testing",
+          "Performance, deployment, and monitoring",
+        ],
+      },
+    ],
+    projects: [
+      "Accessible component library",
+      "API-driven dashboard",
+      "Tested and deployed frontend application",
+    ],
     tools: ["JavaScript", "TypeScript", "React", "HTML", "CSS", "Git"],
     prerequisites: ["Basic HTML, CSS, and JavaScript", "A laptop for development exercises"],
   },
@@ -4493,19 +4477,56 @@ const courseRecords: Course[] = [
     duration: "10 weeks",
     delivery: "Both",
     image: devImg,
-    summary: "Design and build secure backend services, APIs, and database-backed applications with practical testing and deployment workflows.",
-    seoIntro: "Learn backend development through API design, databases, authentication, testing, and deploying reliable server-side applications.",
-    overview: "A practical server-side development course focused on API and service design rather than full-stack interface development. Learners build backend services, model relational data, implement authentication and authorization, test service behavior, and prepare applications for deployment.",
-    audience: "Developers with basic programming experience who want to build APIs, server-side applications, and database-backed services.",
-    outcomes: ["Design REST APIs and validate requests and responses", "Model relational data and write efficient database queries", "Implement authentication, authorization, and secure configuration", "Test, document, and deploy backend services"],
-    curriculum: [
-      { module: "Server-Side Foundations", topics: ["HTTP and API fundamentals", "Node.js and service structure", "Validation and error handling"] },
-      { module: "Data and Identity", topics: ["Relational data modelling", "SQL queries and migrations", "Authentication and access control"] },
-      { module: "Reliable Services", topics: ["API and integration testing", "Logging and security", "Deployment and service documentation"] },
+    summary:
+      "Design and build secure backend services, APIs, and database-backed applications with practical testing and deployment workflows.",
+    seoIntro:
+      "Learn backend development through API design, databases, authentication, testing, and deploying reliable server-side applications.",
+    overview:
+      "A practical server-side development course focused on API and service design rather than full-stack interface development. Learners build backend services, model relational data, implement authentication and authorization, test service behavior, and prepare applications for deployment.",
+    audience:
+      "Developers with basic programming experience who want to build APIs, server-side applications, and database-backed services.",
+    outcomes: [
+      "Design REST APIs and validate requests and responses",
+      "Model relational data and write efficient database queries",
+      "Implement authentication, authorization, and secure configuration",
+      "Test, document, and deploy backend services",
     ],
-    projects: ["Secure REST API", "Role-based account service", "Deployed database-backed application"],
+    curriculum: [
+      {
+        module: "Server-Side Foundations",
+        topics: [
+          "HTTP and API fundamentals",
+          "Node.js and service structure",
+          "Validation and error handling",
+        ],
+      },
+      {
+        module: "Data and Identity",
+        topics: [
+          "Relational data modelling",
+          "SQL queries and migrations",
+          "Authentication and access control",
+        ],
+      },
+      {
+        module: "Reliable Services",
+        topics: [
+          "API and integration testing",
+          "Logging and security",
+          "Deployment and service documentation",
+        ],
+      },
+    ],
+    projects: [
+      "Secure REST API",
+      "Role-based account service",
+      "Deployed database-backed application",
+    ],
     tools: ["JavaScript", "Node.js", "Express", "SQL", "PostgreSQL", "Git"],
-    prerequisites: ["Basic programming experience", "Familiarity with command-line tools is helpful"],
+    prerequisites: [
+      "Basic programming experience",
+      "Familiarity with command-line tools is helpful",
+    ],
   },
   {
     slug: "mobile-development-cross-platform",
@@ -4515,20 +4536,57 @@ const courseRecords: Course[] = [
     duration: "10 weeks",
     delivery: "Live Online",
     image: devImg,
-    
-    summary: "Create cross-platform mobile applications with React Native, focusing on app architecture, device capabilities, offline behavior, and release workflows.",
-    seoIntro: "Build cross-platform mobile applications and learn the workflow from mobile interface design through app testing and release preparation.",
-    overview: "A cross-platform mobile development course that develops mobile product engineering skills beyond introductory React Native usage. Learners work with navigation, device features, offline data, application performance, mobile testing, and release preparation for Android and iOS.",
-    audience: "JavaScript developers and aspiring mobile engineers who want to build and prepare cross-platform applications for release.",
-    outcomes: ["Structure multi-screen mobile applications with reusable components", "Integrate device APIs, remote services, and local storage", "Handle mobile permissions, connectivity, and application lifecycle", "Test and prepare applications for Android and iOS release"],
-    curriculum: [
-      { module: "Mobile Application Foundations", topics: ["React Native project structure", "Navigation and mobile layouts", "Forms and application state"] },
-      { module: "Device and Data Integration", topics: ["REST API integration", "Local storage and offline states", "Camera, location, and permissions"] },
-      { module: "Testing and Release", topics: ["Mobile debugging and testing", "Performance and accessibility", "Build and store-release preparation"] },
+
+    summary:
+      "Create cross-platform mobile applications with React Native, focusing on app architecture, device capabilities, offline behavior, and release workflows.",
+    seoIntro:
+      "Build cross-platform mobile applications and learn the workflow from mobile interface design through app testing and release preparation.",
+    overview:
+      "A cross-platform mobile development course that develops mobile product engineering skills beyond introductory React Native usage. Learners work with navigation, device features, offline data, application performance, mobile testing, and release preparation for Android and iOS.",
+    audience:
+      "JavaScript developers and aspiring mobile engineers who want to build and prepare cross-platform applications for release.",
+    outcomes: [
+      "Structure multi-screen mobile applications with reusable components",
+      "Integrate device APIs, remote services, and local storage",
+      "Handle mobile permissions, connectivity, and application lifecycle",
+      "Test and prepare applications for Android and iOS release",
     ],
-    projects: ["Offline-capable task app", "Location-aware service app", "Mobile capstone prepared for release"],
+    curriculum: [
+      {
+        module: "Mobile Application Foundations",
+        topics: [
+          "React Native project structure",
+          "Navigation and mobile layouts",
+          "Forms and application state",
+        ],
+      },
+      {
+        module: "Device and Data Integration",
+        topics: [
+          "REST API integration",
+          "Local storage and offline states",
+          "Camera, location, and permissions",
+        ],
+      },
+      {
+        module: "Testing and Release",
+        topics: [
+          "Mobile debugging and testing",
+          "Performance and accessibility",
+          "Build and store-release preparation",
+        ],
+      },
+    ],
+    projects: [
+      "Offline-capable task app",
+      "Location-aware service app",
+      "Mobile capstone prepared for release",
+    ],
     tools: ["React Native", "Expo", "JavaScript", "REST APIs", "Git"],
-    prerequisites: ["Basic JavaScript knowledge", "A laptop and mobile device or emulator for practice"],
+    prerequisites: [
+      "Basic JavaScript knowledge",
+      "A laptop and mobile device or emulator for practice",
+    ],
   },
   {
     slug: "devops-engineering",
@@ -4539,19 +4597,56 @@ const courseRecords: Course[] = [
     delivery: "Live Online",
     image: resolveCourseImage("devops-engineering", cloudImg),
 
-    summary: "Automate software delivery and operate cloud services with infrastructure as code, CI/CD, observability, and reliability practices.",
-    seoIntro: "Develop practical DevOps engineering skills in delivery automation, infrastructure management, observability, and service reliability.",
-    overview: "A delivery-operations programme focused on repeatable releases, cloud infrastructure, and service reliability. It complements container and Kubernetes training by emphasizing infrastructure as code, pipeline design, environment management, observability, and incident response.",
-    audience: "Developers, system administrators, and cloud practitioners who want to automate delivery and improve software service reliability.",
-    outcomes: ["Build CI/CD workflows with testing and release controls", "Provision cloud infrastructure using infrastructure as code", "Monitor service health with metrics, logs, and alerts", "Apply incident response and reliability practices"],
-    curriculum: [
-      { module: "Delivery Automation", topics: ["Version control workflows", "CI pipeline design", "Release strategies and rollback"] },
-      { module: "Cloud Operations", topics: ["Infrastructure as code", "Environment and secret management", "Configuration and access controls"] },
-      { module: "Reliability Engineering", topics: ["Metrics, logs, and traces", "Alerting and incident response", "Capacity and service reliability reviews"] },
+    summary:
+      "Automate software delivery and operate cloud services with infrastructure as code, CI/CD, observability, and reliability practices.",
+    seoIntro:
+      "Develop practical DevOps engineering skills in delivery automation, infrastructure management, observability, and service reliability.",
+    overview:
+      "A delivery-operations programme focused on repeatable releases, cloud infrastructure, and service reliability. It complements container and Kubernetes training by emphasizing infrastructure as code, pipeline design, environment management, observability, and incident response.",
+    audience:
+      "Developers, system administrators, and cloud practitioners who want to automate delivery and improve software service reliability.",
+    outcomes: [
+      "Build CI/CD workflows with testing and release controls",
+      "Provision cloud infrastructure using infrastructure as code",
+      "Monitor service health with metrics, logs, and alerts",
+      "Apply incident response and reliability practices",
     ],
-    projects: ["Automated application release pipeline", "Infrastructure-as-code environment", "Service monitoring and incident exercise"],
+    curriculum: [
+      {
+        module: "Delivery Automation",
+        topics: [
+          "Version control workflows",
+          "CI pipeline design",
+          "Release strategies and rollback",
+        ],
+      },
+      {
+        module: "Cloud Operations",
+        topics: [
+          "Infrastructure as code",
+          "Environment and secret management",
+          "Configuration and access controls",
+        ],
+      },
+      {
+        module: "Reliability Engineering",
+        topics: [
+          "Metrics, logs, and traces",
+          "Alerting and incident response",
+          "Capacity and service reliability reviews",
+        ],
+      },
+    ],
+    projects: [
+      "Automated application release pipeline",
+      "Infrastructure-as-code environment",
+      "Service monitoring and incident exercise",
+    ],
     tools: ["GitHub Actions", "Terraform", "Linux", "Cloud services", "Prometheus", "Grafana"],
-    prerequisites: ["Basic Linux and Git experience", "Experience deploying an application is helpful"],
+    prerequisites: [
+      "Basic Linux and Git experience",
+      "Experience deploying an application is helpful",
+    ],
   },
   {
     slug: "data-engineering",
@@ -4562,17 +4657,51 @@ const courseRecords: Course[] = [
     delivery: "Both",
     image: dataImg,
 
-    summary: "Build data pipelines that collect, transform, validate, and deliver dependable datasets for analytics and reporting.",
-    seoIntro: "Learn to design and operate data pipelines, from source ingestion and transformation to data quality checks and analytics-ready models.",
-    overview: "A practical data engineering course centered on reliable data movement and modelling, distinct from analytics courses that focus on interpreting datasets. Learners develop batch pipelines, transform data with SQL and Python, validate outputs, and organize data for downstream reporting.",
-    audience: "Data analysts, software developers, and technical professionals who want to build reliable data platforms and analytics pipelines.",
-    outcomes: ["Ingest data from files, databases, and APIs", "Build repeatable batch transformation pipelines with SQL and Python", "Model analytics-ready datasets and apply data quality checks", "Schedule, monitor, and document data workflows"],
-    curriculum: [
-      { module: "Data Pipeline Foundations", topics: ["Data sources and formats", "SQL and Python ingestion", "Batch processing concepts"] },
-      { module: "Transformation and Modelling", topics: ["Data cleaning and validation", "Dimensional modelling", "Reusable transformation workflows"] },
-      { module: "Operations and Delivery", topics: ["Workflow scheduling", "Pipeline monitoring and recovery", "Publishing analytics-ready datasets"] },
+    summary:
+      "Build data pipelines that collect, transform, validate, and deliver dependable datasets for analytics and reporting.",
+    seoIntro:
+      "Learn to design and operate data pipelines, from source ingestion and transformation to data quality checks and analytics-ready models.",
+    overview:
+      "A practical data engineering course centered on reliable data movement and modelling, distinct from analytics courses that focus on interpreting datasets. Learners develop batch pipelines, transform data with SQL and Python, validate outputs, and organize data for downstream reporting.",
+    audience:
+      "Data analysts, software developers, and technical professionals who want to build reliable data platforms and analytics pipelines.",
+    outcomes: [
+      "Ingest data from files, databases, and APIs",
+      "Build repeatable batch transformation pipelines with SQL and Python",
+      "Model analytics-ready datasets and apply data quality checks",
+      "Schedule, monitor, and document data workflows",
     ],
-    projects: ["API-to-warehouse batch pipeline", "Quality-tested analytics model", "Scheduled data reporting workflow"],
+    curriculum: [
+      {
+        module: "Data Pipeline Foundations",
+        topics: [
+          "Data sources and formats",
+          "SQL and Python ingestion",
+          "Batch processing concepts",
+        ],
+      },
+      {
+        module: "Transformation and Modelling",
+        topics: [
+          "Data cleaning and validation",
+          "Dimensional modelling",
+          "Reusable transformation workflows",
+        ],
+      },
+      {
+        module: "Operations and Delivery",
+        topics: [
+          "Workflow scheduling",
+          "Pipeline monitoring and recovery",
+          "Publishing analytics-ready datasets",
+        ],
+      },
+    ],
+    projects: [
+      "API-to-warehouse batch pipeline",
+      "Quality-tested analytics model",
+      "Scheduled data reporting workflow",
+    ],
     tools: ["Python", "SQL", "PostgreSQL", "Pandas", "Git"],
     prerequisites: ["Basic SQL and Python familiarity", "Basic relational database concepts"],
   },
@@ -4585,15 +4714,45 @@ const courseRecords: Course[] = [
     delivery: "Both",
     image: resolveCourseImage("ai-ml-engineering", aiImg),
 
-    summary: "Engineer machine-learning systems from data preparation and model evaluation through reproducible serving and operational monitoring.",
-    seoIntro: "Practice the engineering lifecycle for machine-learning systems, including reproducible experiments, model serving, evaluation, and monitoring.",
-    overview: "An applied ML systems course emphasizing the engineering lifecycle around model development: experiment reproducibility, data and model validation, deployment interfaces, monitoring, and maintenance. It complements the broader AI Engineering certificate with a focused implementation track.",
-    audience: "Python developers and data practitioners with foundational machine-learning knowledge who want to engineer maintainable model services.",
-    outcomes: ["Build reproducible training and evaluation workflows", "Package models behind versioned prediction interfaces", "Track model quality and data changes after deployment", "Document and maintain an end-to-end ML service"],
+    summary:
+      "Engineer machine-learning systems from data preparation and model evaluation through reproducible serving and operational monitoring.",
+    seoIntro:
+      "Practice the engineering lifecycle for machine-learning systems, including reproducible experiments, model serving, evaluation, and monitoring.",
+    overview:
+      "An applied ML systems course emphasizing the engineering lifecycle around model development: experiment reproducibility, data and model validation, deployment interfaces, monitoring, and maintenance. It complements the broader AI Engineering certificate with a focused implementation track.",
+    audience:
+      "Python developers and data practitioners with foundational machine-learning knowledge who want to engineer maintainable model services.",
+    outcomes: [
+      "Build reproducible training and evaluation workflows",
+      "Package models behind versioned prediction interfaces",
+      "Track model quality and data changes after deployment",
+      "Document and maintain an end-to-end ML service",
+    ],
     curriculum: [
-      { module: "Reliable Model Development", topics: ["Data and feature validation", "Experiment tracking", "Model evaluation and comparison"] },
-      { module: "Model Serving", topics: ["Model packaging and versioning", "Prediction APIs", "Containerized model services"] },
-      { module: "ML Operations", topics: ["Deployment checks", "Quality and drift monitoring", "Retraining and rollback workflows"] },
+      {
+        module: "Reliable Model Development",
+        topics: [
+          "Data and feature validation",
+          "Experiment tracking",
+          "Model evaluation and comparison",
+        ],
+      },
+      {
+        module: "Model Serving",
+        topics: [
+          "Model packaging and versioning",
+          "Prediction APIs",
+          "Containerized model services",
+        ],
+      },
+      {
+        module: "ML Operations",
+        topics: [
+          "Deployment checks",
+          "Quality and drift monitoring",
+          "Retraining and rollback workflows",
+        ],
+      },
     ],
     projects: ["Reproducible ML pipeline", "Versioned prediction API", "Monitored model service"],
     tools: ["Python", "scikit-learn", "FastAPI", "Docker", "Git"],
@@ -4608,19 +4767,56 @@ const courseRecords: Course[] = [
     delivery: "Live Online",
     image: devImg,
 
-    summary: "Understand software systems through architecture, operating-system concepts, networking, concurrency, and dependable design practices.",
-    seoIntro: "Study how software systems are designed and operated, with practical work in architecture, networking, concurrency, and reliability.",
-    overview: "A systems-oriented course focused on how software behaves across processes, networks, storage, and service boundaries. Learners analyze system requirements, design components, reason about concurrency and failure, and document architectural trade-offs rather than building another web application.",
-    audience: "Developers with programming experience who want stronger foundations in software architecture and system behavior.",
-    outcomes: ["Explain processes, memory, files, and network communication", "Design modular systems and document architecture decisions", "Reason about concurrency, failure, and data consistency", "Apply testing and observability to system components"],
-    curriculum: [
-      { module: "Computer and Operating-System Concepts", topics: ["Processes and threads", "Memory and file systems", "Command-line and networking foundations"] },
-      { module: "Software Architecture", topics: ["Modularity and interfaces", "Service and event-driven patterns", "Architecture decision records"] },
-      { module: "Reliability and Integration", topics: ["Concurrency and consistency", "Failure handling and observability", "System design capstone"] },
+    summary:
+      "Understand software systems through architecture, operating-system concepts, networking, concurrency, and dependable design practices.",
+    seoIntro:
+      "Study how software systems are designed and operated, with practical work in architecture, networking, concurrency, and reliability.",
+    overview:
+      "A systems-oriented course focused on how software behaves across processes, networks, storage, and service boundaries. Learners analyze system requirements, design components, reason about concurrency and failure, and document architectural trade-offs rather than building another web application.",
+    audience:
+      "Developers with programming experience who want stronger foundations in software architecture and system behavior.",
+    outcomes: [
+      "Explain processes, memory, files, and network communication",
+      "Design modular systems and document architecture decisions",
+      "Reason about concurrency, failure, and data consistency",
+      "Apply testing and observability to system components",
     ],
-    projects: ["Architecture decision record set", "Resilient service design", "Systems behavior analysis"],
+    curriculum: [
+      {
+        module: "Computer and Operating-System Concepts",
+        topics: [
+          "Processes and threads",
+          "Memory and file systems",
+          "Command-line and networking foundations",
+        ],
+      },
+      {
+        module: "Software Architecture",
+        topics: [
+          "Modularity and interfaces",
+          "Service and event-driven patterns",
+          "Architecture decision records",
+        ],
+      },
+      {
+        module: "Reliability and Integration",
+        topics: [
+          "Concurrency and consistency",
+          "Failure handling and observability",
+          "System design capstone",
+        ],
+      },
+    ],
+    projects: [
+      "Architecture decision record set",
+      "Resilient service design",
+      "Systems behavior analysis",
+    ],
     tools: ["Linux", "Git", "TypeScript or Python", "Diagramming tools"],
-    prerequisites: ["Experience writing programs in one language", "Basic command-line familiarity"],
+    prerequisites: [
+      "Experience writing programs in one language",
+      "Basic command-line familiarity",
+    ],
   },
   {
     slug: "business-analysis",
@@ -4629,21 +4825,58 @@ const courseRecords: Course[] = [
     level: "Beginner",
     duration: "6 weeks",
     delivery: "Both",
-    image: resolveCourseImage("business-analysis",managementImg),
+    image: resolveCourseImage("business-analysis", managementImg),
 
-    summary: "Elicit business needs, model processes, define requirements, and help stakeholders make clear, testable decisions.",
-    seoIntro: "Build practical business analysis skills in stakeholder discovery, process modelling, requirements, and solution validation.",
-    overview: "A professional business analysis course focused on understanding organizational needs and translating them into actionable requirements. Learners practice stakeholder interviews, process analysis, user stories, acceptance criteria, and validation with delivery teams.",
-    audience: "Aspiring business analysts, project coordinators, operations professionals, and team members who translate business needs into delivery requirements.",
-    outcomes: ["Plan stakeholder discovery and document business needs", "Model current and future business processes", "Write clear requirements, user stories, and acceptance criteria", "Validate solutions against business objectives"],
-    curriculum: [
-      { module: "Discovery and Stakeholders", topics: ["Business analysis lifecycle", "Stakeholder mapping and interviews", "Problem and opportunity statements"] },
-      { module: "Processes and Requirements", topics: ["Process modelling", "Functional and non-functional requirements", "User stories and acceptance criteria"] },
-      { module: "Validation and Change", topics: ["Requirements prioritization", "Solution evaluation", "Change and traceability practices"] },
+    summary:
+      "Elicit business needs, model processes, define requirements, and help stakeholders make clear, testable decisions.",
+    seoIntro:
+      "Build practical business analysis skills in stakeholder discovery, process modelling, requirements, and solution validation.",
+    overview:
+      "A professional business analysis course focused on understanding organizational needs and translating them into actionable requirements. Learners practice stakeholder interviews, process analysis, user stories, acceptance criteria, and validation with delivery teams.",
+    audience:
+      "Aspiring business analysts, project coordinators, operations professionals, and team members who translate business needs into delivery requirements.",
+    outcomes: [
+      "Plan stakeholder discovery and document business needs",
+      "Model current and future business processes",
+      "Write clear requirements, user stories, and acceptance criteria",
+      "Validate solutions against business objectives",
     ],
-    projects: ["Stakeholder analysis", "Current-to-future process model", "Requirements and acceptance-criteria pack"],
+    curriculum: [
+      {
+        module: "Discovery and Stakeholders",
+        topics: [
+          "Business analysis lifecycle",
+          "Stakeholder mapping and interviews",
+          "Problem and opportunity statements",
+        ],
+      },
+      {
+        module: "Processes and Requirements",
+        topics: [
+          "Process modelling",
+          "Functional and non-functional requirements",
+          "User stories and acceptance criteria",
+        ],
+      },
+      {
+        module: "Validation and Change",
+        topics: [
+          "Requirements prioritization",
+          "Solution evaluation",
+          "Change and traceability practices",
+        ],
+      },
+    ],
+    projects: [
+      "Stakeholder analysis",
+      "Current-to-future process model",
+      "Requirements and acceptance-criteria pack",
+    ],
     tools: ["Process diagrams", "User story maps", "Spreadsheets", "Documentation tools"],
-    prerequisites: ["Basic computer literacy", "Interest in business processes and problem solving"],
+    prerequisites: [
+      "Basic computer literacy",
+      "Interest in business processes and problem solving",
+    ],
   },
   {
     slug: "product-analytics",
@@ -4653,15 +4886,41 @@ const courseRecords: Course[] = [
     duration: "6 weeks",
     delivery: "Live Online",
     image: dataImg,
-    summary: "Use product metrics, funnels, cohorts, and experiments to understand user behavior and guide product decisions.",
-    seoIntro: "Learn product analytics methods for measuring activation, engagement, retention, and experiments across digital products.",
-    overview: "A product analytics course focused on behavioral data and evidence-based product decisions, distinct from product management or business requirements analysis. Learners define events and metrics, analyze funnels and cohorts, and communicate findings with product teams.",
-    audience: "Product analysts, product managers, UX researchers, and data analysts who work with digital product usage data.",
-    outcomes: ["Define product events and metrics aligned to user outcomes", "Analyze funnels, cohorts, engagement, and retention", "Design experiments and interpret results responsibly", "Present product insights and recommendations to stakeholders"],
+    summary:
+      "Use product metrics, funnels, cohorts, and experiments to understand user behavior and guide product decisions.",
+    seoIntro:
+      "Learn product analytics methods for measuring activation, engagement, retention, and experiments across digital products.",
+    overview:
+      "A product analytics course focused on behavioral data and evidence-based product decisions, distinct from product management or business requirements analysis. Learners define events and metrics, analyze funnels and cohorts, and communicate findings with product teams.",
+    audience:
+      "Product analysts, product managers, UX researchers, and data analysts who work with digital product usage data.",
+    outcomes: [
+      "Define product events and metrics aligned to user outcomes",
+      "Analyze funnels, cohorts, engagement, and retention",
+      "Design experiments and interpret results responsibly",
+      "Present product insights and recommendations to stakeholders",
+    ],
     curriculum: [
-      { module: "Product Measurement", topics: ["Product goals and metric trees", "Event taxonomy", "Instrumentation quality"] },
-      { module: "Behavioral Analysis", topics: ["Funnels and conversion", "Cohort and retention analysis", "Segmentation and user journeys"] },
-      { module: "Experiments and Decisions", topics: ["A/B test fundamentals", "Experiment interpretation", "Insight communication and recommendations"] },
+      {
+        module: "Product Measurement",
+        topics: ["Product goals and metric trees", "Event taxonomy", "Instrumentation quality"],
+      },
+      {
+        module: "Behavioral Analysis",
+        topics: [
+          "Funnels and conversion",
+          "Cohort and retention analysis",
+          "Segmentation and user journeys",
+        ],
+      },
+      {
+        module: "Experiments and Decisions",
+        topics: [
+          "A/B test fundamentals",
+          "Experiment interpretation",
+          "Insight communication and recommendations",
+        ],
+      },
     ],
     projects: ["Product event plan", "Activation and retention analysis", "Experiment readout"],
     tools: ["SQL", "Spreadsheets", "Product analytics concepts", "Data visualization"],
@@ -4675,17 +4934,51 @@ const courseRecords: Course[] = [
     duration: "6 weeks",
     delivery: "Both",
     image: dataImg,
-    summary: "Measure campaign performance, customer acquisition, conversion, and return on marketing investment using practical data analysis.",
-    seoIntro: "Develop marketing analytics skills to connect campaign activity with leads, conversions, customer value, and business outcomes.",
-    overview: "A domain-focused analytics course for marketers and analysts who need to evaluate channel performance and campaign outcomes. Learners organize campaign data, define comparable metrics, analyze customer journeys, and communicate recommendations without assuming a specific advertising platform.",
-    audience: "Marketing professionals, business owners, campaign coordinators, and analysts who need to measure marketing performance.",
-    outcomes: ["Define channel and campaign performance metrics", "Clean and combine marketing and conversion datasets", "Analyze acquisition, conversion, and customer value", "Present campaign findings and budget recommendations"],
-    curriculum: [
-      { module: "Marketing Measurement", topics: ["Marketing objectives and KPIs", "Campaign data concepts", "Data quality and attribution limits"] },
-      { module: "Campaign and Customer Analysis", topics: ["Channel and campaign comparisons", "Conversion funnel analysis", "Customer acquisition cost and value"] },
-      { module: "Reporting and Optimization", topics: ["Dashboard design", "Budget and performance recommendations", "Communicating uncertainty and attribution"] },
+    summary:
+      "Measure campaign performance, customer acquisition, conversion, and return on marketing investment using practical data analysis.",
+    seoIntro:
+      "Develop marketing analytics skills to connect campaign activity with leads, conversions, customer value, and business outcomes.",
+    overview:
+      "A domain-focused analytics course for marketers and analysts who need to evaluate channel performance and campaign outcomes. Learners organize campaign data, define comparable metrics, analyze customer journeys, and communicate recommendations without assuming a specific advertising platform.",
+    audience:
+      "Marketing professionals, business owners, campaign coordinators, and analysts who need to measure marketing performance.",
+    outcomes: [
+      "Define channel and campaign performance metrics",
+      "Clean and combine marketing and conversion datasets",
+      "Analyze acquisition, conversion, and customer value",
+      "Present campaign findings and budget recommendations",
     ],
-    projects: ["Campaign performance report", "Channel conversion dashboard", "Marketing budget recommendation"],
+    curriculum: [
+      {
+        module: "Marketing Measurement",
+        topics: [
+          "Marketing objectives and KPIs",
+          "Campaign data concepts",
+          "Data quality and attribution limits",
+        ],
+      },
+      {
+        module: "Campaign and Customer Analysis",
+        topics: [
+          "Channel and campaign comparisons",
+          "Conversion funnel analysis",
+          "Customer acquisition cost and value",
+        ],
+      },
+      {
+        module: "Reporting and Optimization",
+        topics: [
+          "Dashboard design",
+          "Budget and performance recommendations",
+          "Communicating uncertainty and attribution",
+        ],
+      },
+    ],
+    projects: [
+      "Campaign performance report",
+      "Channel conversion dashboard",
+      "Marketing budget recommendation",
+    ],
     tools: ["Spreadsheets", "SQL fundamentals", "Power BI", "Web analytics concepts"],
     prerequisites: ["Basic spreadsheet skills", "No previous analytics experience required"],
   },
@@ -4697,19 +4990,52 @@ const courseRecords: Course[] = [
     duration: "6 weeks",
     delivery: "Both",
     image: dataImg,
-    summary: "Analyze operational workflows, service levels, capacity, and process performance to identify measurable improvement opportunities.",
-    seoIntro: "Learn operations analysis through process metrics, capacity analysis, service-level reporting, and practical improvement projects.",
-    overview: "An applied analytics course for improving operational performance. Learners map processes, define throughput and service metrics, analyze bottlenecks and variation, and build reports that support practical improvement decisions.",
-    audience: "Operations staff, process analysts, service managers, and data analysts working with operational performance data.",
-    outcomes: ["Map workflows and define operational performance measures", "Analyze throughput, wait times, capacity, and service levels", "Identify bottlenecks and prioritize improvement opportunities", "Build operational reports and communicate findings"],
-    curriculum: [
-      { module: "Process and Metrics", topics: ["Process mapping", "Operational KPI design", "Data collection and quality"] },
-      { module: "Performance Analysis", topics: ["Throughput and cycle time", "Capacity and demand", "Bottleneck and variation analysis"] },
-      { module: "Improvement and Reporting", topics: ["Root-cause analysis", "Improvement prioritization", "Operations dashboards and reviews"] },
+    summary:
+      "Analyze operational workflows, service levels, capacity, and process performance to identify measurable improvement opportunities.",
+    seoIntro:
+      "Learn operations analysis through process metrics, capacity analysis, service-level reporting, and practical improvement projects.",
+    overview:
+      "An applied analytics course for improving operational performance. Learners map processes, define throughput and service metrics, analyze bottlenecks and variation, and build reports that support practical improvement decisions.",
+    audience:
+      "Operations staff, process analysts, service managers, and data analysts working with operational performance data.",
+    outcomes: [
+      "Map workflows and define operational performance measures",
+      "Analyze throughput, wait times, capacity, and service levels",
+      "Identify bottlenecks and prioritize improvement opportunities",
+      "Build operational reports and communicate findings",
     ],
-    projects: ["Service process map", "Capacity and bottleneck analysis", "Operational performance dashboard"],
+    curriculum: [
+      {
+        module: "Process and Metrics",
+        topics: ["Process mapping", "Operational KPI design", "Data collection and quality"],
+      },
+      {
+        module: "Performance Analysis",
+        topics: [
+          "Throughput and cycle time",
+          "Capacity and demand",
+          "Bottleneck and variation analysis",
+        ],
+      },
+      {
+        module: "Improvement and Reporting",
+        topics: [
+          "Root-cause analysis",
+          "Improvement prioritization",
+          "Operations dashboards and reviews",
+        ],
+      },
+    ],
+    projects: [
+      "Service process map",
+      "Capacity and bottleneck analysis",
+      "Operational performance dashboard",
+    ],
     tools: ["Spreadsheets", "SQL fundamentals", "Power BI", "Process mapping"],
-    prerequisites: ["Basic spreadsheet skills", "Familiarity with a business or service process is helpful"],
+    prerequisites: [
+      "Basic spreadsheet skills",
+      "Familiarity with a business or service process is helpful",
+    ],
   },
   {
     slug: "risk-analysis",
@@ -4719,17 +5045,47 @@ const courseRecords: Course[] = [
     duration: "6 weeks",
     delivery: "Live Online",
     image: dataImg,
-    summary: "Identify, assess, quantify, and communicate business risks using structured analysis, scenarios, and monitoring indicators.",
-    seoIntro: "Build practical risk analysis skills in risk identification, assessment, scenario analysis, controls, and reporting.",
-    overview: "A cross-industry risk analysis course that introduces a structured approach to uncertainty and exposure. Learners define risk statements, assess likelihood and impact, analyze scenarios and controls, and prepare clear risk registers and monitoring reports.",
-    audience: "Business analysts, operations professionals, project teams, and aspiring risk practitioners who support organizational decisions.",
-    outcomes: ["Identify and describe risks with clear causes and consequences", "Assess likelihood, impact, controls, and residual exposure", "Use scenarios and sensitivity analysis to examine uncertainty", "Create risk registers, indicators, and stakeholder reports"],
-    curriculum: [
-      { module: "Risk Foundations", topics: ["Risk concepts and context", "Risk identification techniques", "Risk statements and categories"] },
-      { module: "Assessment and Analysis", topics: ["Likelihood and impact assessment", "Controls and residual risk", "Scenario and sensitivity analysis"] },
-      { module: "Response and Monitoring", topics: ["Risk treatment planning", "Key risk indicators", "Risk reporting and review"] },
+    summary:
+      "Identify, assess, quantify, and communicate business risks using structured analysis, scenarios, and monitoring indicators.",
+    seoIntro:
+      "Build practical risk analysis skills in risk identification, assessment, scenario analysis, controls, and reporting.",
+    overview:
+      "A cross-industry risk analysis course that introduces a structured approach to uncertainty and exposure. Learners define risk statements, assess likelihood and impact, analyze scenarios and controls, and prepare clear risk registers and monitoring reports.",
+    audience:
+      "Business analysts, operations professionals, project teams, and aspiring risk practitioners who support organizational decisions.",
+    outcomes: [
+      "Identify and describe risks with clear causes and consequences",
+      "Assess likelihood, impact, controls, and residual exposure",
+      "Use scenarios and sensitivity analysis to examine uncertainty",
+      "Create risk registers, indicators, and stakeholder reports",
     ],
-    projects: ["Organizational risk register", "Scenario analysis brief", "Risk monitoring dashboard"],
+    curriculum: [
+      {
+        module: "Risk Foundations",
+        topics: [
+          "Risk concepts and context",
+          "Risk identification techniques",
+          "Risk statements and categories",
+        ],
+      },
+      {
+        module: "Assessment and Analysis",
+        topics: [
+          "Likelihood and impact assessment",
+          "Controls and residual risk",
+          "Scenario and sensitivity analysis",
+        ],
+      },
+      {
+        module: "Response and Monitoring",
+        topics: ["Risk treatment planning", "Key risk indicators", "Risk reporting and review"],
+      },
+    ],
+    projects: [
+      "Organizational risk register",
+      "Scenario analysis brief",
+      "Risk monitoring dashboard",
+    ],
     tools: ["Spreadsheets", "Risk registers", "Scenario analysis", "Data visualization"],
     prerequisites: ["Basic spreadsheet skills", "No previous risk-management role required"],
   },
@@ -4741,17 +5097,51 @@ const courseRecords: Course[] = [
     duration: "6 weeks",
     delivery: "Live Online",
     image: dataImg,
-    summary: "Analyze healthcare operations and outcomes data with attention to data quality, privacy, indicators, and responsible interpretation.",
-    seoIntro: "Learn healthcare data analysis using operational and outcome indicators, with careful attention to privacy and responsible interpretation.",
-    overview: "A domain-focused analytics course using sample and de-identified healthcare datasets. Learners work with service and outcome indicators, check data quality, build clear reports, and discuss privacy and interpretation limits. This course does not provide clinical training or medical advice.",
-    audience: "Healthcare administrators, public-health learners, researchers, and analysts interested in health service data.",
-    outcomes: ["Interpret common healthcare service and outcome indicators", "Prepare and validate de-identified healthcare datasets", "Analyze trends and service performance responsibly", "Communicate findings while respecting privacy and limitations"],
-    curriculum: [
-      { module: "Healthcare Data Foundations", topics: ["Healthcare data sources", "Indicators and denominators", "Privacy and data governance"] },
-      { module: "Analysis and Quality", topics: ["Data cleaning and validation", "Trend and service analysis", "Equity and subgroup comparisons"] },
-      { module: "Reporting and Interpretation", topics: ["Healthcare dashboards", "Responsible interpretation", "Communicating operational findings"] },
+    summary:
+      "Analyze healthcare operations and outcomes data with attention to data quality, privacy, indicators, and responsible interpretation.",
+    seoIntro:
+      "Learn healthcare data analysis using operational and outcome indicators, with careful attention to privacy and responsible interpretation.",
+    overview:
+      "A domain-focused analytics course using sample and de-identified healthcare datasets. Learners work with service and outcome indicators, check data quality, build clear reports, and discuss privacy and interpretation limits. This course does not provide clinical training or medical advice.",
+    audience:
+      "Healthcare administrators, public-health learners, researchers, and analysts interested in health service data.",
+    outcomes: [
+      "Interpret common healthcare service and outcome indicators",
+      "Prepare and validate de-identified healthcare datasets",
+      "Analyze trends and service performance responsibly",
+      "Communicate findings while respecting privacy and limitations",
     ],
-    projects: ["Healthcare indicator dictionary", "Service utilization analysis", "De-identified performance dashboard"],
+    curriculum: [
+      {
+        module: "Healthcare Data Foundations",
+        topics: [
+          "Healthcare data sources",
+          "Indicators and denominators",
+          "Privacy and data governance",
+        ],
+      },
+      {
+        module: "Analysis and Quality",
+        topics: [
+          "Data cleaning and validation",
+          "Trend and service analysis",
+          "Equity and subgroup comparisons",
+        ],
+      },
+      {
+        module: "Reporting and Interpretation",
+        topics: [
+          "Healthcare dashboards",
+          "Responsible interpretation",
+          "Communicating operational findings",
+        ],
+      },
+    ],
+    projects: [
+      "Healthcare indicator dictionary",
+      "Service utilization analysis",
+      "De-identified performance dashboard",
+    ],
     tools: ["Spreadsheets", "SQL fundamentals", "Power BI", "Data quality checklists"],
     prerequisites: ["Basic spreadsheet skills", "No clinical background required"],
   },
@@ -4764,18 +5154,57 @@ const courseRecords: Course[] = [
     delivery: "Both",
     image: dataImg,
 
-    summary: "Use financial statements, budgets, ratios, and cash-flow analysis to explain business performance and support planning.",
-    seoIntro: "Practice financial analysis with statements, budgets, cash flows, ratios, and spreadsheet models for business decision-making.",
-    overview: "A practical business finance analytics course focused on interpreting company performance rather than investment advice. Learners structure financial data, analyze statements and budgets, build spreadsheet models, and communicate assumptions and findings.",
-    audience: "Business owners, finance staff, analysts, and managers who need to understand and report business financial performance.",
-    outcomes: ["Read and compare core financial statements", "Analyze margins, liquidity, efficiency, and cash flow", "Build budget and variance analysis models", "Explain financial assumptions and findings to stakeholders"],
-    curriculum: [
-      { module: "Financial Information", topics: ["Income statements and balance sheets", "Cash-flow statements", "Data preparation and assumptions"] },
-      { module: "Performance Analysis", topics: ["Financial ratios", "Trend and variance analysis", "Working capital and cash flow"] },
-      { module: "Planning and Reporting", topics: ["Budget models", "Scenario and sensitivity analysis", "Financial reporting and recommendations"] },
+    summary:
+      "Use financial statements, budgets, ratios, and cash-flow analysis to explain business performance and support planning.",
+    seoIntro:
+      "Practice financial analysis with statements, budgets, cash flows, ratios, and spreadsheet models for business decision-making.",
+    overview:
+      "A practical business finance analytics course focused on interpreting company performance rather than investment advice. Learners structure financial data, analyze statements and budgets, build spreadsheet models, and communicate assumptions and findings.",
+    audience:
+      "Business owners, finance staff, analysts, and managers who need to understand and report business financial performance.",
+    outcomes: [
+      "Read and compare core financial statements",
+      "Analyze margins, liquidity, efficiency, and cash flow",
+      "Build budget and variance analysis models",
+      "Explain financial assumptions and findings to stakeholders",
     ],
-    projects: ["Financial statement analysis", "Budget-versus-actual model", "Cash-flow and scenario report"],
-    tools: ["Microsoft Excel", "Financial statements", "Spreadsheet modelling", "Power BI fundamentals"],
+    curriculum: [
+      {
+        module: "Financial Information",
+        topics: [
+          "Income statements and balance sheets",
+          "Cash-flow statements",
+          "Data preparation and assumptions",
+        ],
+      },
+      {
+        module: "Performance Analysis",
+        topics: [
+          "Financial ratios",
+          "Trend and variance analysis",
+          "Working capital and cash flow",
+        ],
+      },
+      {
+        module: "Planning and Reporting",
+        topics: [
+          "Budget models",
+          "Scenario and sensitivity analysis",
+          "Financial reporting and recommendations",
+        ],
+      },
+    ],
+    projects: [
+      "Financial statement analysis",
+      "Budget-versus-actual model",
+      "Cash-flow and scenario report",
+    ],
+    tools: [
+      "Microsoft Excel",
+      "Financial statements",
+      "Spreadsheet modelling",
+      "Power BI fundamentals",
+    ],
     prerequisites: ["Basic spreadsheet skills", "Basic arithmetic and percentages"],
   },
   {
@@ -4786,19 +5215,57 @@ const courseRecords: Course[] = [
     duration: "10 weeks",
     delivery: "Both",
     image: devImg,
-    summary: "Build Python-powered websites with Django and create API services with FastAPI, from data models and forms through testing and deployment.",
-    seoIntro: "Learn Python website development with Django and FastAPI. Build a complete Django website, expose API endpoints, and deploy a working web project.",
-    overview: "A practical Python web development course focused on creating working websites and web services with Django and FastAPI. Learners build server-rendered pages and forms with Django, connect applications to a relational database, add authentication, and create API endpoints with FastAPI. The capstone combines web and API components and covers testing, security fundamentals, and deployment.",
-    audience: "Beginners with basic computer skills and aspiring Python developers who want to create and deploy websites using Python frameworks.",
-    outcomes: ["Use Python fundamentals to build server-side web applications", "Create Django pages, forms, models, and database-backed features", "Build and validate REST API endpoints with FastAPI", "Test, secure, and deploy a Python web application"],
-    curriculum: [
-      { module: "Python and Web Foundations", topics: ["Python fundamentals for web development", "HTTP requests and responses", "HTML, CSS, and templates"] },
-      { module: "Django Website Development", topics: ["Projects, apps, and URL routing", "Models, migrations, and database queries", "Templates, forms, authentication, and admin"] },
-      { module: "FastAPI, Testing, and Deployment", topics: ["REST endpoints and request validation", "Connecting APIs to application data", "Testing, security basics, and deployment"] },
+    summary:
+      "Build Python-powered websites with Django and create API services with FastAPI, from data models and forms through testing and deployment.",
+    seoIntro:
+      "Learn Python website development with Django and FastAPI. Build a complete Django website, expose API endpoints, and deploy a working web project.",
+    overview:
+      "A practical Python web development course focused on creating working websites and web services with Django and FastAPI. Learners build server-rendered pages and forms with Django, connect applications to a relational database, add authentication, and create API endpoints with FastAPI. The capstone combines web and API components and covers testing, security fundamentals, and deployment.",
+    audience:
+      "Beginners with basic computer skills and aspiring Python developers who want to create and deploy websites using Python frameworks.",
+    outcomes: [
+      "Use Python fundamentals to build server-side web applications",
+      "Create Django pages, forms, models, and database-backed features",
+      "Build and validate REST API endpoints with FastAPI",
+      "Test, secure, and deploy a Python web application",
     ],
-    projects: ["Django business website with forms and admin", "FastAPI data service", "Deployed Python website with API integration"],
+    curriculum: [
+      {
+        module: "Python and Web Foundations",
+        topics: [
+          "Python fundamentals for web development",
+          "HTTP requests and responses",
+          "HTML, CSS, and templates",
+        ],
+      },
+      {
+        module: "Django Website Development",
+        topics: [
+          "Projects, apps, and URL routing",
+          "Models, migrations, and database queries",
+          "Templates, forms, authentication, and admin",
+        ],
+      },
+      {
+        module: "FastAPI, Testing, and Deployment",
+        topics: [
+          "REST endpoints and request validation",
+          "Connecting APIs to application data",
+          "Testing, security basics, and deployment",
+        ],
+      },
+    ],
+    projects: [
+      "Django business website with forms and admin",
+      "FastAPI data service",
+      "Deployed Python website with API integration",
+    ],
     tools: ["Python", "Django", "FastAPI", "HTML", "CSS", "SQL", "Git"],
-    prerequisites: ["Basic computer literacy", "No prior Python experience required", "A laptop for development exercises"],
+    prerequisites: [
+      "Basic computer literacy",
+      "No prior Python experience required",
+      "A laptop for development exercises",
+    ],
   },
   {
     slug: "ui-ux-design",
@@ -4808,17 +5275,51 @@ const courseRecords: Course[] = [
     duration: "8 weeks",
     delivery: "Both",
     image: resolveCourseImage("ui-ux-design", devImg),
-    summary: "Research user needs and design clear digital experiences through information architecture, wireframes, prototypes, and usability testing.",
-    seoIntro: "Learn user-centered design methods, from research and wireframes to interactive prototypes and usability evaluation.",
-    overview: "A design-focused course covering both user experience research and interface design. Learners define user needs, organize information, develop wireframes and prototypes, establish visual systems, and test designs with users before handoff.",
-    audience: "Aspiring UI/UX designers, product team members, and visual designers moving into digital product design.",
-    outcomes: ["Plan user research and synthesize findings into design requirements", "Create user flows, wireframes, and interactive prototypes", "Apply visual hierarchy and accessible interface patterns", "Evaluate designs through usability testing and iteration"],
-    curriculum: [
-      { module: "UX Research and Structure", topics: ["User goals and research planning", "Personas and journey maps", "Information architecture and user flows"] },
-      { module: "Interface Design", topics: ["Wireframing", "Visual hierarchy and design systems", "Responsive and accessible patterns"] },
-      { module: "Prototyping and Evaluation", topics: ["Interactive prototypes", "Usability testing", "Design iteration and developer handoff"] },
+    summary:
+      "Research user needs and design clear digital experiences through information architecture, wireframes, prototypes, and usability testing.",
+    seoIntro:
+      "Learn user-centered design methods, from research and wireframes to interactive prototypes and usability evaluation.",
+    overview:
+      "A design-focused course covering both user experience research and interface design. Learners define user needs, organize information, develop wireframes and prototypes, establish visual systems, and test designs with users before handoff.",
+    audience:
+      "Aspiring UI/UX designers, product team members, and visual designers moving into digital product design.",
+    outcomes: [
+      "Plan user research and synthesize findings into design requirements",
+      "Create user flows, wireframes, and interactive prototypes",
+      "Apply visual hierarchy and accessible interface patterns",
+      "Evaluate designs through usability testing and iteration",
     ],
-    projects: ["User research summary", "Mobile application prototype", "Usability test and redesign"],
+    curriculum: [
+      {
+        module: "UX Research and Structure",
+        topics: [
+          "User goals and research planning",
+          "Personas and journey maps",
+          "Information architecture and user flows",
+        ],
+      },
+      {
+        module: "Interface Design",
+        topics: [
+          "Wireframing",
+          "Visual hierarchy and design systems",
+          "Responsive and accessible patterns",
+        ],
+      },
+      {
+        module: "Prototyping and Evaluation",
+        topics: [
+          "Interactive prototypes",
+          "Usability testing",
+          "Design iteration and developer handoff",
+        ],
+      },
+    ],
+    projects: [
+      "User research summary",
+      "Mobile application prototype",
+      "Usability test and redesign",
+    ],
     tools: ["Figma", "Prototyping tools", "Accessibility guidelines", "Research templates"],
     prerequisites: ["Basic computer literacy", "No previous design experience required"],
   },
@@ -4830,17 +5331,51 @@ const courseRecords: Course[] = [
     duration: "6 weeks",
     delivery: "Both",
     image: resolveCourseImage("generative-ai", aiImg),
-    summary: "Understand generative AI capabilities and limitations, compare text and image tools, and apply them responsibly to practical work.",
-    seoIntro: "Explore generative AI tools and applications across text, image, and research workflows, with practical guidance on evaluation and responsible use.",
-    overview: "A non-programming introduction to generative AI focused on model capabilities, tool selection, output evaluation, and responsible use. It complements prompt engineering by emphasizing tool literacy and use-case evaluation rather than prompt frameworks alone.",
-    audience: "Professionals, students, educators, and business owners who want a practical understanding of generative AI tools without a coding prerequisite.",
-    outcomes: ["Explain common generative AI concepts and limitations", "Compare text, image, and multimodal tools for practical use cases", "Evaluate AI-generated outputs for accuracy, bias, and suitability", "Apply privacy, attribution, and responsible-use practices"],
-    curriculum: [
-      { module: "Generative AI Concepts", topics: ["Generative models and training concepts", "Text, image, and multimodal systems", "Capabilities and limitations"] },
-      { module: "Tools and Use Cases", topics: ["Research and summarization workflows", "Image and content generation", "Tool selection and output evaluation"] },
-      { module: "Responsible Application", topics: ["Privacy and sensitive information", "Bias, accuracy, and verification", "Responsible-use case project"] },
+    summary:
+      "Understand generative AI capabilities and limitations, compare text and image tools, and apply them responsibly to practical work.",
+    seoIntro:
+      "Explore generative AI tools and applications across text, image, and research workflows, with practical guidance on evaluation and responsible use.",
+    overview:
+      "A non-programming introduction to generative AI focused on model capabilities, tool selection, output evaluation, and responsible use. It complements prompt engineering by emphasizing tool literacy and use-case evaluation rather than prompt frameworks alone.",
+    audience:
+      "Professionals, students, educators, and business owners who want a practical understanding of generative AI tools without a coding prerequisite.",
+    outcomes: [
+      "Explain common generative AI concepts and limitations",
+      "Compare text, image, and multimodal tools for practical use cases",
+      "Evaluate AI-generated outputs for accuracy, bias, and suitability",
+      "Apply privacy, attribution, and responsible-use practices",
     ],
-    projects: ["Generative AI tool comparison", "Verified research workflow", "Responsible-use policy for a selected task"],
+    curriculum: [
+      {
+        module: "Generative AI Concepts",
+        topics: [
+          "Generative models and training concepts",
+          "Text, image, and multimodal systems",
+          "Capabilities and limitations",
+        ],
+      },
+      {
+        module: "Tools and Use Cases",
+        topics: [
+          "Research and summarization workflows",
+          "Image and content generation",
+          "Tool selection and output evaluation",
+        ],
+      },
+      {
+        module: "Responsible Application",
+        topics: [
+          "Privacy and sensitive information",
+          "Bias, accuracy, and verification",
+          "Responsible-use case project",
+        ],
+      },
+    ],
+    projects: [
+      "Generative AI tool comparison",
+      "Verified research workflow",
+      "Responsible-use policy for a selected task",
+    ],
     tools: ["Generative AI assistants", "Image generation tools", "Evaluation checklists"],
     prerequisites: ["Basic computer literacy", "No programming or prior AI experience required"],
   },
@@ -4852,32 +5387,66 @@ const courseRecords: Course[] = [
     duration: "8 weeks",
     delivery: "Live Online",
     image: resolveCourseImage("agentic-ai", aiImg),
-    
-    summary: "Design and evaluate tool-using AI agents with controlled workflows, state management, human approval, and operational safeguards.",
-    seoIntro: "Build agentic AI workflows with tools, state, evaluation, human approval, and safeguards for reliable task execution.",
-    overview: "A technical course focused on designing and evaluating agentic workflows, distinct from general LLM application development. Learners build bounded agents that use tools, manage task state, request human approval where needed, and are tested for reliability, security, and cost.",
-    audience: "Developers and technical practitioners with Python and API experience who want to build controlled AI agent workflows.",
-    outcomes: ["Design bounded agent workflows with explicit goals and tool permissions", "Implement tool calling, state, and human approval steps", "Evaluate agent behavior using repeatable test cases", "Apply security, reliability, and cost controls to agent systems"],
-    curriculum: [
-      { module: "Agent Design", topics: ["Agents and workflow orchestration", "Task decomposition and state", "Tool selection and permission boundaries"] },
-      { module: "Implementation", topics: ["Tool calling and structured outputs", "Memory and state persistence", "Human-in-the-loop approval"] },
-      { module: "Evaluation and Operations", topics: ["Agent test cases and evaluation", "Prompt injection and tool security", "Tracing, cost, and failure recovery"] },
+
+    summary:
+      "Design and evaluate tool-using AI agents with controlled workflows, state management, human approval, and operational safeguards.",
+    seoIntro:
+      "Build agentic AI workflows with tools, state, evaluation, human approval, and safeguards for reliable task execution.",
+    overview:
+      "A technical course focused on designing and evaluating agentic workflows, distinct from general LLM application development. Learners build bounded agents that use tools, manage task state, request human approval where needed, and are tested for reliability, security, and cost.",
+    audience:
+      "Developers and technical practitioners with Python and API experience who want to build controlled AI agent workflows.",
+    outcomes: [
+      "Design bounded agent workflows with explicit goals and tool permissions",
+      "Implement tool calling, state, and human approval steps",
+      "Evaluate agent behavior using repeatable test cases",
+      "Apply security, reliability, and cost controls to agent systems",
     ],
-    projects: ["Bounded research agent", "Human-approved workflow agent", "Evaluated agent capstone"],
+    curriculum: [
+      {
+        module: "Agent Design",
+        topics: [
+          "Agents and workflow orchestration",
+          "Task decomposition and state",
+          "Tool selection and permission boundaries",
+        ],
+      },
+      {
+        module: "Implementation",
+        topics: [
+          "Tool calling and structured outputs",
+          "Memory and state persistence",
+          "Human-in-the-loop approval",
+        ],
+      },
+      {
+        module: "Evaluation and Operations",
+        topics: [
+          "Agent test cases and evaluation",
+          "Prompt injection and tool security",
+          "Tracing, cost, and failure recovery",
+        ],
+      },
+    ],
+    projects: [
+      "Bounded research agent",
+      "Human-approved workflow agent",
+      "Evaluated agent capstone",
+    ],
     tools: ["Python", "LLM APIs", "Agent orchestration frameworks", "Git"],
     prerequisites: ["Python programming experience", "Basic API and LLM application familiarity"],
   },
   {
     slug: "professional-supply-chain-management-analytics-procurement",
     title: "Professional Supply Chain Management, Analytics & Procurement",
-    category: "supply-chain",
+    category: "management",
     level: "Beginner",
     duration: "12 weeks",
     delivery: "Both",
     featured: true,
     image: resolveCourseImage(
       "professional-supply-chain-management-analytics-procurement",
-      managementImg
+      managementImg,
     ),
 
     summary:
@@ -5152,22 +5721,18 @@ const courseRecords: Course[] = [
   {
     slug: "human-resource-management-and-analytics",
     title: "Human Resource Management & Analytics",
-    category: "hr-management",
+    category: "management",
     level: "Beginner",
     duration: "12 weeks",
     delivery: "Live Online",
     featured: true,
 
-    image: resolveCourseImage(
-      "human-resource-management-and-analytics",
-      managementImg
-    ),
+    image: resolveCourseImage("human-resource-management-and-analytics", managementImg),
 
     summary:
       "Develop practical HR management skills using modern HR software, payroll systems, Advanced Excel, Power BI and AI-powered productivity tools. Learn to manage employees, recruitment, performance, HR operations and workforce analytics.",
 
-    seoTitle:
-      "Human Resource Management & Analytics Course | Corepoint Tech Academy",
+    seoTitle: "Human Resource Management & Analytics Course | Corepoint Tech Academy",
 
     seoDescription:
       "Learn practical Human Resource Management, HRIS, HRMS, payroll administration, OrangeHRM, Odoo, Advanced Excel, Power BI and AI applications at Corepoint Tech Academy.",
@@ -5196,7 +5761,7 @@ const courseRecords: Course[] = [
       "Build interactive HR dashboards using Microsoft Power BI",
       "Apply AI tools to HR documentation and administrative workflows",
       "Prepare professional HR reports and management presentations",
-      "Complete practical HR management and workforce analytics projects"
+      "Complete practical HR management and workforce analytics projects",
     ],
 
     curriculum: [
@@ -5211,8 +5776,8 @@ const courseRecords: Course[] = [
           "Organisational structure and workforce planning",
           "Employee lifecycle management",
           "HR policies and procedures",
-          "Introduction to Nigerian workplace practices"
-        ]
+          "Introduction to Nigerian workplace practices",
+        ],
       },
 
       {
@@ -5226,8 +5791,8 @@ const courseRecords: Course[] = [
           "Interview planning and evaluation",
           "Candidate assessment and selection",
           "Employment documentation",
-          "Employee onboarding and orientation"
-        ]
+          "Employee onboarding and orientation",
+        ],
       },
 
       {
@@ -5242,8 +5807,8 @@ const courseRecords: Course[] = [
           "Workplace conflict management",
           "Disciplinary procedures",
           "Employee grievance management",
-          "Confidentiality and HR data protection"
-        ]
+          "Confidentiality and HR data protection",
+        ],
       },
 
       {
@@ -5257,8 +5822,8 @@ const courseRecords: Course[] = [
           "Recruitment and onboarding workflows",
           "Attendance and leave management systems",
           "Performance management systems",
-          "Benefits of HR digital transformation"
-        ]
+          "Benefits of HR digital transformation",
+        ],
       },
 
       {
@@ -5273,8 +5838,8 @@ const courseRecords: Course[] = [
           "Payroll documentation",
           "Payroll processing and reconciliation",
           "Payroll reporting and record keeping",
-          "Introduction to Nigerian payroll compliance"
-        ]
+          "Introduction to Nigerian payroll compliance",
+        ],
       },
 
       {
@@ -5289,8 +5854,8 @@ const courseRecords: Course[] = [
           "Leave and attendance administration",
           "Performance management",
           "Generating HR reports",
-          "Practical HR administration exercises"
-        ]
+          "Practical HR administration exercises",
+        ],
       },
 
       {
@@ -5305,8 +5870,8 @@ const courseRecords: Course[] = [
           "Time-off management",
           "Attendance management",
           "Understanding HR integration with other business functions",
-          "Practical Odoo HR exercises"
-        ]
+          "Practical Odoo HR exercises",
+        ],
       },
 
       {
@@ -5322,8 +5887,8 @@ const courseRecords: Course[] = [
           "Employee attendance tracking",
           "PivotTables and PivotCharts",
           "Conditional formatting",
-          "HR reporting and automated summaries"
-        ]
+          "HR reporting and automated summaries",
+        ],
       },
 
       {
@@ -5338,8 +5903,8 @@ const courseRecords: Course[] = [
           "Recruitment performance metrics",
           "Absenteeism and attendance analysis",
           "Employee productivity measurement",
-          "Workforce planning and reporting"
-        ]
+          "Workforce planning and reporting",
+        ],
       },
 
       {
@@ -5355,8 +5920,8 @@ const courseRecords: Course[] = [
           "Recruitment and hiring analytics",
           "Workforce demographics analysis",
           "Designing interactive HR dashboards",
-          "Presenting workforce insights to management"
-        ]
+          "Presenting workforce insights to management",
+        ],
       },
 
       {
@@ -5370,8 +5935,8 @@ const courseRecords: Course[] = [
           "AI for HR reporting and data interpretation",
           "Automating repetitive HR administrative tasks",
           "Responsible AI use and human oversight",
-          "Data privacy, bias and ethical considerations"
-        ]
+          "Data privacy, bias and ethical considerations",
+        ],
       },
 
       {
@@ -5385,9 +5950,9 @@ const courseRecords: Course[] = [
           "Analysing workforce performance data",
           "Building an interactive Power BI HR dashboard",
           "Presenting HR insights and recommendations",
-          "Final project presentation"
-        ]
-      }
+          "Final project presentation",
+        ],
+      },
     ],
 
     projects: [
@@ -5400,7 +5965,7 @@ const courseRecords: Course[] = [
       "Employee Turnover and Retention Analysis",
       "Recruitment Performance Analytics Report",
       "Interactive HR Workforce Analytics Dashboard",
-      "End-to-End HR Management and Analytics Capstone Project"
+      "End-to-End HR Management and Analytics Capstone Project",
     ],
 
     tools: [
@@ -5411,53 +5976,537 @@ const courseRecords: Course[] = [
       "DAX",
       "OrangeHRM",
       "Odoo ERP",
-      "AI Productivity Tools"
+      "AI Productivity Tools",
     ],
 
     prerequisites: [
       "Basic computer literacy",
       "Interest in human resource management or business administration",
       "Basic Excel knowledge is helpful but not compulsory",
-      "No previous HR software experience is required"
+      "No previous HR software experience is required",
     ],
 
     faqs: [
       {
         question: "Who should enrol in this HR Management course?",
         answer:
-          "The course is suitable for HR graduates, aspiring HR professionals, HR officers, administrative professionals, business owners and anyone interested in building a career in modern human resource management."
+          "The course is suitable for HR graduates, aspiring HR professionals, HR officers, administrative professionals, business owners and anyone interested in building a career in modern human resource management.",
       },
       {
         question: "Will I learn HR software during the programme?",
         answer:
-          "Yes. You will gain practical exposure to OrangeHRM and Odoo, including employee administration, recruitment, attendance, leave management and HR workflows."
+          "Yes. You will gain practical exposure to OrangeHRM and Odoo, including employee administration, recruitment, attendance, leave management and HR workflows.",
       },
       {
         question: "Will I learn payroll management?",
         answer:
-          "Yes. The programme covers salary structures, payroll calculations, allowances, deductions, payroll documentation and practical payroll processing using Excel."
+          "Yes. The programme covers salary structures, payroll calculations, allowances, deductions, payroll documentation and practical payroll processing using Excel.",
       },
       {
         question: "Will I learn HR analytics and Power BI?",
         answer:
-          "Yes. You will learn how to analyse workforce data, calculate HR metrics and develop interactive dashboards using Microsoft Power BI."
+          "Yes. You will learn how to analyse workforce data, calculate HR metrics and develop interactive dashboards using Microsoft Power BI.",
       },
       {
         question: "Do I need previous HR experience?",
         answer:
-          "No. The programme starts with HR fundamentals and gradually introduces practical HR administration, software and analytics."
+          "No. The programme starts with HR fundamentals and gradually introduces practical HR administration, software and analytics.",
       },
       {
         question: "Is the programme available online?",
         answer:
-          "Yes. Corepoint Tech Academy delivers this programme through live online classes with practical exercises and projects."
+          "Yes. Corepoint Tech Academy delivers this programme through live online classes with practical exercises and projects.",
       },
       {
         question: "Will I complete practical projects?",
         answer:
-          "Yes. You will complete practical exercises involving employee records, recruitment, payroll, HR software and workforce analytics, including a final capstone project."
-      }
-    ]
+          "Yes. You will complete practical exercises involving employee records, recruitment, payroll, HR software and workforce analytics, including a final capstone project.",
+      },
+    ],
+  },
+  {
+    slug: "professional-accounting-software-ai-automation",
+    title: "Professional Accounting Software & AI Automation",
+    category: "management",
+    level: "Beginner",
+    duration: "3 Months (12 Weeks)",
+    delivery: "Live Online",
+    image: managementImg,
+    imageAlt:
+      "Professional Accounting Software and AI Automation Training at Corepoint Tech Academy.",
+    seoHeading: "Professional Accounting, Software & AI Automation Course in Nigeria",
+    seoTitle: "Professional Accounting Software Course in Nigeria | Corepoint Tech Academy",
+    seoDescription:
+      "Learn practical accounting with QuickBooks, Sage 50, Zoho Books, Advanced Excel and AI tools. Join Corepoint Tech Academy's 12-week online accounting course.",
+    faqSchema: false,
+    schemaDuration: "P12W",
+    certificate:
+      "Students who successfully complete the programme, participate in the practical exercises and submit the required capstone project will receive a Certificate of Completion from Corepoint Tech Academy.",
+    summary:
+      "Become a practical, tech-enabled accounting professional with live online training in bookkeeping, QuickBooks, Sage 50, Zoho Books, Excel and AI for accountants.",
+    seoIntro:
+      "Corepoint Tech Academy's Professional Accounting, Software & AI Automation programme is a practical accounting software course in Nigeria for beginners. Across 12 weeks of live online accounting classes, learners build bookkeeping, financial reporting and digital financial management skills through real-world business exercises. This professional accounting course in Nigeria combines QuickBooks training, Sage 50 training, Zoho Books, Advanced Excel for Accountants and responsible AI for Accountants, preparing learners to manage day-to-day accounting operations and communicate business performance.",
+    overview:
+      "Become a practical, tech-enabled accounting professional. This three-month programme combines accounting fundamentals, bookkeeping, financial reporting, accounting software and AI-powered productivity. Learners practise with QuickBooks, Sage 50, Zoho Books, Microsoft Excel, Advanced Excel, ChatGPT and Microsoft Copilot, using realistic business transactions and reporting exercises. The live online training is designed for Nigerian learners who want hands-on accounting software experience, useful financial analysis skills and a portfolio of practical projects. Successful learners who complete the practical exercises and capstone project receive a Certificate of Completion from Corepoint Tech Academy.",
+    audience:
+      "Beginners, aspiring bookkeepers, accounts assistants, small-business owners, administrators, graduates and professionals who want practical accounting training and digital finance skills. No previous accounting software experience is required.",
+    outcomes: [
+      "Apply accounting principles, the accounting equation, double-entry bookkeeping, and debit and credit rules",
+      "Record transactions and maintain journals, ledgers, accounts payable and accounts receivable",
+      "Use QuickBooks, Sage 50 and Zoho Books for common business accounting operations",
+      "Reconcile bank records and organise business accounting documentation",
+      "Build Advanced Excel workbooks with formulas, PivotTables and reconciliation tools",
+      "Prepare income statements, statements of financial position and cash flow reports",
+      "Analyse budgets, variances, financial ratios and business performance",
+      "Use ChatGPT and Microsoft Copilot responsibly to support accounting workflows",
+      "Verify AI-assisted work using source records, professional judgement and privacy practices",
+      "Complete and present an end-to-end simulated business accounting capstone project",
+    ],
+    tools: [
+      "QuickBooks",
+      "Sage 50",
+      "Zoho Books",
+      "Microsoft Excel",
+      "Advanced Excel",
+      "ChatGPT",
+      "Microsoft Copilot",
+    ],
+    projects: [
+      "Business Bookkeeping and Transaction Recording Project",
+      "QuickBooks Company Setup and Financial Reporting",
+      "Sage 50 Business Accounting Project",
+      "Zoho Books Cloud Accounting Project",
+      "Advanced Excel Bookkeeping and Reconciliation Workbook",
+      "Business Budget and Financial Performance Analysis",
+      "AI-Assisted Financial Reporting Project",
+      "End-to-End Business Accounting Capstone Project",
+    ],
+    prerequisites: [
+      "Basic computer literacy",
+      "No previous accounting or accounting software experience is required",
+      "A computer and internet connection for live online classes and practical exercises",
+    ],
+    curriculum: [
+      {
+        module: "Module 1: Introduction to Accounting Fundamentals",
+        topics: [
+          "Introduction to accounting",
+          "Accounting principles and concepts",
+          "Assets, liabilities and equity",
+          "Revenue and expenses",
+          "Accounting equation",
+          "Double-entry bookkeeping",
+          "Debit and credit principles",
+          "Chart of accounts",
+        ],
+      },
+      {
+        module: "Module 2: Bookkeeping and Financial Statements",
+        topics: [
+          "Source documents and transaction records",
+          "Journal entries",
+          "General ledger",
+          "Trial balance",
+          "Income statement",
+          "Statement of financial position",
+          "Cash flow statement",
+          "Financial reporting",
+        ],
+      },
+      {
+        module: "Module 3: Business Accounting Operations",
+        topics: [
+          "Sales and purchase transactions",
+          "Accounts receivable and payable",
+          "Expense management",
+          "Cash and bank transactions",
+          "Bank reconciliation",
+          "Inventory accounting",
+          "Fixed assets and depreciation",
+          "Accounting documentation and controls",
+        ],
+      },
+      {
+        module: "Module 4: QuickBooks Accounting Software",
+        topics: [
+          "QuickBooks interface",
+          "Company setup",
+          "Chart of accounts",
+          "Customer and supplier management",
+          "Invoicing",
+          "Recording expenses and bills",
+          "Accounts payable and receivable",
+          "Bank reconciliation",
+          "Financial reports",
+        ],
+      },
+      {
+        module: "Module 5: QuickBooks Practical Applications",
+        topics: [
+          "Managing daily business transactions",
+          "Customer payments",
+          "Supplier payments",
+          "Expense categorisation",
+          "Inventory management fundamentals",
+          "Bank reconciliation",
+          "Profit and loss reports",
+          "Balance sheet reports",
+          "Cash flow reporting",
+          "Practical company accounting project",
+        ],
+      },
+      {
+        module: "Module 6: Sage 50 Accounting Software",
+        topics: [
+          "Introduction to Sage 50",
+          "Company creation and configuration",
+          "Chart of accounts",
+          "Customer and supplier records",
+          "Sales invoicing",
+          "Purchase transactions",
+          "Cash book management",
+          "Accounts payable and receivable",
+          "Inventory management",
+          "Financial statements",
+        ],
+      },
+      {
+        module: "Module 7: Sage 50 Practical Applications",
+        topics: [
+          "Recording business transactions",
+          "Supplier invoices",
+          "Customer receipts",
+          "Inventory records",
+          "Bank reconciliation",
+          "General ledger management",
+          "Financial reporting",
+          "Accounting period management",
+          "Practical accounting exercises",
+        ],
+      },
+      {
+        module: "Module 8: Zoho Books and Cloud Accounting",
+        topics: [
+          "Introduction to cloud accounting",
+          "Zoho Books interface",
+          "Company setup",
+          "Chart of accounts",
+          "Customer and vendor management",
+          "Invoicing and estimates",
+          "Expense and bill management",
+          "Bank feeds and reconciliation",
+          "Financial reports",
+          "Accounting workflow automation",
+        ],
+      },
+      {
+        module: "Module 9: Advanced Excel for Accountants",
+        topics: [
+          "Accounting data organisation",
+          "IF and nested IF functions",
+          "SUMIF and SUMIFS",
+          "COUNTIF and COUNTIFS",
+          "XLOOKUP",
+          "Text and date functions",
+          "Data validation",
+          "Conditional formatting",
+          "PivotTables and PivotCharts",
+          "Automated bookkeeping templates",
+          "Bank reconciliation",
+          "Financial reporting workbooks",
+        ],
+      },
+      {
+        module: "Module 10: Financial Reporting and Analysis",
+        topics: [
+          "Financial statement interpretation",
+          "Revenue and expense analysis",
+          "Budget preparation",
+          "Cash flow management",
+          "Budget versus actual analysis",
+          "Variance analysis",
+          "Financial ratios",
+          "Profitability analysis",
+          "Financial performance reporting",
+          "Management reporting",
+        ],
+      },
+      {
+        module: "Module 11: AI for Accountants",
+        topics: [
+          "Introduction to AI in accounting",
+          "ChatGPT and Microsoft Copilot",
+          "Prompt engineering for accounting tasks",
+          "AI-assisted financial documentation",
+          "Financial report drafting",
+          "Financial data analysis support",
+          "AI-assisted Excel formula development",
+          "Accounting workflow automation",
+          "AI for financial summaries",
+          "Data privacy and responsible AI use",
+          "Human verification and professional judgement",
+        ],
+      },
+      {
+        module: "Module 12: Practical Accounting Capstone Project",
+        topics: [
+          "Setting up a simulated business",
+          "Creating a chart of accounts",
+          "Recording financial transactions",
+          "Managing customer and supplier accounts",
+          "Recording expenses and payments",
+          "Bank reconciliation",
+          "Preparing financial statements",
+          "Developing an Excel accounting workbook",
+          "Generating reports using accounting software",
+          "Applying AI to financial reporting",
+          "Final project presentation",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "Do I need accounting experience to enrol?",
+        answer:
+          "No. This beginner programme starts with accounting fundamentals and introduces bookkeeping, accounting software, Excel and AI tools step by step.",
+      },
+      {
+        question: "Is this accounting software training available online?",
+        answer:
+          "Yes. The 12-week programme is delivered through live online classes for learners in Nigeria and elsewhere.",
+      },
+      {
+        question: "Which accounting software and tools will I learn?",
+        answer:
+          "The programme includes practical exercises with QuickBooks, Sage 50, Zoho Books, Microsoft Excel, Advanced Excel, ChatGPT and Microsoft Copilot.",
+      },
+      {
+        question: "Will I work on practical accounting projects?",
+        answer:
+          "Yes. The training is project-based and includes bookkeeping, accounting software, reconciliation, financial analysis and an end-to-end capstone project.",
+      },
+      {
+        question: "Will I receive a professional accounting qualification?",
+        answer:
+          "No external professional-body qualification is claimed. Learners who meet the programme completion and practical assessment requirements receive a Certificate of Completion from Corepoint Tech Academy.",
+      },
+    ],
+  },
+  {
+    slug: "ai-video-content-generation-production",
+    title: "AI Video Content Generation & Production",
+    category: "automation",
+    level: "Beginner",
+    duration: "6 Weeks",
+    delivery: "Live Online",
+    image: automationImg,
+    imageAlt: "AI Video Content Generation and Production Training at Corepoint Tech Academy.",
+    seoHeading: "AI Video Content Generation & Production Course in Nigeria",
+    seoTitle: "AI Video Creation Course in Nigeria | Corepoint Tech Academy",
+    seoDescription:
+      "Learn AI video creation with Runway, Sora, HeyGen, Synthesia, ElevenLabs and CapCut. Join Corepoint Tech Academy's practical online AI video production course.",
+    seoIntro:
+      "Learn AI video creation in Nigeria through a practical, six-week online programme. This AI Video Creation Course in Nigeria guides beginners through turning ideas into scripts, storyboards, generated scenes, digital presenters, voiceovers and finished videos. Get hands-on AI video generation training with tools used for marketing, education and social media, and build a portfolio of original production projects.",
+    summary:
+      "Create professional videos, avatars and digital content using artificial intelligence. Learn practical AI video production from creative planning and generation to editing, branding and publishing.",
+    overview:
+      "This beginner-friendly AI content creation course teaches the complete video production workflow: plan a concept, write and storyboard it, generate scenes, create presenter videos and voiceovers, edit the result and prepare it for publication. Learners practise with Runway, Sora, Pika, HeyGen, Synthesia, ElevenLabs, CapCut, ChatGPT and Adobe Premiere Pro. The AI video editing and production skills apply to business marketing, advertising, education, social media, freelancing and digital entrepreneurship. Third-party platform access, features and pricing vary; paid subscriptions are not promised or included.",
+    audience:
+      "Content creators, marketers, business owners, educators, freelancers, entrepreneurs and beginners interested in producing video with AI. No previous video editing or AI experience is required; basic computer literacy and access to a computer and internet connection are recommended.",
+    careerOpportunities:
+      "Use your portfolio to pursue freelance AI video production, social media content creation, video marketing, educational media production or in-house content roles. You can also apply the workflows to create promotional videos and campaign assets for a business or personal brand.",
+    outcomes: [
+      "Understand modern AI video generation technologies",
+      "Develop video concepts and scripts using AI",
+      "Create storyboards and production plans",
+      "Generate video scenes from text and images",
+      "Use AI tools for cinematic video production",
+      "Create talking avatars and digital presenters",
+      "Produce multilingual AI avatar videos",
+      "Generate AI voiceovers and audio content",
+      "Edit and enhance videos using AI-powered tools",
+      "Create captions, subtitles and translated videos",
+      "Produce content for TikTok, Instagram and YouTube",
+      "Develop consistent visual identities for video campaigns",
+      "Build AI-assisted video production workflows",
+      "Understand responsible AI media production",
+      "Complete professional AI video production projects",
+    ],
+    tools: [
+      "Runway",
+      "Sora",
+      "Pika",
+      "HeyGen",
+      "Synthesia",
+      "ElevenLabs",
+      "CapCut",
+      "ChatGPT",
+      "Adobe Premiere Pro",
+    ],
+    toolsNote:
+      "Third-party platform availability, features and pricing may vary. Paid subscriptions are not promised or included.",
+    projects: [
+      "AI Storytelling and Video Scene Production",
+      "AI-Powered Business Commercial",
+      "Professional AI Avatar Presentation",
+      "AI Voiceover and Audio Production",
+      "Short-Form Social Media Video Campaign",
+      "AI Brand Video Marketing Campaign",
+      "Complete AI Video Production Capstone Project",
+    ],
+    prerequisites: [
+      "Basic computer literacy",
+      "No previous AI video or editing experience is required",
+      "A computer and internet connection for live online classes and practical exercises",
+    ],
+    certificate:
+      "Students who successfully complete the programme, participate in the practical exercises and submit the required capstone project will receive a Certificate of Completion from Corepoint Tech Academy.",
+    schemaDuration: "P6W",
+    faqSchema: false,
+    relatedCourseSlugs: ["generative-ai", "machine-learning-with-python", "ai-ml-engineering"],
+    curriculum: [
+      {
+        module: "Module 1: Introduction to AI Video Production",
+        topics: [
+          "Understanding the AI video production landscape",
+          "How generative AI creates video content",
+          "Text-to-video generation",
+          "Image-to-video generation",
+          "Video-to-video workflows",
+          "Capabilities and limitations of AI video tools",
+          "Applications of AI video in business and education",
+          "Introduction to AI video production workflows",
+        ],
+      },
+      {
+        module: "Module 2: AI Scriptwriting and Storyboarding",
+        topics: [
+          "Developing video concepts with ChatGPT",
+          "Writing scripts for different audiences",
+          "Creating story outlines and scene descriptions",
+          "AI-assisted storyboarding",
+          "Shot planning and camera angles",
+          "Visual composition and storytelling",
+          "Prompt development for AI video generation",
+          "Planning a complete production project",
+        ],
+      },
+      {
+        module: "Module 3: AI Video Generation and Cinematic Production",
+        topics: [
+          "Introduction to Runway",
+          "Text-to-video production",
+          "Image-to-video generation",
+          "Exploring Pika and other AI video platforms",
+          "Introduction to Sora",
+          "AI cinematic scene creation",
+          "Camera movement and scene direction",
+          "Character and visual consistency",
+          "Prompt refinement and production quality",
+        ],
+      },
+      {
+        module: "Module 4: AI Avatars and Talking Videos",
+        topics: [
+          "Understanding AI avatars and digital presenters",
+          "Creating avatars with HeyGen",
+          "Creating presenter videos with Synthesia",
+          "Converting scripts into talking videos",
+          "Creating personalised AI avatars",
+          "Training an AI video clone with consent",
+          "Multilingual avatar production",
+          "Education, marketing and corporate applications",
+        ],
+      },
+      {
+        module: "Module 5: AI Voiceovers, Music and Sound Design",
+        topics: [
+          "Introduction to AI voice generation",
+          "Text-to-speech with ElevenLabs",
+          "Voice selection and narration styles",
+          "AI-generated background music",
+          "AI sound effects and audio environments",
+          "Synchronising audio and video",
+          "Voice cloning and permissions",
+          "Responsible AI audio production",
+        ],
+      },
+      {
+        module: "Module 6: AI Video Editing and Post-Production",
+        topics: [
+          "Introduction to CapCut",
+          "AI-assisted video editing",
+          "Video timelines and scene arrangement",
+          "Automated captions and subtitles",
+          "Transcription and translation",
+          "Background removal",
+          "Visual enhancement and colour correction",
+          "Transitions and special effects",
+          "Audio synchronisation",
+          "Exporting videos for different platforms",
+        ],
+      },
+      {
+        module: "Module 7: Social Media Video Production and Branding",
+        topics: [
+          "Creating TikTok videos",
+          "Producing Instagram Reels",
+          "Creating YouTube Shorts",
+          "AI-powered promotional videos",
+          "Repurposing long-form video content",
+          "Brand consistency and visual identity",
+          "AI-assisted content planning",
+          "Educational and storytelling videos",
+          "Video content for business campaigns",
+        ],
+      },
+      {
+        module: "Module 8: AI Video Business and Responsible Production",
+        topics: [
+          "Building an AI video production portfolio",
+          "Freelance AI video production services",
+          "Creating marketing videos for businesses",
+          "Developing video production packages",
+          "Content monetisation opportunities",
+          "Copyright and intellectual property",
+          "Disclosure of AI-generated content",
+          "Deepfakes and misinformation",
+          "Ethical voice and likeness usage",
+          "Final project presentation",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "Do I need previous video editing or AI experience?",
+        answer:
+          "No. This beginner programme introduces AI video creation and editing step by step. Basic computer literacy is recommended.",
+      },
+      {
+        question: "Which AI video tools will I learn?",
+        answer:
+          "Practical lessons use Runway, Sora, Pika, HeyGen, Synthesia, ElevenLabs, CapCut, ChatGPT and Adobe Premiere Pro. Platform features and availability can change.",
+      },
+      {
+        question: "Are software subscriptions included in the course?",
+        answer:
+          "No paid software subscription is promised or included. Third-party platform access, features and pricing may vary, and learners should check each provider's current terms.",
+      },
+      {
+        question: "Is the AI video course available online?",
+        answer: "Yes. The six-week programme is delivered through live online classes.",
+      },
+      {
+        question: "Will I complete practical projects?",
+        answer:
+          "Yes. You will create video scenes, a business commercial, an avatar presentation, voiceover work, social media and brand campaigns, and a final capstone for your portfolio.",
+      },
+      {
+        question: "Will I receive a certificate?",
+        answer:
+          "Students who successfully complete the programme, participate in the practical exercises and submit the required capstone project will receive a Certificate of Completion from Corepoint Tech Academy.",
+      },
+    ],
   },
 ];
 

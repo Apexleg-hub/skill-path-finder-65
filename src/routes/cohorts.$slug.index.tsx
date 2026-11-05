@@ -14,8 +14,8 @@ import {
   type CohortStatus,
   type CurriculumModule,
 } from "@/lib/cohorts";
-
-const SITE = "https://corepointtech.com.ng";
+import { toAbsoluteUrl } from "@/lib/site";
+import { pageStructuredDataScript, scheduledCourseSchema } from "@/lib/structured-data";
 
 export const Route = createFileRoute("/cohorts/$slug/")({
   loader: async ({ params }) => {
@@ -26,31 +26,39 @@ export const Route = createFileRoute("/cohorts/$slug/")({
   head: ({ loaderData, params }) => {
     if (!loaderData) return {};
     const c = loaderData.cohort;
-    const url = `${SITE}/cohorts/${params.slug}`;
+    const url = toAbsoluteUrl(`/cohorts/${params.slug}`);
     const title = `${c.title} | Corepoint Tech Academy`;
     const desc =
       c.description?.slice(0, 160) ??
       `${c.programme_name} cohort training from Corepoint Tech Academy. See dates, curriculum and tuition.`;
-
-    // Structured data uses only configured facts: no ratings, no invented prices or dates.
-    const course: Record<string, unknown> = {
-      "@context": "https://schema.org",
-      "@type": "Course",
+    const structuredData = pageStructuredDataScript({
       name: c.title,
-      description: desc,
-      provider: { "@type": "Organization", name: "Corepoint Tech Academy", url: SITE },
       url,
-      hasCourseInstance: {
-        "@type": "CourseInstance",
-        courseMode:
-          c.learning_format === "virtual" ? "Online" : c.learning_format === "physical" ? "Onsite" : ["Online", "Onsite"],
-        ...(c.start_date ? { startDate: c.start_date } : {}),
-        ...(c.end_date ? { endDate: c.end_date } : {}),
-      },
-      ...(c.tuition_fee != null
-        ? { offers: { "@type": "Offer", price: c.tuition_fee, priceCurrency: "NGN", url } }
-        : {}),
-    };
+      description: desc,
+      ...(c.image_url ? { image: c.image_url } : {}),
+      breadcrumbs: [
+        { name: "Home", url: toAbsoluteUrl("/") },
+        { name: "Cohorts", url: toAbsoluteUrl("/cohorts") },
+        { name: c.title, url },
+      ],
+      entities: [
+        scheduledCourseSchema({
+          name: c.title,
+          description: desc,
+          url,
+          image: c.image_url,
+          courseMode:
+            c.learning_format === "virtual"
+              ? "Online"
+              : c.learning_format === "physical"
+                ? "Onsite"
+                : ["Online", "Onsite"],
+          startDate: c.start_date,
+          endDate: c.end_date,
+          price: c.tuition_fee,
+        }),
+      ],
+    });
 
     return {
       meta: [
@@ -64,7 +72,7 @@ export const Route = createFileRoute("/cohorts/$slug/")({
         { name: "twitter:card", content: "summary_large_image" },
       ],
       links: [{ rel: "canonical", href: url }],
-      scripts: [{ type: "application/ld+json", children: JSON.stringify(course).replace(/</g, "\\u003c") }],
+      scripts: [structuredData],
     };
   },
   notFoundComponent: CohortNotFound,

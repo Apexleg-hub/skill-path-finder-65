@@ -19,9 +19,24 @@ import {
   Users,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { toAbsoluteUrl } from "@/lib/site";
+import { pageStructuredDataScript } from "@/lib/structured-data";
 
 export const Route = createFileRoute("/data-science-ai-course")({
   head: () => ({
+    links: [{ rel: "canonical", href: toAbsoluteUrl("/data-science-ai-course") }],
+    scripts: [
+      pageStructuredDataScript({
+        name: "Data Science & AI Course in Lagos | Corepoint Tech Academy",
+        url: toAbsoluteUrl("/data-science-ai-course"),
+        description:
+          "Learn Data Science and Artificial Intelligence with Corepoint Tech Academy through Python, machine learning and real-world projects.",
+        breadcrumbs: [
+          { name: "Home", url: toAbsoluteUrl("/") },
+          { name: "Data Science & AI Course", url: toAbsoluteUrl("/data-science-ai-course") },
+        ],
+      }),
+    ],
     meta: [
       {
         title: "Data Science & AI Course in Lagos | Corepoint Tech Academy",

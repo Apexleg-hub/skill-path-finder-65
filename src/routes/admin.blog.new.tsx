@@ -16,7 +16,7 @@ import {
   X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { supabase } from "@/lib/supabase"; // adjust this import to match your existing Supabase client path
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/admin/blog/new")({
   beforeLoad: async ({ location }) => {

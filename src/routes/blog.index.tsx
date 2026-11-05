@@ -11,9 +11,24 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/lib/supabase"; // adjust this import to match your existing Supabase client path
+import { toAbsoluteUrl } from "@/lib/site";
+import { pageStructuredDataScript } from "@/lib/structured-data";
 
 export const Route = createFileRoute("/blog/")({
   head: () => ({
+    links: [{ rel: "canonical", href: toAbsoluteUrl("/blog") }],
+    scripts: [
+      pageStructuredDataScript({
+        name: "Blog | Corepoint Tech Academy",
+        url: toAbsoluteUrl("/blog"),
+        description:
+          "Guides, tutorials, career advice, and trending tech topics from Corepoint Tech Academy.",
+        breadcrumbs: [
+          { name: "Home", url: toAbsoluteUrl("/") },
+          { name: "Blog", url: toAbsoluteUrl("/blog") },
+        ],
+      }),
+    ],
     meta: [
       {
         title: "Blog | Corepoint Tech Academy",
