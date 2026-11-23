@@ -187,3 +187,129 @@
 @utility shadow-lift {
   box-shadow: var(--shadow-lift);
 }
+
+.rich-text-editor,
+.rich-text-content {
+  color: #111111;
+  font-family: var(--font-sans);
+  line-height: 1.75;
+}
+
+.rich-text-editor p,
+.rich-text-content p { margin: 0.9em 0; }
+
+.rich-text-editor h1,
+.rich-text-editor h2,
+.rich-text-editor h3,
+.rich-text-content h1,
+.rich-text-content h2,
+.rich-text-content h3 {
+  font-family: var(--font-display);
+  line-height: 1.22;
+  letter-spacing: -0.025em;
+  color: #111111;
+}
+
+.rich-text-editor h1,
+.rich-text-content h1 { margin: 1.3em 0 0.6em; font-size: clamp(2rem, 5vw, 3rem); }
+
+.rich-text-editor h2,
+.rich-text-content h2 { margin: 1.35em 0 0.55em; font-size: clamp(1.55rem, 3.5vw, 2.25rem); }
+
+.rich-text-editor h3,
+.rich-text-content h3 { margin: 1.15em 0 0.45em; font-size: clamp(1.25rem, 2.5vw, 1.55rem); }
+
+.rich-text-editor ul,
+.rich-text-editor ol,
+.rich-text-content ul,
+.rich-text-content ol { margin: 1em 0; padding-left: 1.5rem; }
+.rich-text-editor ul,
+.rich-text-content ul { list-style: disc; }
+.rich-text-editor ol,
+.rich-text-content ol { list-style: decimal; }
+.rich-text-editor li,
+.rich-text-content li { margin: 0.35em 0; }
+
+.rich-text-content a,
+.rich-text-editor a {
+  color: var(--primary);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.rich-text-editor hr,
+.rich-text-content hr { margin: 2rem 0; border: 0; border-top: 1px solid #e3e3e3; }
+
+.rich-text-editor img,
+.rich-text-content img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 1.5rem auto;
+  border-radius: 0.5rem;
+}
+
+.rich-text-editor table,
+.rich-text-content table {
+  width: 100%;
+  min-width: 640px;
+  margin: 1.5rem 0;
+  border-collapse: collapse;
+  table-layout: auto;
+  font-size: 0.95rem;
+  background: #ffffff;
+}
+
+.rich-text-editor th,
+.rich-text-editor td,
+.rich-text-content th,
+.rich-text-content td {
+  border: 1px solid #d7d7d7;
+  padding: 0.65rem 0.75rem;
+  vertical-align: top;
+  text-align: left;
+  color: #111111;
+}
+
+.rich-text-editor th,
+.rich-text-content th { background: #f5f5f5; font-weight: 700; }
+
+.rich-text-content {
+  max-width: 100%;
+  overflow-x: auto;
+  font-size: clamp(1rem, 1.5vw, 1.125rem);
+}
+
+.cohort-description {
+  background: #ffffff;
+  color: #111111;
+  padding: 0;
+}
+
+.cohort-description p,
+.cohort-description li,
+.cohort-description td { color: #444444; }
+
+.cohort-description strong,
+.cohort-description th,
+.cohort-description h1,
+.cohort-description h2,
+.cohort-description h3 { color: #111111; }
+
+.cohort-description blockquote {
+  margin: 1.5rem 0;
+  border-left: 3px solid var(--primary);
+  padding: 0.25rem 0 0.25rem 1.25rem;
+  color: #444444;
+}
+
+@media (max-width: 640px) {
+  .cohort-description {
+    font-size: 1rem;
+  }
+
+  .rich-text-content table {
+    min-width: 560px;
+  }
+}

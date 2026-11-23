@@ -1,21 +1,24 @@
-// Save as src/routes/cohorts.$slug.index.tsx
-// Leaves room for src/routes/cohorts.$slug.register.tsx (the registration page).
-import { useState } from "react";
+// Save as src/routes/cohorts.$slug.index.tsx  (replaces the previous version)
+// Sales and SEO layout for a cohort. Most of the wording is edited in /admin/cohorts.
+import { useEffect, useState } from "react";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { ArrowLeft, CalendarDays, Check, ChevronDown, Clock, MapPin, Users, Wallet } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { SITE_URL } from "@/lib/site";
+import { pageStructuredDataScript, scheduledCourseSchema } from "@/lib/structured-data";
+import { sanitizeRichText } from "@/lib/rich-text";
 import {
   FORMAT_LABEL,
   STATUS_LABEL,
   fetchCohortDetail,
   formatDate,
   formatNaira,
+  lagosToday,
   type CohortDetail,
   type CohortStatus,
-  type CurriculumModule,
 } from "@/lib/cohorts";
-import { toAbsoluteUrl } from "@/lib/site";
-import { pageStructuredDataScript, scheduledCourseSchema } from "@/lib/structured-data";
+
+// WhatsApp number shown in the site footer, in international format without the plus sign.
+const WHATSAPP_NUMBER = "2349115751406";
 
 export const Route = createFileRoute("/cohorts/$slug/")({
   loader: async ({ params }) => {
@@ -26,19 +29,26 @@ export const Route = createFileRoute("/cohorts/$slug/")({
   head: ({ loaderData, params }) => {
     if (!loaderData) return {};
     const c = loaderData.cohort;
-    const url = toAbsoluteUrl(`/cohorts/${params.slug}`);
-    const title = `${c.title} | Corepoint Tech Academy`;
-    const desc =
-      c.description?.slice(0, 160) ??
-      `${c.programme_name} cohort training from Corepoint Tech Academy. See dates, curriculum and tuition.`;
-    const structuredData = pageStructuredDataScript({
-      name: c.title,
+    const url = `${SITE_URL}/cohorts/${params.slug}`;
+    const title = c.seo_title?.trim() || `${c.title} | Corepoint Tech Academy`;
+    const desc = (
+      c.seo_description?.trim() ||
+      c.tagline?.trim() ||
+      c.description?.trim() ||
+      `${c.programme_name} cohort training from Corepoint Tech Academy. See dates, curriculum and tuition.`
+    ).slice(0, 200);
+    const price = c.earlyBirdActive ? c.early_bird_fee : c.tuition_fee;
+
+    // One structured-data script built from the site's shared helpers (organization, webpage,
+    // breadcrumbs and the course with its scheduled instance). Only configured facts are included.
+    const structured = pageStructuredDataScript({
+      name: title,
       url,
       description: desc,
-      ...(c.image_url ? { image: c.image_url } : {}),
+      image: c.image_url ?? undefined,
       breadcrumbs: [
-        { name: "Home", url: toAbsoluteUrl("/") },
-        { name: "Cohorts", url: toAbsoluteUrl("/cohorts") },
+        { name: "Home", url: SITE_URL },
+        { name: "Cohorts", url: `${SITE_URL}/cohorts` },
         { name: c.title, url },
       ],
       entities: [
@@ -48,14 +58,10 @@ export const Route = createFileRoute("/cohorts/$slug/")({
           url,
           image: c.image_url,
           courseMode:
-            c.learning_format === "virtual"
-              ? "Online"
-              : c.learning_format === "physical"
-                ? "Onsite"
-                : ["Online", "Onsite"],
+            c.learning_format === "virtual" ? "Online" : c.learning_format === "physical" ? "Onsite" : ["Online", "Onsite"],
           startDate: c.start_date,
           endDate: c.end_date,
-          price: c.tuition_fee,
+          price,
         }),
       ],
     });
@@ -72,7 +78,7 @@ export const Route = createFileRoute("/cohorts/$slug/")({
         { name: "twitter:card", content: "summary_large_image" },
       ],
       links: [{ rel: "canonical", href: url }],
-      scripts: [structuredData],
+      scripts: [structured],
     };
   },
   notFoundComponent: CohortNotFound,
@@ -85,7 +91,8 @@ const PAYMENT_LABEL: Record<string, string> = {
   installment: "Instalment payment",
 };
 
-const BENEFITS = [
+// Shown when the admin has not written a custom "What is included" list.
+const DEFAULT_INCLUDED = [
   "Live instructor-led sessions",
   "Practical assignments",
   "Real-world projects",
@@ -95,11 +102,11 @@ const BENEFITS = [
 ];
 
 const statusStyles: Record<CohortStatus, string> = {
-  open: "bg-primary-foreground text-primary",
-  coming_soon: "bg-primary-foreground/20 text-primary-foreground",
-  in_progress: "bg-primary-foreground/20 text-primary-foreground",
-  closed: "bg-primary-foreground/20 text-primary-foreground",
-  completed: "bg-primary-foreground/20 text-primary-foreground",
+  open: "bg-primary text-white",
+  coming_soon: "border border-[#d7d7d7] bg-white text-[#111111]",
+  in_progress: "border border-[#d7d7d7] bg-white text-[#111111]",
+  closed: "border border-[#d7d7d7] bg-white text-[#111111]",
+  completed: "border border-[#d7d7d7] bg-white text-[#111111]",
 };
 
 const unavailableLabel: Record<Exclude<CohortStatus, "open">, string> = {
@@ -109,97 +116,113 @@ const unavailableLabel: Record<Exclude<CohortStatus, "open">, string> = {
   completed: "Cohort completed",
 };
 
+const whatsappLink = (title: string) =>
+  `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Hello Corepoint Tech Academy, I have a question about ${title}.`)}`;
+
+const paragraphs = (text: string | null) => (text ?? "").split(/\n{2,}/).map((p) => p.trim()).filter(Boolean);
+
+// Days until a date, worked out in the browser so the page markup never differs between server and browser.
+function useDaysLeft(deadline: string | null): number | null {
+  const [days, setDays] = useState<number | null>(null);
+  useEffect(() => {
+    if (!deadline) return;
+    const diff = Math.round((Date.parse(deadline) - Date.parse(lagosToday())) / 86_400_000);
+    setDays(diff);
+  }, [deadline]);
+  return days;
+}
+
 function CohortDetailPage() {
-  const { cohort: c, curriculum } = Route.useLoaderData();
+  const { cohort: c } = Route.useLoaderData();
   const open = c.status === "open";
   const price = c.earlyBirdActive ? c.early_bird_fee : c.tuition_fee;
+  const included = c.included.length > 0 ? c.included : DEFAULT_INCLUDED;
 
   return (
     // Bottom padding on small screens so the sticky bar never covers the footer.
-    <div className="pb-24 md:pb-0">
+    <div className="bg-white pb-24 text-[#111111] md:pb-0">
       <Hero c={c} open={open} />
+      {open && <Urgency c={c} />}
 
       <div className="mx-auto max-w-6xl px-4">
-        {c.about && (
-          <section className="py-12" aria-labelledby="about-heading">
-            <h2 id="about-heading" className="text-2xl font-bold sm:text-3xl">
-              About the Programme
-            </h2>
-            <div className="mt-4 max-w-3xl space-y-4 text-muted-foreground">
-              {c.about.split(/\n{2,}/).map((p, i) => (
-                <p key={i}>{p}</p>
-              ))}
-            </div>
+        {c.description && (
+          <section className="bg-white pb-2 pt-10" aria-label="Cohort description">
+            <article
+              className="rich-text-content cohort-description mx-auto max-w-5xl"
+              dangerouslySetInnerHTML={{ __html: sanitizeRichText(c.description) }}
+            />
           </section>
         )}
 
-        {c.skills.length > 0 && (
-          <section className="pb-12" aria-labelledby="learn-heading">
-            <h2 id="learn-heading" className="text-2xl font-bold sm:text-3xl">
-              What You Will Learn
-            </h2>
-            <div className="mt-6 rounded-2xl border border-border bg-card p-6 shadow-card sm:p-8">
-              <ul className="grid gap-x-8 gap-y-4 sm:grid-cols-2">
-                {c.skills.map((s) => (
-                  <li key={s} className="flex items-start gap-3">
-                    <span className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
-                      <Check className="size-4" />
-                    </span>
-                    <span className="font-medium">{s}</span>
-                  </li>
-                ))}
-              </ul>
+        {(c.audience.length > 0 || c.not_for.length > 0) && (
+          <Section id="audience" title="Is this programme right for you?">
+            <div className="grid gap-6 md:grid-cols-2">
+              {c.audience.length > 0 && (
+                <div className="rounded-2xl border border-border bg-card p-6 shadow-card">
+                  <h3 className="text-lg font-semibold">This is for you if you are</h3>
+                  <ul className="mt-4 space-y-3">
+                    {c.audience.map((a) => (
+                      <li key={a} className="flex items-start gap-3"><span>{a}</span></li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {c.not_for.length > 0 && (
+                <div className="rounded-2xl border border-border bg-card p-6 shadow-card">
+                  {c.slug !== "data-analysis-cohort-1" && (
+                    <h3 className="text-lg font-semibold">This may not be for you if</h3>
+                  )}
+                  <ul className="mt-4 space-y-3">
+                    {c.not_for.map((a) => (
+                      <li key={a} className="flex items-start gap-3">
+                        <span>{a}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
-          </section>
+          </Section>
         )}
 
-        {curriculum.length > 0 && <Curriculum modules={curriculum} />}
-
-        <section className="pb-12" aria-labelledby="benefits-heading">
-          <h2 id="benefits-heading" className="text-2xl font-bold sm:text-3xl">
-            Programme Benefits
-          </h2>
-          <div className="mt-6 rounded-2xl border border-border bg-card p-6 shadow-card sm:p-8">
+        <Section id="included" title="What is included">
+          <div className="rounded-2xl border border-border bg-card p-6 shadow-card sm:p-8">
             <ul className="grid gap-x-8 gap-y-4 sm:grid-cols-2">
-              {BENEFITS.map((b) => (
-                <li key={b} className="flex items-start gap-3">
-                  <span className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
-                    <Check className="size-4" />
-                  </span>
-                  <span>{b}</span>
-                </li>
+              {included.map((b) => (
+                <li key={b} className="flex items-start gap-3"><span>{b}</span></li>
               ))}
             </ul>
           </div>
-        </section>
+        </Section>
 
-        <Tuition c={c} />
+        <Tuition c={c} open={open} />
 
         {c.faqs.length > 0 && <Faqs faqs={c.faqs} />}
 
         <section className="pb-16">
-          <div className="overflow-hidden rounded-3xl bg-hero-gradient px-6 py-12 text-center text-primary-foreground sm:px-12">
+          <div className="border-t border-[#ededed] px-2 py-12 text-center text-[#111111] sm:px-12">
             <h2 className="text-2xl font-bold sm:text-3xl">
-              {open ? "Ready to join this cohort?" : "Interested in this programme?"}
+              {open ? `Reserve your place in ${c.title}` : "Interested in this programme?"}
             </h2>
-            <p className="mx-auto mt-3 max-w-xl text-primary-foreground/80">
+            <p className="mx-auto mt-3 max-w-xl text-[#444444]">
               {open
-                ? `Register by ${formatDate(c.registration_deadline)} to secure your place.`
-                : "Browse other cohorts, or register your interest and our admissions team will contact you."}
+                ? `Registration closes on ${formatDate(c.payment_deadline ?? c.registration_deadline)}. ${c.seatsRemaining !== null ? `${c.seatsRemaining} seats remaining.` : ""}`
+                : "Browse other cohorts, or ask us a question and our team will help."}
             </p>
             <div className="mt-6 flex flex-wrap justify-center gap-3">
               {open ? (
                 <RegisterButton slug={c.slug} size="xl" />
               ) : (
                 <>
-                  <Button disabled size="xl" variant="onHero">
-                    {unavailableLabel[c.status as Exclude<CohortStatus, "open">]}
-                  </Button>
-                  <Button asChild size="xl" variant="cta">
-                    <Link to="/cohorts">View Other Cohorts</Link>
-                  </Button>
+                  <Button disabled size="xl" variant="outline">{unavailableLabel[c.status as Exclude<CohortStatus, "open">]}</Button>
+                  <Button asChild size="xl" variant="cta"><Link to="/cohorts">View Other Cohorts</Link></Button>
                 </>
               )}
+              <Button asChild size="xl" variant="outline">
+                <a href={whatsappLink(c.title)} target="_blank" rel="noopener noreferrer">
+                  Ask question
+                </a>
+              </Button>
             </div>
           </div>
         </section>
@@ -215,95 +238,99 @@ function CohortDetailPage() {
             <p className="truncate text-sm font-semibold">{c.programme_name}</p>
             <p className="text-sm text-muted-foreground">{formatNaira(price)}</p>
           </div>
-          {open ? (
-            <RegisterButton slug={c.slug} />
-          ) : (
-            <Button disabled>{unavailableLabel[c.status as Exclude<CohortStatus, "open">]}</Button>
-          )}
+          <div className="flex items-center gap-2">
+            <a href={whatsappLink(c.title)} target="_blank" rel="noopener noreferrer" aria-label="Ask question on WhatsApp"
+              className="inline-flex size-10 items-center justify-center rounded-md border border-border bg-background text-primary">
+              Ask
+            </a>
+            {open ? <RegisterButton slug={c.slug} /> : <Button disabled>{unavailableLabel[c.status as Exclude<CohortStatus, "open">]}</Button>}
+          </div>
         </div>
       </div>
     </div>
+  );
+}
+
+function Section({ id, title, children }: { id: string; title: string; children: React.ReactNode }) {
+  return (
+    <section className="py-10" aria-labelledby={`${id}-heading`}>
+      <h2 id={`${id}-heading`} className="text-2xl font-bold sm:text-3xl">{title}</h2>
+      <div className="mt-5">{children}</div>
+    </section>
   );
 }
 
 function RegisterButton({ slug, size }: { slug: string; size?: "xl" }) {
   return (
     <Button asChild variant="cta" size={size}>
-      <Link to="/cohorts/$slug/register" params={{ slug }}>
-        Register Now
-      </Link>
+      <Link to="/cohorts/$slug/register" params={{ slug }}>Register Now</Link>
     </Button>
   );
 }
 
 function Hero({ c, open }: { c: CohortDetail; open: boolean }) {
+  const lead = c.tagline?.trim();
   return (
-    <section className="bg-hero-gradient text-primary-foreground">
-      <div className="mx-auto max-w-6xl px-4 py-10 lg:py-16">
-        <Link
-          to="/cohorts"
-          className="inline-flex items-center gap-1.5 text-sm font-medium text-primary-foreground/80 hover:text-primary-foreground"
-        >
-          <ArrowLeft className="size-4" /> All cohorts
-        </Link>
+    <section className="border-b border-[#ededed] bg-white text-[#111111]">
+      <div className="mx-auto max-w-6xl px-4 py-8 lg:py-14">
+        <nav aria-label="Breadcrumb" className="text-sm text-[#444444]">
+          <ol className="flex flex-wrap items-center gap-1.5">
+            <li><Link to="/" className="hover:text-[#111111]">Home</Link></li>
+            <li aria-hidden="true">/</li>
+            <li><Link to="/cohorts" className="hover:text-[#111111]">Cohorts</Link></li>
+            <li aria-hidden="true">/</li>
+            <li aria-current="page" className="text-[#111111]">{c.title}</li>
+          </ol>
+        </nav>
 
         <div className="mt-6 grid gap-10 lg:grid-cols-[1.05fr_1fr] lg:items-center">
           <div>
             <div className="flex flex-wrap items-center gap-2">
-              <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${statusStyles[c.status]}`}>
-                {STATUS_LABEL[c.status]}
-              </span>
+              <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${statusStyles[c.status]}`}>{STATUS_LABEL[c.status]}</span>
               {c.cohort_number != null && (
-                <span className="rounded-full border border-primary-foreground/25 px-3 py-1 text-xs font-medium">
-                  Cohort {c.cohort_number}
-                </span>
+                <span className="rounded-full border border-[#d7d7d7] px-3 py-1 text-xs font-medium text-[#111111]">Cohort {c.cohort_number}</span>
               )}
             </div>
 
             <h1 className="mt-4 text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">{c.title}</h1>
-            {c.description && <p className="mt-4 max-w-xl text-lg text-primary-foreground/80">{c.description}</p>}
+            {lead && <p className="mt-4 max-w-xl text-lg text-[#444444]">{lead}</p>}
 
             <dl className="mt-6 grid max-w-xl grid-cols-2 gap-4 text-sm">
-              <HeroFact icon={<CalendarDays className="size-4" />} label="Start date">
-                {formatDate(c.start_date)}
-              </HeroFact>
-              <HeroFact icon={<Clock className="size-4" />} label="Duration">
-                {c.duration_weeks ? `${c.duration_weeks} weeks` : "To be confirmed"}
-              </HeroFact>
-              <HeroFact icon={<MapPin className="size-4" />} label="Format">
-                {FORMAT_LABEL[c.learning_format]}
-              </HeroFact>
-              <HeroFact icon={<Wallet className="size-4" />} label="Tuition">
-                {formatNaira(c.earlyBirdActive ? c.early_bird_fee : c.tuition_fee)}
-              </HeroFact>
+              <HeroFact label="Start date">{formatDate(c.start_date)}</HeroFact>
+              <HeroFact label="Duration">{c.duration_weeks ? `${c.duration_weeks} weeks` : "To be confirmed"}</HeroFact>
+              <HeroFact label="Format">{FORMAT_LABEL[c.learning_format]}</HeroFact>
+              <HeroFact label="Tuition">{formatNaira(c.earlyBirdActive ? c.early_bird_fee : c.tuition_fee)}</HeroFact>
               {c.seatsRemaining !== null && (
-                <HeroFact icon={<Users className="size-4" />} label="Seats left">
-                  {c.seatsRemaining}
-                </HeroFact>
+                <HeroFact label="Seats left">{c.seatsRemaining}</HeroFact>
               )}
             </dl>
 
-            <div className="mt-8">
+            <div className="mt-8 flex flex-wrap items-center gap-3">
               {open ? (
                 <RegisterButton slug={c.slug} size="xl" />
               ) : (
-                <Button disabled size="xl" variant="onHero">
-                  {unavailableLabel[c.status as Exclude<CohortStatus, "open">]}
-                </Button>
+                <Button disabled size="xl" variant="outline">{unavailableLabel[c.status as Exclude<CohortStatus, "open">]}</Button>
               )}
+              <Button asChild size="xl" variant="outline">
+                <a href={whatsappLink(c.title)} target="_blank" rel="noopener noreferrer">
+                  Ask question
+                </a>
+              </Button>
             </div>
+            <p className="mt-4 text-sm text-[#444444]">Secure online payment with Paystack</p>
           </div>
 
           {c.image_url ? (
             <img
               src={c.image_url}
-              alt={`${c.programme_name} training`}
+              alt={`${c.programme_name} training at Corepoint Tech Academy`}
               width={1600}
               height={1008}
-              className="w-full rounded-3xl object-cover shadow-lift"
+              decoding="async"
+              className="w-full rounded-3xl object-cover"
             />
           ) : (
-            <div className="hidden aspect-[16/10] w-full rounded-3xl bg-primary-foreground/10 lg:block" aria-hidden="true" />
+            <div className="hidden aspect-[16/10] w-full rounded-3xl bg-[#f5f5f5] lg:block" aria-hidden="true" />
           )}
         </div>
       </div>
@@ -311,100 +338,43 @@ function Hero({ c, open }: { c: CohortDetail; open: boolean }) {
   );
 }
 
-function HeroFact({ icon, label, children }: { icon: React.ReactNode; label: string; children: React.ReactNode }) {
+function HeroFact({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div>
-      <dt className="flex items-center gap-1.5 text-primary-foreground/70">
-        {icon}
-        {label}
-      </dt>
+      <dt className="text-[#444444]">{label}</dt>
       <dd className="mt-0.5 font-semibold">{children}</dd>
     </div>
   );
 }
 
-function Curriculum({ modules }: { modules: CurriculumModule[] }) {
-  const [openIds, setOpenIds] = useState<Set<string>>(() => new Set([modules[0]?.id]));
-  const toggle = (id: string) =>
-    setOpenIds((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
-
+// A true deadline and true seat count, never invented urgency.
+function Urgency({ c }: { c: CohortDetail }) {
+  const deadline = c.payment_deadline ?? c.registration_deadline;
+  const days = useDaysLeft(deadline);
+  const parts: string[] = [];
+  if (deadline) {
+    parts.push(
+      days === null ? `Register by ${formatDate(deadline)}`
+      : days > 1 ? `Registration closes in ${days} days (${formatDate(deadline)})`
+      : days === 1 ? `Registration closes tomorrow (${formatDate(deadline)})`
+      : days === 0 ? `Registration closes today (${formatDate(deadline)})`
+      : `Register by ${formatDate(deadline)}`,
+    );
+  }
+  if (c.seatsRemaining !== null) parts.push(`${c.seatsRemaining} ${c.seatsRemaining === 1 ? "seat" : "seats"} remaining`);
+  if (parts.length === 0) return null;
   return (
-    <section className="pb-12" aria-labelledby="curriculum-heading">
-      <h2 id="curriculum-heading" className="text-2xl font-bold sm:text-3xl">
-        Course Curriculum
-      </h2>
-      <div className="mt-6 divide-y divide-border overflow-hidden rounded-2xl border border-border bg-card shadow-card">
-        {modules.map((m) => {
-          const isOpen = openIds.has(m.id);
-          const panelId = `module-${m.id}`;
-          return (
-            <div key={m.id}>
-              <h3>
-                <button
-                  type="button"
-                  onClick={() => toggle(m.id)}
-                  aria-expanded={isOpen}
-                  aria-controls={panelId}
-                  className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left hover:bg-secondary/40"
-                >
-                  <span>
-                    <span className="block text-xs font-semibold uppercase tracking-wide text-primary">
-                      Week {m.week_number}
-                    </span>
-                    <span className="mt-0.5 block font-semibold">{m.module_title}</span>
-                  </span>
-                  <ChevronDown
-                    className={`size-5 shrink-0 text-muted-foreground transition-transform ${isOpen ? "rotate-180" : ""}`}
-                  />
-                </button>
-              </h3>
-              {isOpen && (
-                <div id={panelId} className="space-y-4 px-5 pb-5 text-sm">
-                  {m.module_description && <p className="text-muted-foreground">{m.module_description}</p>}
-                  {m.topics.length > 0 && <BulletBlock title="Topics covered" items={m.topics} />}
-                  {m.objectives.length > 0 && <BulletBlock title="Learning objectives" items={m.objectives} />}
-                  {m.assignment && (
-                    <div>
-                      <p className="font-semibold">Practical assignment</p>
-                      <p className="mt-1 text-muted-foreground">{m.assignment}</p>
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
-          );
-        })}
-      </div>
-    </section>
-  );
-}
-
-function BulletBlock({ title, items }: { title: string; items: string[] }) {
-  return (
-    <div>
-      <p className="font-semibold">{title}</p>
-      <ul className="mt-1 list-disc space-y-1 pl-5 text-muted-foreground">
-        {items.map((t) => (
-          <li key={t}>{t}</li>
-        ))}
-      </ul>
+    <div className="border-b border-border bg-secondary/60">
+      <p className="mx-auto max-w-6xl px-4 py-3 text-center text-sm font-semibold">{parts.join("  |  ")}</p>
     </div>
   );
 }
 
-function Tuition({ c }: { c: CohortDetail }) {
+function Tuition({ c, open }: { c: CohortDetail; open: boolean }) {
   const options = c.payment_options.map((o) => PAYMENT_LABEL[o] ?? o);
   return (
-    <section className="pb-12" aria-labelledby="tuition-heading">
-      <h2 id="tuition-heading" className="text-2xl font-bold sm:text-3xl">
-        Tuition and Payment
-      </h2>
-      <div className="mt-6 grid gap-6 lg:grid-cols-2">
+    <Section id="tuition" title="Tuition and payment">
+      <div className="grid gap-6 lg:grid-cols-2">
         <div className="rounded-2xl border border-border bg-card p-6 shadow-card">
           <dl className="space-y-4 text-sm">
             <div className="flex items-baseline justify-between gap-4">
@@ -418,14 +388,13 @@ function Tuition({ c }: { c: CohortDetail }) {
                   <dd className="text-xl font-bold text-primary">{formatNaira(c.early_bird_fee)}</dd>
                 </div>
                 <p className="mt-2 text-muted-foreground">
-                  Available to students who register on or before {formatDate(c.early_bird_deadline)}. The price is
-                  applied automatically when you register in time.
+                  Available to students who register on or before {formatDate(c.early_bird_deadline)}. The price is applied automatically when you register in time.
                 </p>
               </div>
             )}
             <div className="flex justify-between gap-4">
-              <dt className="text-muted-foreground">Registration deadline</dt>
-              <dd className="font-medium">{formatDate(c.registration_deadline)}</dd>
+              <dt className="text-muted-foreground">Registration and payment deadline</dt>
+              <dd className="font-medium">{formatDate(c.payment_deadline ?? c.registration_deadline)}</dd>
             </div>
             {c.class_schedule && (
               <div className="flex justify-between gap-4">
@@ -434,63 +403,47 @@ function Tuition({ c }: { c: CohortDetail }) {
               </div>
             )}
           </dl>
+          {open && (
+            <div className="mt-5"><RegisterButton slug={c.slug} size="xl" /></div>
+          )}
         </div>
 
         <div className="rounded-2xl border border-border bg-card p-6 shadow-card">
-          <h3 className="font-semibold">Payment options</h3>
-          {options.length > 0 && (
-            <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-muted-foreground">
-              {options.map((o) => (
-                <li key={o}>{o}</li>
-              ))}
-            </ul>
-          )}
-          <p className="mt-3 text-sm text-muted-foreground">
-            Tuition is paid in full online with Paystack when you register. Your place is confirmed as soon as the
-            payment is verified. Bank transfer is available as an alternative.
-          </p>
+          <h3 className="font-semibold">How payment works</h3>
+          <ol className="mt-3 list-decimal space-y-2 pl-5 text-sm text-muted-foreground">
+            <li>Fill in the short registration form.</li>
+            <li>Pay the full tuition securely online with Paystack, on the same page.</li>
+            <li>Your place is confirmed as soon as the payment is verified, and you receive a receipt.</li>
+          </ol>
+          {options.length > 0 && <p className="mt-3 text-sm text-muted-foreground">Payment option: {options.join(", ")}.</p>}
+          <p className="mt-3 text-sm text-muted-foreground">Prefer to pay by bank transfer? You can choose that after you register.</p>
         </div>
       </div>
-    </section>
+    </Section>
   );
 }
 
 function Faqs({ faqs }: { faqs: { q: string; a: string }[] }) {
   const [openIdx, setOpenIdx] = useState<number | null>(null);
   return (
-    <section className="pb-12" aria-labelledby="faq-heading">
-      <h2 id="faq-heading" className="text-2xl font-bold sm:text-3xl">
-        Frequently Asked Questions
-      </h2>
-      <div className="mt-6 divide-y divide-border overflow-hidden rounded-2xl border border-border bg-card shadow-card">
+    <Section id="faq" title="Frequently asked questions">
+      <div className="divide-y divide-border overflow-hidden rounded-2xl border border-border bg-card shadow-card">
         {faqs.map((f, i) => {
           const isOpen = openIdx === i;
           return (
             <div key={i}>
               <h3>
-                <button
-                  type="button"
-                  onClick={() => setOpenIdx(isOpen ? null : i)}
-                  aria-expanded={isOpen}
-                  aria-controls={`faq-${i}`}
-                  className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left font-semibold hover:bg-secondary/40"
-                >
+                <button type="button" onClick={() => setOpenIdx(isOpen ? null : i)} aria-expanded={isOpen} aria-controls={`faq-${i}`}
+                  className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left font-semibold hover:bg-secondary/40">
                   {f.q}
-                  <ChevronDown
-                    className={`size-5 shrink-0 text-muted-foreground transition-transform ${isOpen ? "rotate-180" : ""}`}
-                  />
                 </button>
               </h3>
-              {isOpen && (
-                <p id={`faq-${i}`} className="px-5 pb-5 text-sm text-muted-foreground">
-                  {f.a}
-                </p>
-              )}
+              {isOpen && <p id={`faq-${i}`} className="px-5 pb-5 text-sm text-muted-foreground">{f.a}</p>}
             </div>
           );
         })}
       </div>
-    </section>
+    </Section>
   );
 }
 
@@ -501,9 +454,7 @@ function CohortNotFound() {
       <p className="mt-3 text-muted-foreground">
         This cohort may have been removed or is not available yet. See the cohorts that are currently published.
       </p>
-      <Button asChild variant="cta" className="mt-6">
-        <Link to="/cohorts">View All Cohorts</Link>
-      </Button>
+      <Button asChild variant="cta" className="mt-6"><Link to="/cohorts">View All Cohorts</Link></Button>
     </div>
   );
 }

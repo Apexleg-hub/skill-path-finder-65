@@ -1,7 +1,9 @@
 // Save as src/components/admin/CohortEditor.tsx
 import { useEffect, useState } from "react";
-import { ArrowDown, ArrowUp, Loader2, Plus, Trash2 } from "lucide-react";
+import { Loader2, Plus, Trash2, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { RichTextEditor } from "@/components/admin/RichTextEditor";
+import { sanitizeRichText } from "@/lib/rich-text";
 import {
   cohortError,
   fetchCohortForEdit,
@@ -24,6 +26,13 @@ type Form = {
   about: string;
   category: string;
   skills: string; // one per line
+  tagline: string;
+  why_text: string;
+  audience: string; // one per line
+  not_for: string; // one per line
+  included: string; // one per line
+  seo_title: string;
+  seo_description: string;
   image_url: string;
   duration_weeks: string;
   start_date: string;
@@ -43,7 +52,7 @@ type Form = {
 
 const EMPTY: Form = {
   programme_name: "", cohort_number: "1", title: "", slug: "", description: "", about: "", category: "",
-  skills: "", image_url: "", duration_weeks: "", start_date: "", end_date: "", registration_deadline: "",
+  skills: "", tagline: "", why_text: "", audience: "", not_for: "", included: "", seo_title: "", seo_description: "", image_url: "", duration_weeks: "", start_date: "", end_date: "", registration_deadline: "",
   payment_deadline: "", seat_hold_hours: "48",
   learning_format: "virtual", class_schedule: "", tuition_fee: "", early_bird_fee: "", early_bird_deadline: "",
   seat_capacity: "", faqs: [], modules: [],
@@ -94,6 +103,7 @@ export function CohortEditor({
   const [error, setError] = useState<string | null>(null);
   const [slugTouched, setSlugTouched] = useState(Boolean(cohortId));
   const [published, setPublished] = useState(false);
+  const [previewHtml, setPreviewHtml] = useState<string | null>(null);
 
   useEffect(() => {
     if (!cohortId) return;
@@ -105,7 +115,9 @@ export function CohortEditor({
         setForm({
           programme_name: c.programme_name, cohort_number: String(c.cohort_number), title: c.title, slug: c.slug,
           description: c.description ?? "", about: c.about ?? "", category: c.category ?? "",
-          skills: c.skills.join("\n"), image_url: c.image_url ?? "",
+          skills: c.skills.join("\n"), tagline: c.tagline ?? "", why_text: c.why_text ?? "",
+          audience: c.audience.join("\n"), not_for: c.not_for.join("\n"), included: c.included.join("\n"),
+          seo_title: c.seo_title ?? "", seo_description: c.seo_description ?? "", image_url: c.image_url ?? "",
           duration_weeks: c.duration_weeks?.toString() ?? "", start_date: c.start_date ?? "", end_date: c.end_date ?? "",
           registration_deadline: c.registration_deadline ?? "", payment_deadline: c.payment_deadline ?? "",
           seat_hold_hours: String(c.seat_hold_hours ?? 48), learning_format: c.learning_format,
@@ -165,6 +177,9 @@ export function CohortEditor({
     if (form.early_bird_fee.trim() !== "" && form.tuition_fee.trim() !== "" && Number(form.early_bird_fee) > Number(form.tuition_fee))
       return "The early-bird fee cannot be higher than the standard tuition.";
     if (form.early_bird_fee.trim() !== "" && !form.early_bird_deadline) return "Set a deadline for the early-bird fee, or clear the fee.";
+    if (form.tagline.length > 200) return "The tagline must be 200 characters or fewer.";
+    if (form.seo_title.length > 70) return "The page title must be 70 characters or fewer.";
+    if (form.seo_description.length > 200) return "The meta description must be 200 characters or fewer.";
     if (form.modules.some((m) => m.module_title.trim() === "")) return "Every curriculum module needs a title.";
     if (form.faqs.some((f) => (f.q.trim() === "") !== (f.a.trim() === ""))) return "Each FAQ needs both a question and an answer.";
     return null;
@@ -187,11 +202,18 @@ export function CohortEditor({
         slug: form.slug,
         cohort_number: Number(form.cohort_number),
         title: form.title.trim(),
-        description: form.description.trim() || null,
+        description: sanitizeRichText(form.description),
         about: form.about.trim() || null,
         image_url: form.image_url || null,
         category: form.category.trim() || null,
         skills: lines(form.skills),
+        tagline: form.tagline.trim() || null,
+        why_text: form.why_text.trim() || null,
+        audience: lines(form.audience),
+        not_for: lines(form.not_for),
+        included: lines(form.included),
+        seo_title: form.seo_title.trim() || null,
+        seo_description: form.seo_description.trim() || null,
         duration_weeks: num(form.duration_weeks),
         start_date: form.start_date || null,
         end_date: form.end_date || null,
@@ -276,18 +298,15 @@ export function CohortEditor({
         <Field label="Category" hint="Used for the category filter, for example Data Analytics & Business Intelligence.">
           <input className={inputClass} value={form.category} onChange={(e) => set("category", e.target.value)} />
         </Field>
-        <Field label="Short description" hint="Shown on cards and in search previews.">
-          <textarea rows={2} className={inputClass} value={form.description} onChange={(e) => set("description", e.target.value)} />
+        <Field label="Cohort description" hint="Write the complete sales article here. It appears directly on the public cohort page.">
+          <RichTextEditor
+            value={form.description}
+            onChange={(html) => set("description", html)}
+            onUploadImage={uploadCohortImage}
+            onPreview={(html) => setPreviewHtml(sanitizeRichText(html))}
+          />
         </Field>
-      </Section>
 
-      <Section title="Programme content">
-        <Field label="About the programme" hint="Leave a blank line between paragraphs.">
-          <textarea rows={8} className={inputClass} value={form.about} onChange={(e) => set("about", e.target.value)} />
-        </Field>
-        <Field label="What you will learn" hint="One skill or tool per line. Each becomes a card.">
-          <textarea rows={5} className={inputClass} value={form.skills} onChange={(e) => set("skills", e.target.value)} />
-        </Field>
         <div>
           <span className="mb-1 block text-sm font-medium">Course image</span>
           {form.image_url && <img src={form.image_url} alt="Course preview" className="mb-2 h-32 w-auto rounded-lg object-cover" />}
@@ -327,34 +346,38 @@ export function CohortEditor({
         <p className="rounded-md bg-secondary/60 p-3 text-sm text-muted-foreground">Payment: full tuition is paid online with Paystack. Part payments and instalments are not offered.</p>
       </Section>
 
-      <Section title="Curriculum">
-        {form.modules.length === 0 && <p className="text-sm text-muted-foreground">No modules yet. The curriculum section stays hidden on the public page until you add one.</p>}
-        {form.modules.map((m, i) => (
-          <div key={i} className="space-y-3 rounded-xl border border-border p-4">
-            <div className="flex items-center justify-between gap-2">
-              <span className="text-sm font-semibold">Module {i + 1}</span>
-              <div className="flex gap-1">
-                <Button type="button" size="sm" variant="outline" onClick={() => moveModule(i, -1)} disabled={i === 0} aria-label="Move up"><ArrowUp className="size-4" /></Button>
-                <Button type="button" size="sm" variant="outline" onClick={() => moveModule(i, 1)} disabled={i === form.modules.length - 1} aria-label="Move down"><ArrowDown className="size-4" /></Button>
-                <Button type="button" size="sm" variant="outline" onClick={() => set("modules", form.modules.filter((_, idx) => idx !== i))} aria-label="Remove module"><Trash2 className="size-4" /></Button>
-              </div>
-            </div>
-            <div className="grid gap-3 sm:grid-cols-[100px_1fr]">
-              <Field label="Week"><input className={inputClass} inputMode="numeric" value={m.week_number} onChange={(e) => updateModule(i, { week_number: e.target.value })} placeholder={String(i + 1)} /></Field>
-              <Field label="Module title"><input className={inputClass} value={m.module_title} onChange={(e) => updateModule(i, { module_title: e.target.value })} /></Field>
-            </div>
-            <Field label="Description"><textarea rows={2} className={inputClass} value={m.module_description} onChange={(e) => updateModule(i, { module_description: e.target.value })} /></Field>
-            <div className="grid gap-3 sm:grid-cols-2">
-              <Field label="Topics covered" hint="One per line."><textarea rows={4} className={inputClass} value={m.topics} onChange={(e) => updateModule(i, { topics: e.target.value })} /></Field>
-              <Field label="Learning objectives" hint="One per line."><textarea rows={4} className={inputClass} value={m.objectives} onChange={(e) => updateModule(i, { objectives: e.target.value })} /></Field>
-            </div>
-            <Field label="Practical assignment or project"><input className={inputClass} value={m.assignment} onChange={(e) => updateModule(i, { assignment: e.target.value })} /></Field>
+      <Section title="Sales page and SEO">
+        <Field label="Tagline" hint={`${form.tagline.length}/200. The one-line promise under the page heading.`}>
+          <textarea rows={2} maxLength={200} className={inputClass} value={form.tagline} onChange={(e) => set("tagline", e.target.value)} />
+        </Field>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Field label="Who it is for" hint="One point per line.">
+            <textarea rows={5} className={inputClass} value={form.audience} onChange={(e) => set("audience", e.target.value)} />
+          </Field>
+          <Field label="Who it is not for" hint="One point per line. Being honest builds trust.">
+            <textarea rows={5} className={inputClass} value={form.not_for} onChange={(e) => set("not_for", e.target.value)} />
+          </Field>
+        </div>
+        <Field label="What is included" hint="One point per line. If empty, the standard list is shown.">
+          <textarea rows={5} className={inputClass} value={form.included} onChange={(e) => set("included", e.target.value)} />
+        </Field>
+
+        <div className="rounded-xl border border-border p-4">
+          <p className="text-sm font-semibold">Google search result</p>
+          <Field label="Page title" hint={`${form.seo_title.length}/70. Aim for about 60 or fewer. Start with the phrase people search for.`}>
+            <input className={inputClass} maxLength={70} value={form.seo_title} onChange={(e) => set("seo_title", e.target.value)} placeholder="Data Analysis Course in Nigeria: Excel, SQL & Power BI" />
+          </Field>
+          <div className="mt-3" />
+          <Field label="Meta description" hint={`${form.seo_description.length}/200. Aim for about 150 characters. Include the benefit, the start date and a call to action.`}>
+            <textarea rows={3} maxLength={200} className={inputClass} value={form.seo_description} onChange={(e) => set("seo_description", e.target.value)} />
+          </Field>
+          <div className="mt-4 rounded-lg bg-secondary/40 p-3">
+            <p className="text-xs text-muted-foreground">Preview</p>
+            <p className="truncate text-base font-medium text-blue-700">{form.seo_title || form.title || "Page title"}</p>
+            <p className="truncate text-xs text-green-700">corepointtech.com.ng/cohorts/{form.slug || "..."}</p>
+            <p className="text-sm text-muted-foreground">{form.seo_description || form.tagline || "Your description appears here."}</p>
           </div>
-        ))}
-        <Button type="button" variant="outline" size="sm" disabled={form.modules.length >= 60}
-          onClick={() => set("modules", [...form.modules, { ...EMPTY_MODULE, week_number: String(form.modules.length + 1) }])}>
-          <Plus className="size-4" /> Add module
-        </Button>
+        </div>
       </Section>
 
       <Section title="Frequently asked questions">
@@ -377,6 +400,23 @@ export function CohortEditor({
           {saving ? (<><Loader2 className="size-4 animate-spin" /> Saving...</>) : "Save cohort"}
         </Button>
       </div>
+
+      {previewHtml !== null && (
+        <div className="fixed inset-0 z-50 overflow-y-auto bg-background/95 p-4 backdrop-blur sm:p-8" role="dialog" aria-modal="true" aria-label="Cohort description preview">
+          <div className="mx-auto max-w-4xl">
+            <div className="sticky top-0 z-10 flex items-center justify-between border-b border-border bg-background py-3">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wide text-primary">Preview</p>
+                <h2 className="text-xl font-bold">Cohort description</h2>
+              </div>
+              <Button type="button" size="sm" variant="outline" onClick={() => setPreviewHtml(null)}>
+                <X className="size-4" /> Close
+              </Button>
+            </div>
+            <article className="rich-text-content py-8" dangerouslySetInnerHTML={{ __html: previewHtml }} />
+          </div>
+        </div>
+      )}
     </form>
   );
 }
