@@ -149,6 +149,13 @@ export type CohortDetail = CohortWithMeta & {
   early_bird_deadline: string | null;
   payment_options: string[];
   payment_deadline: string | null;
+  tagline: string | null;
+  why_text: string | null;
+  audience: string[];
+  not_for: string[];
+  included: string[];
+  seo_title: string | null;
+  seo_description: string | null;
   faqs: CohortFaq[];
   earlyBirdActive: boolean;
 };
@@ -174,6 +181,13 @@ export async function fetchCohortDetail(slug: string): Promise<CohortDetailResul
     early_bird_deadline: string | null;
     payment_options: string[] | null;
     payment_deadline: string | null;
+    tagline: string | null;
+    why_text: string | null;
+    audience: string[] | null;
+    not_for: string[] | null;
+    included: string[] | null;
+    seo_title: string | null;
+    seo_description: string | null;
     faqs: unknown;
   };
 
@@ -202,6 +216,9 @@ export async function fetchCohortDetail(slug: string): Promise<CohortDetailResul
     cohort: {
       ...row,
       skills: row.skills ?? [],
+      audience: row.audience ?? [],
+      not_for: row.not_for ?? [],
+      included: row.included ?? [],
       payment_options: row.payment_options ?? [],
       faqs,
       seatsRemaining,

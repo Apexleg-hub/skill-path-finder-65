@@ -3,7 +3,7 @@ import { Mail, Phone, MapPin, Linkedin, Twitter, Instagram, MessageCircle } from
 import { categories } from "@/data/courses";
 import logo from "@/assets/corepoint-tech.jpg";
 
-export function SiteFooter() {
+export function SiteFooter({ hideIcons = false }: { hideIcons?: boolean }) {
   return (
     <footer className="mt-24 bg-ink text-ink-foreground">
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:grid-cols-2 lg:grid-cols-4">
@@ -18,13 +18,13 @@ export function SiteFooter() {
           </p>
           <div className="mt-5 flex gap-3">
             <a href="https://linkedin.com" aria-label="LinkedIn" className="rounded-md bg-ink-foreground/10 p-2 transition-colors hover:bg-ink-foreground/20">
-              <Linkedin className="size-4" />
+              {hideIcons ? "LinkedIn" : <Linkedin className="size-4" />}
             </a>
             <a href="https://twitter.com" aria-label="X" className="rounded-md bg-ink-foreground/10 p-2 transition-colors hover:bg-ink-foreground/20">
-              <Twitter className="size-4" />
+              {hideIcons ? "X" : <Twitter className="size-4" />}
             </a>
             <a href="https://instagram.com" aria-label="Instagram" className="rounded-md bg-ink-foreground/10 p-2 transition-colors hover:bg-ink-foreground/20">
-              <Instagram className="size-4" />
+              {hideIcons ? "Instagram" : <Instagram className="size-4" />}
             </a>
           </div>
         </div>
@@ -68,12 +68,12 @@ export function SiteFooter() {
             Get in touch
           </h3>
           <ul className="mt-4 space-y-3 text-sm text-ink-foreground/80">
-            <li className="flex gap-2"><Phone className="size-4 shrink-0" /> +234 911 575 1406</li>
-            <li className="flex gap-2"><MessageCircle className="size-4 shrink-0" /> +234 911 575 1406</li>
-            <li className="flex gap-2"><Mail className="size-4 shrink-0" /> info@corepointtech.com.ng</li>
-            <li className="flex gap-2"><MapPin className="size-4 shrink-0" /> Somolu, Lagos State, Nigeria</li>
+            <li className="flex gap-2">{!hideIcons && <Phone className="size-4 shrink-0" />} +234 911 575 1406</li>
+            <li className="flex gap-2">{!hideIcons && <MessageCircle className="size-4 shrink-0" />} +234 911 575 1406</li>
+            <li className="flex gap-2">{!hideIcons && <Mail className="size-4 shrink-0" />} info@corepointtech.com.ng</li>
+            <li className="flex gap-2">{!hideIcons && <MapPin className="size-4 shrink-0" />} Somolu, Lagos State, Nigeria</li>
             <li className="flex gap-2">
-              <MapPin className="size-4 shrink-0" />
+              {!hideIcons && <MapPin className="size-4 shrink-0" />}
               <span>20 Church Street, Atala Adesan Road, Mowe, Ogun State</span>
             </li>
           </ul>

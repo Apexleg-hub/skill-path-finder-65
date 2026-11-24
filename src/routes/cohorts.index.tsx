@@ -16,6 +16,7 @@ import {
 } from "@/lib/cohorts";
 import { toAbsoluteUrl } from "@/lib/site";
 import { pageStructuredDataScript } from "@/lib/structured-data";
+import { sanitizeRichText } from "@/lib/rich-text";
 
 type CohortSearch = {
   q?: string;
@@ -334,7 +335,12 @@ function CohortCard({ cohort: c }: { cohort: CohortWithMeta }) {
         </div>
 
         <h3 className="mt-3 text-lg font-semibold">{c.programme_name}</h3>
-        {c.description && <p className="mt-1.5 line-clamp-3 text-sm text-muted-foreground">{c.description}</p>}
+        {c.description && (
+          <div
+            className="mt-1.5 line-clamp-3 text-sm text-muted-foreground"
+            dangerouslySetInnerHTML={{ __html: sanitizeRichText(c.description) }}
+          />
+        )}
 
         <dl className="mt-4 space-y-2 text-sm">
           <Row icon={<Clock className="size-4" />} label="Duration">
@@ -358,11 +364,20 @@ function CohortCard({ cohort: c }: { cohort: CohortWithMeta }) {
 
         <p className="mt-4 text-lg font-bold">{formatNaira(c.tuition_fee)}</p>
 
-        <Button asChild variant="cta" className="mt-4">
-          <Link to="/cohorts/$slug" params={{ slug: c.slug }}>
-            View Details
-          </Link>
-        </Button>
+        <div className="mt-4 grid gap-2 sm:grid-cols-2">
+          {c.status === "open" && (
+            <Button asChild variant="cta">
+              <Link to="/cohorts/$slug/register" params={{ slug: c.slug }}>
+                Make Payment
+              </Link>
+            </Button>
+          )}
+          <Button asChild variant={c.status === "open" ? "outline" : "cta"}>
+            <Link to="/cohorts/$slug" params={{ slug: c.slug }}>
+              View Details
+            </Link>
+          </Button>
+        </div>
       </div>
     </article>
   );

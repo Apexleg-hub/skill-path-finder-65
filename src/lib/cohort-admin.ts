@@ -24,6 +24,13 @@ export type AdminCohort = {
   registration_deadline: string | null;
   payment_deadline: string | null;
   seat_hold_hours: number;
+  tagline: string | null;
+  why_text: string | null;
+  audience: string[];
+  not_for: string[];
+  included: string[];
+  seo_title: string | null;
+  seo_description: string | null;
   learning_format: "virtual" | "physical" | "hybrid";
   class_schedule: string | null;
   tuition_fee: number | null;
@@ -102,6 +109,9 @@ export async function fetchAdminCohorts(): Promise<CohortListItem[]> {
   return ((cohorts.data ?? []) as AdminCohort[]).map((c) => ({
     ...c,
     skills: c.skills ?? [],
+    audience: c.audience ?? [],
+    not_for: c.not_for ?? [],
+    included: c.included ?? [],
     payment_options: c.payment_options ?? [],
     faqs: Array.isArray(c.faqs) ? c.faqs : [],
     summary: byId.get(c.id) ?? { registrations: 0, paid: 0, verified_revenue: 0 },
@@ -121,6 +131,9 @@ export async function fetchCohortForEdit(id: string): Promise<{ cohort: AdminCoh
     cohort: {
       ...cohort,
       skills: cohort.skills ?? [],
+      audience: cohort.audience ?? [],
+      not_for: cohort.not_for ?? [],
+      included: cohort.included ?? [],
       payment_options: cohort.payment_options ?? [],
       faqs: Array.isArray(cohort.faqs) ? cohort.faqs : [],
     },

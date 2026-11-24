@@ -33,7 +33,7 @@ const mobileNavLinks = [
   })),
 ] as const;
 
-export function SiteHeader() {
+export function SiteHeader({ hideIcons = false }: { hideIcons?: boolean }) {
   const [open, setOpen] = useState(false);
   const [coursesOpen, setCoursesOpen] = useState(false);
 
@@ -89,7 +89,7 @@ export function SiteHeader() {
               className="flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
               activeProps={{ className: "text-foreground" }}
             >
-              Courses <ChevronDown className="size-3.5" />
+              Courses {!hideIcons && <ChevronDown className="size-3.5" />}
             </Link>
             <div className="invisible absolute left-0 top-full w-64 translate-y-1 rounded-xl border border-border bg-popover p-2 opacity-0 shadow-lift transition-all group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
               {categories.map((cat) => (
@@ -130,7 +130,7 @@ export function SiteHeader() {
           onClick={() => setOpen((v) => !v)}
           className="inline-flex size-10 shrink-0 items-center justify-center rounded-md border border-border bg-background text-foreground shadow-sm md:hidden"
         >
-          {open ? <X className="size-5" /> : <Menu className="size-5" />}
+          {hideIcons ? (open ? "Close" : "Menu") : open ? <X className="size-5" /> : <Menu className="size-5" />}
         </button>
       </div>
 
@@ -144,7 +144,7 @@ export function SiteHeader() {
               activeOptions={{ exact: true }}
               activeProps={{ className: "bg-secondary" }}
             >
-              <Home className="size-4 text-primary" />
+              {!hideIcons && <Home className="size-4 text-primary" />}
               Home
             </Link>
 
@@ -157,12 +157,14 @@ export function SiteHeader() {
                 className="flex w-full items-center justify-between gap-3 px-3 py-3 text-left text-sm font-semibold text-foreground"
               >
                 <span className="flex items-center gap-2">
-                  <BookOpen className="size-4 text-primary" />
+                  {!hideIcons && <BookOpen className="size-4 text-primary" />}
                   All Courses
                 </span>
-                <ChevronDown
-                  className={`size-4 transition-transform ${coursesOpen ? "rotate-180" : ""}`}
-                />
+                {!hideIcons && (
+                  <ChevronDown
+                    className={`size-4 transition-transform ${coursesOpen ? "rotate-180" : ""}`}
+                  />
+                )}
               </button>
 
               <div
@@ -207,7 +209,7 @@ export function SiteHeader() {
                   className="flex items-center gap-2 rounded-md px-3 py-3 text-sm font-semibold text-foreground hover:bg-secondary"
                   activeProps={{ className: "bg-secondary" }}
                 >
-                  <Icon className="size-4 text-primary" />
+                  {!hideIcons && <Icon className="size-4 text-primary" />}
                   {link.label}
                 </Link>
               );
