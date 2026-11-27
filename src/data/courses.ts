@@ -38,7 +38,7 @@ export type CategoryId =
   | "management";
 
 export type Level = "Beginner" | "Intermediate" | "Advanced";
-export type Delivery = "Physical" | "Live Online" | "Both";
+export type Delivery = "Virtual" | "Live Online" | "Both";
 
 export interface Category {
   id: CategoryId;

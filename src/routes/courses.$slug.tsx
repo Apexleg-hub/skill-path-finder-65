@@ -100,7 +100,7 @@ function CourseDetail() {
     {
       icon: Laptop,
       label: "Delivery",
-      value: course.delivery === "Both" ? "Physical & Live Online" : course.delivery,
+      value: course.delivery === "Both" ? "Virtual or Live Online" : course.delivery,
     },
     { icon: ListChecks, label: "Category", value: categoryName(course.category) },
   ];

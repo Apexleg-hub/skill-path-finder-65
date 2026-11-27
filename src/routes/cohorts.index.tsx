@@ -295,7 +295,7 @@ function CohortsPage() {
               <p className="mb-4 text-sm text-muted-foreground">
                 Showing {filtered.length} {filtered.length === 1 ? "cohort" : "cohorts"}
               </p>
-              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-2">
                 {filtered.map((c) => (
                   <CohortCard key={c.id} cohort={c} />
                 ))}
@@ -428,7 +428,11 @@ function EmptyState({
 
 function LoadingGrid() {
   return (
-    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" role="status" aria-label="Loading cohorts">
+    <div
+      className="grid gap-6 sm:grid-cols-2 lg:grid-cols-2"
+      role="status"
+      aria-label="Loading cohorts"
+    >
       {[0, 1, 2].map((i) => (
         <div key={i} className="animate-pulse overflow-hidden rounded-2xl border border-border bg-card">
           <div className="h-40 bg-muted" />
