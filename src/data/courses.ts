@@ -116,9 +116,9 @@ export const categories: Category[] = [
   },
   {
     id: "management",
-    name: "Project Management",
+    name: "Management",
     shortName: "Management",
-    description: "Planning, executing and closing projects effectively.",
+    description: "Project, people, procurement and supply chain management.",
     image: managementImg,
   },
   {
@@ -155,21 +155,6 @@ export const categories: Category[] = [
     shortName: "Automation",
     description: "Scripting and no-code workflow automation for real work.",
     image: automationImg,
-  },
-  {
-    id: "management",
-    name: "Supply Chain & Procurement",
-    shortName: "Management",
-    description: "Procurement, logistics, inventory management and supply chain analytics.",
-    image: managementImg,
-  },
-  {
-    id: "management",
-    name: "Human Resource Management",
-    shortName: "Management",
-    description:
-      "Modern HR management, HR software, payroll administration and workforce analytics.",
-    image: managementImg,
   },
 ];
 

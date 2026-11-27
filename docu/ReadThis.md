@@ -11,6 +11,8 @@ npm run dev
 4. git push
 
 # ++++++++++++
+npm install htmlparser2
+#================
 
 image: resolveCourseImage("ui-ux-design", dataImg),
 

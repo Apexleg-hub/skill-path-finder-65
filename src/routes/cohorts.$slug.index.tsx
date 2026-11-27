@@ -263,7 +263,9 @@ function Section({ id, title, children }: { id: string; title: string; children:
 function RegisterButton({ slug, size }: { slug: string; size?: "xl" }) {
   return (
     <Button asChild variant="cta" size={size}>
-      <Link to="/cohorts/$slug/register" params={{ slug }}>Register Now</Link>
+      <Link to="/cohorts/$slug/register" params={{ slug }}>
+        Register &amp; Pay
+      </Link>
     </Button>
   );
 }
@@ -317,7 +319,9 @@ function Hero({ c, open }: { c: CohortDetail; open: boolean }) {
                 </a>
               </Button>
             </div>
-            <p className="mt-4 text-sm text-[#444444]">Secure online payment with Paystack</p>
+            <p className="mt-4 text-sm text-[#444444]">
+              Complete the short registration form, then pay securely with Paystack.
+            </p>
           </div>
 
           {c.image_url ? (

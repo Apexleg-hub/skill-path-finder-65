@@ -1,13 +1,14 @@
 // Save as src/routes/admin.cohorts.tsx
 import { useCallback, useEffect, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { Loader2, Plus } from "lucide-react";
+import { Loader2, Plus, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CohortEditor } from "@/components/admin/CohortEditor";
 import { CohortRegistrations } from "@/components/admin/CohortRegistrations";
 import { atLeast, useAdmin } from "@/lib/admin-access";
 import {
   cohortError,
+  deleteCohort,
   fetchAdminCohorts,
   setPublication,
   setRegistrationOpen,
@@ -168,6 +169,22 @@ function CohortsAdmin() {
                 <Button size="sm" variant="outline" disabled={busy}
                   onClick={() => act(c, () => setRegistrationOpen(c.id, !regOpen), regOpen ? "Registration closed." : "Registration opened.")}>
                   {regOpen ? "Close registration" : "Open registration"}
+                </Button>
+                <Button
+                  size="sm"
+                  variant="destructive"
+                  disabled={busy}
+                  onClick={() => {
+                    if (
+                      window.confirm(
+                        `Permanently delete "${c.title}"? This cannot be undone. Cohorts with registrations or payment history cannot be deleted.`,
+                      )
+                    ) {
+                      act(c, () => deleteCohort(c.id), "Cohort deleted.");
+                    }
+                  }}
+                >
+                  <Trash2 className="size-4" /> Delete
                 </Button>
                 {isPublished && <a href={`/cohorts/${c.slug}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center px-2 text-sm font-semibold text-primary">View public page</a>}
               </div>

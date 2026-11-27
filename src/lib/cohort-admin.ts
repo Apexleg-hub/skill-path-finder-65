@@ -86,6 +86,8 @@ export function cohortError(err: unknown): string {
   if (e?.code === "P0001" && e.message) return e.message;
   if (e?.code === "42501") return "You do not have permission to do that.";
   if (e?.code === "23505") return "That web address or cohort number is already used for this programme.";
+  if (e?.code === "23503")
+    return "This cohort has registration or payment history and cannot be deleted. Unpublish it to remove it from the public site.";
   if (e?.code === "23514")
     return "Please check the details. A cohort needs a start date, tuition fee and registration deadline to be published, and end dates and early-bird fees must make sense.";
   return "Something went wrong. Please try again.";
@@ -191,6 +193,11 @@ export async function setPublication(id: string, status: "published" | "unpublis
 
 export async function setRegistrationOpen(id: string, open: boolean) {
   const { error } = await db.from("cohorts").update({ cohort_status: open ? "open" : "closed" }).eq("id", id);
+  if (error) throw error;
+}
+
+export async function deleteCohort(id: string) {
+  const { error } = await db.from("cohorts").delete().eq("id", id);
   if (error) throw error;
 }
 
